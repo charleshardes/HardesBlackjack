@@ -1,8 +1,8 @@
 //
 //  main.c
-//  Console_Cards
+//  blackjack_test
 //
-//  Created by Charles Hardes on 3/19/15.
+//  Created by Charles Hardes on 3/28/15.
 //  Copyright (c) 2015 Charles Hardes. All rights reserved.
 //
 

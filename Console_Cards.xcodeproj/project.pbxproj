@@ -7,7 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		634B85AD1ABB5B89006D0857 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85AC1ABB5B89006D0857 /* main.c */; };
+		634B85B91ABB5C5F006D0857 /* cards.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85B41ABB5C2A006D0857 /* cards.c */; };
+		634B85BD1ABFA798006D0857 /* cards_test.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85BB1ABFA798006D0857 /* cards_test.c */; };
+		634B85C01AC01312006D0857 /* cards_suits.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85BE1AC01312006D0857 /* cards_suits.c */; };
+		634B85C41AC01556006D0857 /* cards_values.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85C21AC01556006D0857 /* cards_values.c */; };
+		634B85C91AC3C295006D0857 /* decks.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85C71AC3C295006D0857 /* decks.c */; };
+		634B85E51AC7466D006D0857 /* cards_values.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85C21AC01556006D0857 /* cards_values.c */; };
+		634B85E71AC74680006D0857 /* cards.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85B41ABB5C2A006D0857 /* cards.c */; };
+		634B85E81AC74686006D0857 /* decks.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85C71AC3C295006D0857 /* decks.c */; };
+		634B85E91AC746A6006D0857 /* blackjack_hands.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85CF1AC71D0B006D0857 /* blackjack_hands.c */; };
+		634B85EA1AC746B8006D0857 /* blackjack_test.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85D71AC743DF006D0857 /* blackjack_test.c */; };
+		634B85EB1AC746D4006D0857 /* blackjack_players.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85D31AC73832006D0857 /* blackjack_players.c */; };
+		634B85EC1AC74886006D0857 /* cards_suits.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85BE1AC01312006D0857 /* cards_suits.c */; };
+		634B85F01AC75C52006D0857 /* blackjack_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85EE1AC75C52006D0857 /* blackjack_table.c */; };
+		634B85F31AC763F6006D0857 /* blackjack.c in Sources */ = {isa = PBXBuildFile; fileRef = 634B85F11AC763F6006D0857 /* blackjack.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,15 +33,71 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		634B85DC1AC74638006D0857 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		634B85A91ABB5B89006D0857 /* Console_Cards */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Console_Cards; sourceTree = BUILT_PRODUCTS_DIR; };
-		634B85AC1ABB5B89006D0857 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		634B85A91ABB5B89006D0857 /* Cards_Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Cards_Test; sourceTree = BUILT_PRODUCTS_DIR; };
+		634B85B31ABB5C2A006D0857 /* cards_structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cards_structs.h; sourceTree = "<group>"; };
+		634B85B41ABB5C2A006D0857 /* cards.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cards.c; sourceTree = "<group>"; };
+		634B85B51ABB5C2A006D0857 /* cards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cards.h; sourceTree = "<group>"; };
+		634B85BA1ABDD4B0006D0857 /* cards_globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cards_globals.h; path = ../cards_globals.h; sourceTree = "<group>"; };
+		634B85BB1ABFA798006D0857 /* cards_test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cards_test.c; sourceTree = "<group>"; };
+		634B85BC1ABFA798006D0857 /* cards_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cards_test.h; sourceTree = "<group>"; };
+		634B85BE1AC01312006D0857 /* cards_suits.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cards_suits.c; sourceTree = "<group>"; };
+		634B85BF1AC01312006D0857 /* cards_suits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cards_suits.h; sourceTree = "<group>"; };
+		634B85C21AC01556006D0857 /* cards_values.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cards_values.c; sourceTree = "<group>"; };
+		634B85C31AC01556006D0857 /* cards_values.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cards_values.h; sourceTree = "<group>"; };
+		634B85C71AC3C295006D0857 /* decks.c */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.c; path = decks.c; sourceTree = "<group>"; };
+		634B85C81AC3C295006D0857 /* decks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decks.h; sourceTree = "<group>"; };
+		634B85CE1AC6F79E006D0857 /* blackjack_structs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = blackjack_structs.h; sourceTree = "<group>"; };
+		634B85CF1AC71D0B006D0857 /* blackjack_hands.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = blackjack_hands.c; sourceTree = "<group>"; };
+		634B85D01AC71D0B006D0857 /* blackjack_hands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blackjack_hands.h; sourceTree = "<group>"; };
+		634B85D31AC73832006D0857 /* blackjack_players.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = blackjack_players.c; sourceTree = "<group>"; };
+		634B85D41AC73832006D0857 /* blackjack_players.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blackjack_players.h; sourceTree = "<group>"; };
+		634B85D61AC73E57006D0857 /* blackjack_globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = blackjack_globals.h; sourceTree = "<group>"; };
+		634B85D71AC743DF006D0857 /* blackjack_test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = blackjack_test.c; sourceTree = "<group>"; };
+		634B85D81AC743DF006D0857 /* blackjack_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blackjack_test.h; sourceTree = "<group>"; };
+		634B85DE1AC74638006D0857 /* blackjack_test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = blackjack_test; sourceTree = BUILT_PRODUCTS_DIR; };
+		634B85EE1AC75C52006D0857 /* blackjack_table.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = blackjack_table.c; sourceTree = "<group>"; };
+		634B85EF1AC75C52006D0857 /* blackjack_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blackjack_table.h; sourceTree = "<group>"; };
+		634B85F11AC763F6006D0857 /* blackjack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = blackjack.c; sourceTree = "<group>"; };
+		634B85F21AC763F6006D0857 /* blackjack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blackjack.h; sourceTree = "<group>"; };
+		63C5E2CF1CA0CB9C006AD679 /* cards_test.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cards_test.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		63C5E2DC1CA0D00A006AD679 /* aces.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = aces.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		634B85A61ABB5B89006D0857 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		634B85DB1AC74638006D0857 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63C5E2CC1CA0CB9C006AD679 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63C5E2D91CA0D00A006AD679 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,7 +110,9 @@
 		634B85A01ABB5B89006D0857 = {
 			isa = PBXGroup;
 			children = (
-				634B85AB1ABB5B89006D0857 /* Console_Cards */,
+				634B85AB1ABB5B89006D0857 /* cards */,
+				634B85C61AC3C23A006D0857 /* decks */,
+				634B85CB1AC65943006D0857 /* Blackjack */,
 				634B85AA1ABB5B89006D0857 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,25 +120,106 @@
 		634B85AA1ABB5B89006D0857 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				634B85A91ABB5B89006D0857 /* Console_Cards */,
+				634B85A91ABB5B89006D0857 /* Cards_Test */,
+				634B85DE1AC74638006D0857 /* blackjack_test */,
+				63C5E2CF1CA0CB9C006AD679 /* cards_test.xctest */,
+				63C5E2DC1CA0D00A006AD679 /* aces.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		634B85AB1ABB5B89006D0857 /* Console_Cards */ = {
+		634B85AB1ABB5B89006D0857 /* cards */ = {
 			isa = PBXGroup;
 			children = (
-				634B85AC1ABB5B89006D0857 /* main.c */,
+				634B85BA1ABDD4B0006D0857 /* cards_globals.h */,
+				634B85B31ABB5C2A006D0857 /* cards_structs.h */,
+				634B85C51AC0165A006D0857 /* values */,
+				634B85C11AC01504006D0857 /* suits */,
+				634B85B51ABB5C2A006D0857 /* cards.h */,
+				634B85B41ABB5C2A006D0857 /* cards.c */,
+				634B85BC1ABFA798006D0857 /* cards_test.h */,
+				634B85BB1ABFA798006D0857 /* cards_test.c */,
 			);
+			name = cards;
 			path = Console_Cards;
+			sourceTree = "<group>";
+		};
+		634B85C11AC01504006D0857 /* suits */ = {
+			isa = PBXGroup;
+			children = (
+				634B85BF1AC01312006D0857 /* cards_suits.h */,
+				634B85BE1AC01312006D0857 /* cards_suits.c */,
+			);
+			name = suits;
+			sourceTree = "<group>";
+		};
+		634B85C51AC0165A006D0857 /* values */ = {
+			isa = PBXGroup;
+			children = (
+				634B85C31AC01556006D0857 /* cards_values.h */,
+				634B85C21AC01556006D0857 /* cards_values.c */,
+			);
+			name = values;
+			sourceTree = "<group>";
+		};
+		634B85C61AC3C23A006D0857 /* decks */ = {
+			isa = PBXGroup;
+			children = (
+				634B85C81AC3C295006D0857 /* decks.h */,
+				634B85C71AC3C295006D0857 /* decks.c */,
+			);
+			name = decks;
+			sourceTree = "<group>";
+		};
+		634B85CA1AC624E3006D0857 /* hands */ = {
+			isa = PBXGroup;
+			children = (
+				634B85D01AC71D0B006D0857 /* blackjack_hands.h */,
+				634B85CF1AC71D0B006D0857 /* blackjack_hands.c */,
+			);
+			name = hands;
+			sourceTree = "<group>";
+		};
+		634B85CB1AC65943006D0857 /* Blackjack */ = {
+			isa = PBXGroup;
+			children = (
+				634B85D61AC73E57006D0857 /* blackjack_globals.h */,
+				634B85CE1AC6F79E006D0857 /* blackjack_structs.h */,
+				634B85CA1AC624E3006D0857 /* hands */,
+				634B85D21AC73810006D0857 /* players */,
+				634B85ED1AC75C20006D0857 /* table */,
+				634B85F21AC763F6006D0857 /* blackjack.h */,
+				634B85F11AC763F6006D0857 /* blackjack.c */,
+				634B85D81AC743DF006D0857 /* blackjack_test.h */,
+				634B85D71AC743DF006D0857 /* blackjack_test.c */,
+			);
+			name = Blackjack;
+			sourceTree = "<group>";
+		};
+		634B85D21AC73810006D0857 /* players */ = {
+			isa = PBXGroup;
+			children = (
+				634B85D41AC73832006D0857 /* blackjack_players.h */,
+				634B85D31AC73832006D0857 /* blackjack_players.c */,
+			);
+			name = players;
+			sourceTree = "<group>";
+		};
+		634B85ED1AC75C20006D0857 /* table */ = {
+			isa = PBXGroup;
+			children = (
+				634B85EF1AC75C52006D0857 /* blackjack_table.h */,
+				634B85EE1AC75C52006D0857 /* blackjack_table.c */,
+			);
+			name = table;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		634B85A81ABB5B89006D0857 /* Console_Cards */ = {
+		634B85A81ABB5B89006D0857 /* Cards_Test */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 634B85B01ABB5B89006D0857 /* Build configuration list for PBXNativeTarget "Console_Cards" */;
+			buildConfigurationList = 634B85B01ABB5B89006D0857 /* Build configuration list for PBXNativeTarget "Cards_Test" */;
 			buildPhases = (
 				634B85A51ABB5B89006D0857 /* Sources */,
 				634B85A61ABB5B89006D0857 /* Frameworks */,
@@ -77,10 +229,61 @@
 			);
 			dependencies = (
 			);
-			name = Console_Cards;
+			name = Cards_Test;
 			productName = Console_Cards;
-			productReference = 634B85A91ABB5B89006D0857 /* Console_Cards */;
+			productReference = 634B85A91ABB5B89006D0857 /* Cards_Test */;
 			productType = "com.apple.product-type.tool";
+		};
+		634B85DD1AC74638006D0857 /* blackjack_test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 634B85E21AC74638006D0857 /* Build configuration list for PBXNativeTarget "blackjack_test" */;
+			buildPhases = (
+				634B85DA1AC74638006D0857 /* Sources */,
+				634B85DB1AC74638006D0857 /* Frameworks */,
+				634B85DC1AC74638006D0857 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = blackjack_test;
+			productName = blackjack_test;
+			productReference = 634B85DE1AC74638006D0857 /* blackjack_test */;
+			productType = "com.apple.product-type.tool";
+		};
+		63C5E2CE1CA0CB9C006AD679 /* cards_test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63C5E2D71CA0CB9C006AD679 /* Build configuration list for PBXNativeTarget "cards_test" */;
+			buildPhases = (
+				63C5E2CB1CA0CB9C006AD679 /* Sources */,
+				63C5E2CC1CA0CB9C006AD679 /* Frameworks */,
+				63C5E2CD1CA0CB9C006AD679 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = cards_test;
+			productName = cards_test;
+			productReference = 63C5E2CF1CA0CB9C006AD679 /* cards_test.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		63C5E2DB1CA0D00A006AD679 /* aces */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63C5E2E21CA0D00A006AD679 /* Build configuration list for PBXNativeTarget "aces" */;
+			buildPhases = (
+				63C5E2D81CA0D00A006AD679 /* Sources */,
+				63C5E2D91CA0D00A006AD679 /* Frameworks */,
+				63C5E2DA1CA0D00A006AD679 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = aces;
+			productName = aces;
+			productReference = 63C5E2DC1CA0D00A006AD679 /* aces.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -93,6 +296,15 @@
 				TargetAttributes = {
 					634B85A81ABB5B89006D0857 = {
 						CreatedOnToolsVersion = 6.1.1;
+					};
+					634B85DD1AC74638006D0857 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					63C5E2CE1CA0CB9C006AD679 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+					63C5E2DB1CA0D00A006AD679 = {
+						CreatedOnToolsVersion = 6.2;
 					};
 				};
 			};
@@ -108,17 +320,71 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				634B85A81ABB5B89006D0857 /* Console_Cards */,
+				634B85A81ABB5B89006D0857 /* Cards_Test */,
+				634B85DD1AC74638006D0857 /* blackjack_test */,
+				63C5E2CE1CA0CB9C006AD679 /* cards_test */,
+				63C5E2DB1CA0D00A006AD679 /* aces */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		63C5E2CD1CA0CB9C006AD679 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63C5E2DA1CA0D00A006AD679 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		634B85A51ABB5B89006D0857 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				634B85AD1ABB5B89006D0857 /* main.c in Sources */,
+				634B85C01AC01312006D0857 /* cards_suits.c in Sources */,
+				634B85B91ABB5C5F006D0857 /* cards.c in Sources */,
+				634B85C91AC3C295006D0857 /* decks.c in Sources */,
+				634B85BD1ABFA798006D0857 /* cards_test.c in Sources */,
+				634B85C41AC01556006D0857 /* cards_values.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		634B85DA1AC74638006D0857 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				634B85E51AC7466D006D0857 /* cards_values.c in Sources */,
+				634B85EC1AC74886006D0857 /* cards_suits.c in Sources */,
+				634B85E71AC74680006D0857 /* cards.c in Sources */,
+				634B85E81AC74686006D0857 /* decks.c in Sources */,
+				634B85E91AC746A6006D0857 /* blackjack_hands.c in Sources */,
+				634B85F31AC763F6006D0857 /* blackjack.c in Sources */,
+				634B85EB1AC746D4006D0857 /* blackjack_players.c in Sources */,
+				634B85EA1AC746B8006D0857 /* blackjack_test.c in Sources */,
+				634B85F01AC75C52006D0857 /* blackjack_table.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63C5E2CB1CA0CB9C006AD679 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63C5E2D81CA0D00A006AD679 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,6 +479,90 @@
 			};
 			name = Release;
 		};
+		634B85E31AC74638006D0857 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		634B85E41AC74638006D0857 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		63C5E2D51CA0CB9C006AD679 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = cards_test/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		63C5E2D61CA0CB9C006AD679 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = cards_test/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		63C5E2E31CA0D00A006AD679 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = aces/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		63C5E2E41CA0D00A006AD679 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = aces/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -225,13 +575,41 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		634B85B01ABB5B89006D0857 /* Build configuration list for PBXNativeTarget "Console_Cards" */ = {
+		634B85B01ABB5B89006D0857 /* Build configuration list for PBXNativeTarget "Cards_Test" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				634B85B11ABB5B89006D0857 /* Debug */,
 				634B85B21ABB5B89006D0857 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		634B85E21AC74638006D0857 /* Build configuration list for PBXNativeTarget "blackjack_test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				634B85E31AC74638006D0857 /* Debug */,
+				634B85E41AC74638006D0857 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63C5E2D71CA0CB9C006AD679 /* Build configuration list for PBXNativeTarget "cards_test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63C5E2D51CA0CB9C006AD679 /* Debug */,
+				63C5E2D61CA0CB9C006AD679 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63C5E2E21CA0D00A006AD679 /* Build configuration list for PBXNativeTarget "aces" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63C5E2E31CA0D00A006AD679 /* Debug */,
+				63C5E2E41CA0D00A006AD679 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
