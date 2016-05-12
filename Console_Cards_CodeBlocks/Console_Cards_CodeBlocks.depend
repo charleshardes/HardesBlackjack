@@ -177,3 +177,177 @@
 	"cards.h"
 	"decks.h"
 
+1462924103 source:c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\blackjack.c
+	<unistd.h>
+	<windows.h>
+	<stdlib.h>
+	<stdio.h>
+	<assert.h>
+	<string.h>
+	<unistd.h>
+	"cards_globals.h"
+	"cards_structs.h"
+	"cards_suits.h"
+	"cards_values.h"
+	"cards.h"
+	"decks.h"
+	"cards_test.h"
+	"blackjack_globals.h"
+	"blackjack_structs.h"
+	"blackjack_hands.h"
+	"blackjack_players.h"
+	"blackjack_table.h"
+	"blackjack.h"
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\cards_globals.h
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\cards_structs.h
+	"cards_globals.h"
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\cards_suits.h
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\cards_values.h
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\cards.h
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\decks.h
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\cards_test.h
+	<stdio.h>
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\blackjack_globals.h
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\blackjack_structs.h
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\blackjack_hands.h
+	<stdio.h>
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\blackjack_players.h
+	<stdio.h>
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\blackjack_table.h
+	<stdio.h>
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\blackjack.h
+	<stdio.h>
+
+1462922798 source:c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\blackjack_hands.c
+	<stdlib.h>
+	<stdio.h>
+	<assert.h>
+	<string.h>
+	"cards_globals.h"
+	"cards_structs.h"
+	"cards_suits.h"
+	"cards_values.h"
+	"cards.h"
+	"decks.h"
+	"cards_test.h"
+	"blackjack_globals.h"
+	"blackjack_structs.h"
+	"blackjack_hands.h"
+
+1462922798 source:c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\blackjack_players.c
+	<stdlib.h>
+	<stdio.h>
+	<assert.h>
+	<string.h>
+	"cards_globals.h"
+	"cards_structs.h"
+	"cards_suits.h"
+	"cards_values.h"
+	"cards.h"
+	"decks.h"
+	"cards_test.h"
+	"blackjack_globals.h"
+	"blackjack_structs.h"
+	"blackjack_hands.h"
+	"blackjack_players.h"
+
+1462922798 source:c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\blackjack_table.c
+	<stdlib.h>
+	<stdio.h>
+	<assert.h>
+	<string.h>
+	<math.h>
+	"cards_globals.h"
+	"cards_structs.h"
+	"cards_suits.h"
+	"cards_values.h"
+	"cards.h"
+	"decks.h"
+	"cards_test.h"
+	"blackjack_globals.h"
+	"blackjack_structs.h"
+	"blackjack_hands.h"
+	"blackjack_players.h"
+	"blackjack_table.h"
+	"blackjack.h"
+
+1462922798 source:c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\blackjack_test.c
+	<stdlib.h>
+	<stdio.h>
+	<assert.h>
+	<string.h>
+	"cards_globals.h"
+	"cards_structs.h"
+	"cards_suits.h"
+	"cards_values.h"
+	"cards.h"
+	"decks.h"
+	"cards_test.h"
+	"blackjack_globals.h"
+	"blackjack_structs.h"
+	"blackjack_hands.h"
+	"blackjack_players.h"
+	"blackjack_table.h"
+	"blackjack.h"
+	"blackjack_test.h"
+
+1462922798 c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\blackjack_test.h
+	<stdio.h>
+
+1462922798 source:c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\cards.c
+	<stdlib.h>
+	<stdio.h>
+	<assert.h>
+	<string.h>
+	"cards_globals.h"
+	"cards_structs.h"
+	"cards_suits.h"
+	"cards_values.h"
+	"cards.h"
+
+1462922798 source:c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\cards_suits.c
+	<stdlib.h>
+	<stdio.h>
+	<assert.h>
+	<string.h>
+	"cards_globals.h"
+	"cards_structs.h"
+	"cards.h"
+
+1462922798 source:c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\cards_values.c
+	<stdlib.h>
+	<stdio.h>
+	<assert.h>
+	<string.h>
+	"cards_globals.h"
+	"cards_structs.h"
+	"cards_suits.h"
+	"cards.h"
+	"cards_values.h"
+
+1462922798 source:c:\users\charles\documents\github\hardesblackjack\console_cards_codeblocks\decks.c
+	<stdlib.h>
+	<stdio.h>
+	<assert.h>
+	<string.h>
+	<time.h>
+	"cards_globals.h"
+	"cards_structs.h"
+	"cards_suits.h"
+	"cards_values.h"
+	"cards.h"
+	"decks.h"
+
