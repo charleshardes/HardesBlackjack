@@ -65,17 +65,18 @@ void _initCard(card *c, cardValue *cv, cardSuit *s){
     c->value = (cardValue *)malloc(sizeof(cardValue *));
     c->value = cv;
     
-    /*concatenate strings to form card name i.e. "Three of Hearts"*/http://stackoverflow.com/questions/1114741/how-to-convert-int-to-char-c
-    strcpy(value, c->value->name);
-    strcpy(suits, c->suit->name);
-    strcat(value, of);
-    strcat(value, suits);
-    strcpy(c->name, value);
+    /*concatenate strings to form card name i.e. "Three of Hearts" stackoverflow.com/questions/1114741/how-to-convert-int-to-char-c */
+    strcpy_s(value, sizeof value, c->value->name);
+    strcpy_s(suits, sizeof suits, c->suit->name);
+    strcat_s(value, sizeof value, of);
+    strcat_s(value, sizeof value, suits);
+    strcpy_s(c->name, sizeof c->name, value);
     
     /*set the two characters of abbr to value abbreviation, cardSuit abbreviation
      i.e. 9d = "Nine of Diamonds"*/
     c->abbr[0] = cv->abbr;
     c->abbr[1] = s->abbr;
+	c->abbr[2] = '\0';
     
     c->shown = 0;
     c->wildcard = 0;
@@ -83,22 +84,24 @@ void _initCard(card *c, cardValue *cv, cardSuit *s){
 
 /*algorithm for irregular card creation; may need adjusting in certain cases
  -currently set to create Jokers*/
+
+#if NO_OF_EXTRA_CARDS != 0
 void makeExtraCards(card *c[]) {
     
     int i;
     for (i = 0; i < NO_OF_EXTRA_CARDS; i++) {
         c[i] = (card *)malloc(sizeof(card));
-        strcpy(c[i]->name, extraCards[i]);
+        strcpy_s(c[i]->name, extraCards[i]);
         c[i]->abbr[0] = extraCards[i][0];
         c[i]->abbr[1] = '\0';
         c[i]->suit = (cardSuit *)malloc(sizeof(cardSuit));
-        strcpy(c[i]->suit->name, "");
+        strcpy_s(c[i]->suit->name, "");
         c[i]->suit->abbr = '\0';
         c[i]->suit->trump = 0;
         c[i]->suit->weight = 0;
         c[i]->value = (cardValue *)malloc(sizeof(cardValue));
         c[i]->value->abbr = '\0';
-        strcpy(c[i]->value->name, "");
+        strcpy_s(c[i]->value->name, "");
         c[i]->value->weight = 0;
         c[i]->wildcard = 1;
     }
@@ -113,6 +116,7 @@ void _deleteExtraCards() {
         _deleteCard(extraCardsArr[i]);
     }
 }
+#endif
 
 /*
  Print a string representing the instance of struct card
@@ -125,7 +129,7 @@ void printCard(card *c) {
     
     char s[25];
     assert(c);
-    strcpy(s, c->name);
+    strcpy_s(s, sizeof s, c->name);
     printf("%s\tWeight: %d\t%s\n", c->abbr, c->value->weight, c->name);
 }
 

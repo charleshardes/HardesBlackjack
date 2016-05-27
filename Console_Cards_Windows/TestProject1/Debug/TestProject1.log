@@ -1,0 +1,55 @@
+﻿Build started 5/24/2016 5:12:02 PM.
+     1>Project "C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\TestProject1\TestProject1.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\CardsTest.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "Debug\CardsTest.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TC /wd4958 /wd4956 /wd4957 /wd4959 /analyze- /errorReport:prompt ..\blackjack.c ..\blackjack_hands.c ..\blackjack_players.c ..\blackjack_table.c ..\cards.c ..\cards_suits.c ..\cards_test.c ..\cards_values.c ..\decks.c
+         decks.c
+         cards_values.c
+         cards_test.c
+         cards_suits.c
+         cards.c
+         blackjack_table.c
+         blackjack_players.c
+         blackjack_hands.c
+         blackjack.c
+         Generating Code...
+       ManifestResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\DefaultTest.exe.embed.manifest.res" Debug\DefaultTest_manifest.rc 
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\DefaultTest.exe" /INCREMENTAL /NOLOGO /MANIFEST /ManifestFile:"Debug\DefaultTest.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\DefaultTest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\DefaultTest.lib" /MACHINE:X86 Debug\DefaultTest.exe.embed.manifest.res
+         Debug\blackjack.obj
+         Debug\blackjack_hands.obj
+         Debug\blackjack_players.obj
+         Debug\blackjack_table.obj
+         Debug\cards.obj
+         Debug\cards_suits.obj
+         Debug\cards_test.obj
+         Debug\cards_values.obj
+         Debug\decks.obj
+       Manifest:
+         Deleting file "Debug\DefaultTest.exe.embed.manifest".
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\DefaultTest.exe.embed.manifest" /manifest Debug\DefaultTest.exe.intermediate.manifest
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\DefaultTest.exe.embed.manifest.res" Debug\DefaultTest_manifest.rc 
+       LinkEmbedManifest:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\DefaultTest.exe" /INCREMENTAL /NOLOGO /MANIFEST /ManifestFile:"Debug\DefaultTest.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\DefaultTest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\DefaultTest.lib" /MACHINE:X86 Debug\DefaultTest.exe.embed.manifest.res
+         Debug\blackjack.obj
+         Debug\blackjack_hands.obj
+         Debug\blackjack_players.obj
+         Debug\blackjack_table.obj
+         Debug\cards.obj
+         Debug\cards_suits.obj
+         Debug\cards_test.obj
+         Debug\cards_values.obj
+         Debug\decks.obj
+         TestProject1.vcxproj -> C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\DefaultTest.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\CardsTest.unsuccessfulbuild".
+         Touching "Debug\CardsTest.lastbuildstate".
+     1>Done Building Project "C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\TestProject1\TestProject1.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.92

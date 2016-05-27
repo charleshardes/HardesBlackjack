@@ -41,9 +41,9 @@ void _initTable(table *t, int NO_OF_PLAYERS, int NO_OF_COMPS) {
     for (i = 0; i< NO_OF_COMPS; i++) {
         playerNo[0] = (char)(((int)'0') + i + 1);/*convert int to char*/
         playerNo[1] = '\0';/*make string from char by adding endline character*/
-        strcpy(playerNoPtr, playerNo);
-        strcpy(comp, "Computer");
-        strcat(comp, playerNoPtr);
+        strcpy_s(playerNoPtr, sizeof playerNoPtr, playerNo);
+        strcpy_s(comp, sizeof comp, "Computer");
+        strcat_s(comp, sizeof comp, playerNoPtr);
         t->players[j] = createPlayer(comp, (j +1), 0, 1);
         j++;
     }
@@ -58,6 +58,10 @@ void _initTable(table *t, int NO_OF_PLAYERS, int NO_OF_COMPS) {
     }
     t->discardPile->cards_left = 0;
     t->discardPile->top = NULL;
+
+	t->currPlayer = 0;
+    t->buffer = 0;
+    t->margin = 0;
 }
 
 table *createTable(int NO_OF_PLAYERS, int NO_OF_COMPS) {
@@ -116,8 +120,8 @@ void dealCard(table *t, deck *d, player *p, int shown) {
 /*discards all hands to discard pile for new round*/
 void clearTable(table *t) {
     
-    assert(t);
     int i;
+	assert(t);
     
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
         discardHand(t, t->players[i]->playerHand);
@@ -170,13 +174,13 @@ void displayTable(table *t, int dealt) {
     newlines(6);
     
     /*Player name line display */
-    line1Tabs = 12 - (t->NO_OF_PLAYERS * 2.5);
+    line1Tabs = (int) (12 - (t->NO_OF_PLAYERS * 2.5));
     tabs(line1Tabs);
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
         displayPlayer(t->players[i]);
         
         /*algorithm to print the number of spaces to next player - characters used in previous player*/
-        spaces(30 - strlen(t->players[i]->name) - (log10((double)t->players[i]->chips)  + 1));
+        spaces(30 - strlen(t->players[i]->name) - (((int) log10((double)t->players[i]->chips))  + 1));
     }
     newlines(1);
     
@@ -221,7 +225,7 @@ void displayTable(table *t, int dealt) {
             printf("Enter bet amount: ");
             /*Error handling loop*/
             while (1) {
-                scanf(" %d", &bet);
+                scanf_s(" %d", &bet);
                 if ((bet >= 0) && (bet <= 1000)) break;/*break loop if in range*/
                 /*Error message*/
                 printf("\nERROR: Bet must be between $1 - $1000\nEnter bet amount: ");

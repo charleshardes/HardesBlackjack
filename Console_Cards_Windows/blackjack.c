@@ -9,7 +9,8 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
-#include <unistd.h>
+//#include <unistd.h>
+#include <Windows.h>
 #include "cards_globals.h"
 #include "cards_structs.h"
 #include "cards_suits.h"
@@ -54,21 +55,19 @@ void tabs(int t) {
 
 int getPlayers() {
     
-    static const int BUFFERSIZE = 10;
-    
     int i, noPlayers;
     char buffer[BUFFERSIZE];
     
     do {
         printf("Enter a number of human players between 0 - 4\n");
-        scanf("%d", &noPlayers);
+        scanf_s("%d", &noPlayers);
     } while ((noPlayers > 4) || (noPlayers < 0));
     
     for (i = 0; i < noPlayers; i++) {
         printf("Enter player %d's name:\n", (i + 1));
-        scanf(" %s", buffer);
+        scanf_s(" %63s", buffer, 64);
         /*printf("string entered: %s\n", buffer);*/newlines(1);
-        strcpy(playerArr[i], buffer);
+        strcpy_s(playerArr[i], sizeof playerArr[i], buffer);
     }
     return noPlayers;
 }
@@ -80,7 +79,7 @@ int getComps(int maxComps) {
     if (maxComps != 0) {
         do {
             printf("Enter number of computer players between 0 - %d\n", maxComps);
-            scanf(" %d", &no_Comps);
+            scanf_s(" %d", &no_Comps);
         }while ((no_Comps < 0) || (no_Comps > maxComps));
     }
     return no_Comps;
@@ -89,10 +88,10 @@ int getComps(int maxComps) {
 
 
 void dealStartingHands(table *t, deck *d) {
-    
+
+    int i;    
     assert((t) && (d));
-    int i;
-    
+
     dealToPlayers(t, d);
     dealCard(t, d, t->dealer, 0);
     dealToPlayers(t, d);
@@ -133,7 +132,7 @@ void dealerTurn(table *t, deck *d) {
     assert((t) && (d));
     
     showCard(t->dealer->playerHand->cards[0]);
-    sleep(1);
+    Sleep(1000);
     displayTable(t, 1);
     
     /*Condition for soft 17*/
@@ -143,14 +142,14 @@ void dealerTurn(table *t, deck *d) {
          isHiAce(t->dealer->playerHand->cards[1]))) {
             dealCard(t, d, t->dealer, 1);
             assessHand(t->dealer->playerHand);
-            sleep(1);
+            Sleep(1000);
             displayTable(t, 1);
     }
     
     while (t->dealer->playerHand->score < 17) {
         dealCard(t, d, t->dealer, 1);
         assessHand(t->dealer->playerHand);
-        sleep(1);
+        Sleep(1000);
         displayTable(t, 1);
     }
 }

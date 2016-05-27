@@ -73,7 +73,7 @@ static const int weights[NO_OF_CARD_VALUES] =
     11
 };
 
-
+#if NO_EXTRA_CARDS != 0
 /*Enter any irregular cards here i.e. Jokers*/
 static const char *extraCards[NO_OF_EXTRA_CARDS] =
 
@@ -81,6 +81,7 @@ static const char *extraCards[NO_OF_EXTRA_CARDS] =
     /*"J1",
      "J2"*/
 };
+#endif
 
 
 #endif

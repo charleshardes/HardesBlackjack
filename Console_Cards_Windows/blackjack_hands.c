@@ -22,6 +22,7 @@
 
 void _initHand(hand *h) {
     
+	int i;
     assert(h);
     
     h->starting = NO_CARDS_START;
@@ -39,6 +40,9 @@ void _initHand(hand *h) {
     h->hasSplit = 0;
     h->hasInsurance = 0;
     h->insuranceAmt = 0;
+	for (i = 0; i < MAX_CARDS_IN_HAND; i++) {
+		h->cards[i] = NULL;
+	}
 }
 
 hand *createHand() {
@@ -150,9 +154,9 @@ void displayHand(hand *h, player *p) {
  card pointers on the table to the discard pile*/
 void discardHand(table *t, hand *h) {
     
-    assert(h);
     int i, cardCount;
-    
+    assert(h);
+
     /*If function is called on an empty hand, should not produce an error; just do nothing and return*/
     if (!h->cardCount) return;
     

@@ -33,7 +33,7 @@ struct card{
     cardSuit *suit;
     cardValue *value;
     char name[25];
-    char abbr[2];
+    char abbr[3];
     int shown;
     int wildcard;
 };
