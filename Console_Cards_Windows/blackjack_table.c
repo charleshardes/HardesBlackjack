@@ -162,10 +162,10 @@ void displayTable(table *t, int dealt) {
     
     /*Dealer display line*/
     newlines(5);
-    tabs(13);
+    tabs(9);
     displayPlayer(t->dealer);
     newlines(2);
-    tabs(13);
+    tabs(9);
     /*Condition that hand has already been dealt*/
     if (dealt) {
         displayHand(t->dealer->playerHand, t->dealer);
@@ -187,7 +187,7 @@ void displayTable(table *t, int dealt) {
     /*Current bet display line*/
     tabs(line1Tabs);
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
-        printf("Bet:  \t$%d", t->players[i]->bet);
+        printf("Bet:    $%d", t->players[i]->bet);
         
         /*number of spaces to next player algorithm*/
         if (t->players[i]->bet > 0) {

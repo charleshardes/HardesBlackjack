@@ -50,9 +50,11 @@ int main(int argc, const char * argv[]) {
             newPlayerHand(firstTable->players[i]);
         }
         newPlayerHand(firstTable->dealer);
+
         displayTable(firstTable, 0);
         
         dealStartingHands(firstTable, BJdeck);
+
         displayTable(firstTable, 1);
         
         for (i = 0; i < no_Total_Players; i++) {
