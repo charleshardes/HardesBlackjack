@@ -54,6 +54,7 @@ struct table {
     int currPlayer;
     int buffer;
     int margin;
+	int handsAreDealt;
 };
 
 #endif

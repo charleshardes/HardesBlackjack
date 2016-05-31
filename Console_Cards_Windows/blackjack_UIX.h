@@ -21,8 +21,20 @@ void handFeedBack_Display_ALL(table *t);
 
 void CL_handFeedBack_Display(table *t, int player);
 
+void displayDealer(table *t);
+
+void displayPlayer(player *p);
+
+void displayPlayerHand(player *p);
+
 int continueGamePrompt(table *t);
 
 void getBets(table *t);
+
+void displayPlayers(table *t);
+
+void displayBet(int bet);
+
+void displayAllBets(table *t);
 
 #endif

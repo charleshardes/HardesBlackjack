@@ -62,7 +62,8 @@ void _initTable(table *t, int NO_OF_PLAYERS, int NO_OF_COMPS) {
 
 	t->currPlayer = 0;
     t->buffer = 0;
-    t->margin = 0;
+    t->margin = (int) (12 - (t->NO_OF_PLAYERS * 2.5));
+	t->handsAreDealt = 0;
 }
 
 table *createTable(int NO_OF_PLAYERS, int NO_OF_COMPS) {
@@ -128,50 +129,21 @@ void dealToPlayers(table *t, deck *d) {
     
 void displayTable(table *t, int stage) {
     
-    int i, line1Tabs;
+    int i;
     assert(t);
+   
+	displayDealer(t);
     
-    /*Dealer display line*/
-    newlines(5);
-    tabs(9);
-    displayPlayer(t->dealer);
-    newlines(2);
-    tabs(9);
-    /*Condition that hand has already been dealt*/
-    if (stage) {
-        displayHand(t->dealer->playerHand, t->dealer);
-    }
-    else newlines(1);
-    newlines(6);
-    
-    /*Player name line display */
-    line1Tabs = (int) (12 - (t->NO_OF_PLAYERS * 2.5));
-    tabs(line1Tabs);
-    for (i = 0; i < t->NO_OF_PLAYERS; i++) {
-        displayPlayer(t->players[i]);
-        
-        /*algorithm to print the number of spaces to next player - characters used in previous player*/
-        spaces(30 - strlen(t->players[i]->name) - (((int) log10((double)t->players[i]->chips))  + 1));
-    }
-    newlines(1);
+    /*Player names, dollar amount line display */
+	displayPlayers(t);
     
     /*Current bet display line*/
-    tabs(line1Tabs);
-    for (i = 0; i < t->NO_OF_PLAYERS; i++) {
-        printf("Bet:    $%d", t->players[i]->bet);
-        
-        /*number of spaces to next player algorithm*/
-        if (t->players[i]->bet > 0) {
-            spaces(27 - ((int)log10((double)t->players[i]->bet)  + 1));
-        }
-        else spaces(26);
-    }
-    newlines(1);
-    
-    /*Player hand or bet prompt display line:
+	displayAllBets(t);
+
+    /*Player hand display line:
      Displays the player's hand if already dealt one or a prompt to enter the bet amount
      if a hand not yet dealt to player.*/
-    tabs(line1Tabs);
+	tabs(t->margin);
     i = 0;
     while (1) {/*All conditions eventually return or break loop*/
         
@@ -186,15 +158,7 @@ void displayTable(table *t, int stage) {
             }/*condition for last player; exit loop*/
             else break;
         }
-        /* The bet prompt line:
-         Prints a prompt for player to enter the desired bet amount. Once entered, 
-         displayTable() is called recursively to display the amount entered for the 
-         player and to move on to next player.*/
-		else {
-			getBets(t);
-			break;
-		}
+		else break;
     }
-
 }
 

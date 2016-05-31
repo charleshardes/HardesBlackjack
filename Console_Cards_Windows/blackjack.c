@@ -112,7 +112,7 @@ void dealStartingHands(table *t, deck *d) {
     }
     assessHand(t->dealer->playerHand, 0);
     
-    //displayTable(t);
+	t->handsAreDealt= 1;
 }
 
 void playerTurn(table *t, player *p, deck *d) {
@@ -138,7 +138,6 @@ void playerTurn(table *t, player *p, deck *d) {
 
 		handFeedBack_Display_ALL(t);
     }
-	
 }
 
 void dealerTurn(table *t, deck *d) {

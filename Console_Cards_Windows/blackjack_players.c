@@ -51,28 +51,3 @@ void _deletePlayer(player *p) {
     free(p);
 }
 
-/*THINK THIS IS REDUNDANT...DELETE IF COMPILES/RUNS
-void newPlayerHand(player *p) {
-    assert(p);
-    setNewHand(p->playerHand);
-}
-*/
-
-void displayPlayer(player *p) {
-    
-    assert(p);
-    
-    if (p->dealer == 1) {
-        printf("%s", p->name);
-    }
-    else {
-        printf("%s     $%d", p->name, p->chips);
-    }
-}
-
-void displayPlayerHand(player *p) {
-    
-    assert(p);
-    if (p->dealer == 1) {return;}
-    displayHand(p->playerHand, p);
-}

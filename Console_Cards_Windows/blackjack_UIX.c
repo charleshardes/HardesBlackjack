@@ -26,10 +26,6 @@
 #include "blackjack_run.h"
 #include "blackjack_UIX.h"
 
-
-
-
-
 void spaces(int s) {
     
     int i;
@@ -156,5 +152,78 @@ void getBets(table *t) {
             
     /*Recusively called for players 2 and higher*/
     displayTable(t, 0);
+
+	if (t->currPlayer == t->NO_OF_PLAYERS) {return;}
+
+	getBets(t);
     return;/*extra recursive record exited*/
+}
+
+void displayDealer(table *t) {
+
+	/*Dealer display line*/
+    newlines(5);
+    tabs(9);
+    displayPlayer(t->dealer);
+    newlines(2);
+    tabs(9);
+    /*Condition that hand has already been dealt*/
+	if (t->handsAreDealt) {
+        displayHand(t->dealer->playerHand, t->dealer);
+    }
+    else newlines(1);
+    newlines(6);
+}
+
+void displayPlayer(player *p) {
+    
+    assert(p);
+    
+    if (p->dealer == 1) {printf("%s", p->name);}
+    else {printf("%s     $%d", p->name, p->chips);}
+
+	/*algorithm to print the number of spaces to next player - characters used in previous player*/
+    spaces(30 - strlen(p->name) - (((int) log10((double)p->chips))  + 1));
+}
+
+void displayPlayerHand(player *p) {
+    
+    assert(p);
+    if (p->dealer == 1) {return;}
+    displayHand(p->playerHand, p);
+}
+
+void displayPlayers(table *t) {
+	
+	int i;
+	assert(t);
+
+	tabs(t->margin);
+    for (i = 0; i < t->NO_OF_PLAYERS; i++) {
+        displayPlayer(t->players[i]);
+    }
+    newlines(1);
+}
+
+void displayBet(int bet) {
+
+	printf("Bet:    $%d", bet);
+        
+    /*number of spaces to next player algorithm*/
+    if (bet > 0) {
+        spaces(27 - ((int)log10((double)bet)  + 1));
+    }
+    else spaces(26);
+}
+
+void displayAllBets(table *t) {
+
+	int i;
+	assert(t);
+
+	tabs(t->margin);
+    for (i = 0; i < t->NO_OF_PLAYERS; i++) {
+		displayBet(t->players[i]->bet);
+    }
+    newlines(1);
 }
