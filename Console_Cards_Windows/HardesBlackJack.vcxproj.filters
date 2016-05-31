@@ -27,9 +27,6 @@
     <ClCompile Include="blackjack_table.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="blackjack_test.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="cards.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -40,6 +37,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="decks.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="blackjack_UIX.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="blackjack_run.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,9 +68,6 @@
     <ClInclude Include="blackjack_table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="blackjack_test.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="cards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -81,6 +81,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cards_values.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_UIX.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_run.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

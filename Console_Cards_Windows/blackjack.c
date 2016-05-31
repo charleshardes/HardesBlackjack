@@ -23,34 +23,18 @@
 #include "blackjack_hands.h"
 #include "blackjack_players.h"
 #include "blackjack_table.h"
+#include "blackjack_UIX.h"
 #include "blackjack.h"
 
-void spaces(int s) {
-    
-    int i;
-    for(i = 0; i < s; i++) {
-        printf(" ");
-    }
-}
+table *setTable() {
 
-void newlines(int n) {
-    
-    int i;
-    assert(n >= 0);
-    
-    for (i = 0; i < n; i++) {
-        printf("\n");
-    }
-}
+	int no_Comps, no_Human_Players, no_Total_Players;
 
-void tabs(int t) {
-    
-    int i;
-    assert(t >= 0);
-    
-    for (i = 0; i < t; i++) {
-        printf("\t");
-    }
+    no_Human_Players = getPlayers();
+    no_Comps = getComps(4 - no_Human_Players);
+    no_Total_Players = no_Human_Players + no_Comps;
+
+	return createTable(no_Total_Players, no_Comps);
 }
 
 int getPlayers() {
@@ -85,7 +69,33 @@ int getComps(int maxComps) {
     return no_Comps;
 }
 
-
+void dealCard(table *t, deck *d, player *p, int shown) {
+    
+    card *dealt, **curr;
+    int i = 0;
+    assert((d) && (p));
+    assert(!isEmpty(d));
+    
+    dealt = _popCard(d);/*get top card from deck, assign to variable dealt*/
+    dealt->shown = shown;
+    curr = p->playerHand->cards;
+    
+    /*cycle through cards in hand to find last one, preparing to add an additional card in first empty slot*/
+    while (curr[i] != NULL) {
+        i++;
+    }
+    /*assigns (deals) popped card to player's hand*/
+    curr[i] = dealt;
+    if ((strcmp(dealt->value->name, "Ace") == 0)) {p->playerHand->hiAces++;}/*if ace, increment ace counter*/
+    p->playerHand->cardCount++;
+    
+    /*If card dealt was last in deck, put all discarded cards back in deck and shuffle*/
+    if (isEmpty(d)) {
+        pileToDeck(t, d);
+        shuffle(d);
+        shuffle(d);
+    }
+}
 
 void dealStartingHands(table *t, deck *d) {
 
@@ -98,9 +108,9 @@ void dealStartingHands(table *t, deck *d) {
     dealCard(t, d, t->dealer, 1);
     
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
-        assessHand(t->players[i]->playerHand);
+        assessHand(t->players[i]->playerHand, 0);
     }
-    assessHand(t->dealer->playerHand);
+    assessHand(t->dealer->playerHand, 0);
     
     //displayTable(t);
 }
@@ -116,15 +126,19 @@ void playerTurn(table *t, player *p, deck *d) {
         newlines(1);
         tabs(t->margin);
         spaces(t->buffer);
-        ans = getchar();
+		scanf_s(" %c", &ans);
         
-        if (ans == 'h') {
-            dealCard(t, d, p, 1);
-        }
-        assessHand(p->playerHand);
-        displayTable(t, 1);
+        if (ans == 'h') {dealCard(t, d, p, 1);}
 
+        assessHand(p->playerHand, (ans == 's' ? 1 : 0));
+
+		if (p->playerHand->hasEnded) {t->currPlayer++;}
+
+		displayTable(t, 1);
+
+		handFeedBack_Display_ALL(t);
     }
+	
 }
 
 void dealerTurn(table *t, deck *d) {
@@ -141,14 +155,14 @@ void dealerTurn(table *t, deck *d) {
         (isHiAce(t->dealer->playerHand->cards[0]) ||
          isHiAce(t->dealer->playerHand->cards[1]))) {
             dealCard(t, d, t->dealer, 1);
-            assessHand(t->dealer->playerHand);
+            assessHand(t->dealer->playerHand, 0);
             Sleep(1000);
             displayTable(t, 1);
     }
     
     while (t->dealer->playerHand->score < 17) {
         dealCard(t, d, t->dealer, 1);
-        assessHand(t->dealer->playerHand);
+        assessHand(t->dealer->playerHand, 0);
         Sleep(1000);
         displayTable(t, 1);
     }

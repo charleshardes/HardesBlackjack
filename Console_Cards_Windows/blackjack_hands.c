@@ -18,6 +18,7 @@
 #include "cards_test.h"
 #include "blackjack_globals.h"
 #include "blackjack_structs.h"
+#include "blackjack_players.h"
 #include "blackjack_hands.h"
 
 void _initHand(hand *h) {
@@ -40,6 +41,8 @@ void _initHand(hand *h) {
     h->hasSplit = 0;
     h->hasInsurance = 0;
     h->insuranceAmt = 0;
+	h->doubledDown = 0;
+	h->hasEnded = 0;
 	for (i = 0; i < MAX_CARDS_IN_HAND; i++) {
 		h->cards[i] = NULL;
 	}
@@ -61,6 +64,18 @@ void setNewHand(hand *h) {
     _initHand(h);
 }
 
+void setAllHands(table *t) {
+
+	int i;
+
+	/*create hand structs for each player*/
+	for (i = 0; i < (t->NO_OF_PLAYERS); i++) {
+		setNewHand(t->players[i]->playerHand);
+    }
+
+	/*create hand struct for dealer*/
+	setNewHand(t->dealer->playerHand);
+}
 
 void _deleteHand(hand *h) {
     assert(h);
@@ -94,7 +109,7 @@ int isBlackJack(hand *h) {
 }
  */
 
-void assessHand(hand *h) {
+void assessHand(hand *h, int stayed) {
     
     int sum, i;
     assert(h);
@@ -128,11 +143,15 @@ void assessHand(hand *h) {
             }
             setLoAce(h->cards[i]);
             h->hiAces--;
-            assessHand(h);/*RECURSION!*/
+            assessHand(h, stayed);/*RECURSION!*/
             return;
         }
         h->bust = 1;
     }
+
+	/*determine if the hand is now over*/
+	if ((stayed) || (h->hasBlackjack) || (h->bust)) {h->hasEnded = 1;}
+
     h->score = sum;
 }
 

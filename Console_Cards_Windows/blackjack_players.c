@@ -51,10 +51,12 @@ void _deletePlayer(player *p) {
     free(p);
 }
 
+/*THINK THIS IS REDUNDANT...DELETE IF COMPILES/RUNS
 void newPlayerHand(player *p) {
     assert(p);
     setNewHand(p->playerHand);
 }
+*/
 
 void displayPlayer(player *p) {
     

@@ -31,6 +31,8 @@ struct hand {
     hand *split;
     int hasInsurance;
     int insuranceAmt;
+	int doubledDown;
+	int hasEnded;
 };
 
 struct player {

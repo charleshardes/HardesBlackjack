@@ -17,13 +17,15 @@ hand *createHand();
 
 void setNewHand(hand *h);
 
+void setAllHands(table *t);
+
 void _deleteHand(hand *h);
 
 int isPair(hand *h);
 
 /*int isBlackJack(hand *h);*/
 
-void assessHand(hand *h);
+void assessHand(hand *h, int stayed);
 
 void displayHand(hand *h, player *p);
 

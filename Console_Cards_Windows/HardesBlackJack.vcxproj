@@ -131,7 +131,8 @@
     <ClCompile Include="blackjack_hands.c" />
     <ClCompile Include="blackjack_players.c" />
     <ClCompile Include="blackjack_table.c" />
-    <ClCompile Include="blackjack_test.c" />
+    <ClCompile Include="blackjack_run.c" />
+    <ClCompile Include="blackjack_UIX.c" />
     <ClCompile Include="cards.c" />
     <ClCompile Include="cards_suits.c" />
     <ClCompile Include="cards_values.c" />
@@ -144,7 +145,8 @@
     <ClInclude Include="blackjack_players.h" />
     <ClInclude Include="blackjack_structs.h" />
     <ClInclude Include="blackjack_table.h" />
-    <ClInclude Include="blackjack_test.h" />
+    <ClInclude Include="blackjack_run.h" />
+    <ClInclude Include="blackjack_UIX.h" />
     <ClInclude Include="cards.h" />
     <ClInclude Include="cards_globals.h" />
     <ClInclude Include="cards_structs.h" />

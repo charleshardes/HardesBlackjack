@@ -13,13 +13,11 @@
 
 char playerArr[4][10];
 
-void spaces(int s);
-
-void newlines(int n);
-
-void tabs(int t);
+table *setTable();
 
 int getPlayers();
+
+void dealCard(table *t, deck *d, player *p, int shown);
 
 void dealStartingHands(table *t, deck *d);
 

@@ -22,6 +22,7 @@
 #include "blackjack_hands.h"
 #include "blackjack_players.h"
 #include "blackjack_table.h"
+#include "blackjack_UIX.h"
 #include "blackjack.h"
 
 
@@ -87,36 +88,6 @@ void _deleteTable(table *t) {
     free(t);
 }
 
-
-void dealCard(table *t, deck *d, player *p, int shown) {
-    
-    card *dealt, **curr;
-    int i = 0;
-    assert((d) && (p));
-    assert(!isEmpty(d));
-    
-    dealt = _popCard(d);/*get top card from deck, assign to variable dealt*/
-    dealt->shown = shown;
-    curr = p->playerHand->cards;
-    
-    /*cycle through cards in hand to find last one, preparing to add an additional card in first empty slot*/
-    while (curr[i] != NULL) {
-        i++;
-    }
-    /*assigns (deals) popped card to player's hand*/
-    curr[i] = dealt;
-    if ((strcmp(dealt->value->name, "Ace") == 0)) {p->playerHand->hiAces++;}/*if ace, increment ace counter*/
-    p->playerHand->cardCount++;
-    
-    /*If card dealt was last in deck, put all discarded cards back in deck and shuffle*/
-    if (isEmpty(d)) {
-        pileToDeck(t, d);
-        shuffle(d);
-        shuffle(d);
-    }
-}
-
-
 /*discards all hands to discard pile for new round*/
 void clearTable(table *t) {
     
@@ -155,9 +126,9 @@ void dealToPlayers(table *t, deck *d) {
     }
 }
     
-void displayTable(table *t, int dealt) {
+void displayTable(table *t, int stage) {
     
-    int i, line1Tabs, promptBuffer, bet;
+    int i, line1Tabs;
     assert(t);
     
     /*Dealer display line*/
@@ -167,7 +138,7 @@ void displayTable(table *t, int dealt) {
     newlines(2);
     tabs(9);
     /*Condition that hand has already been dealt*/
-    if (dealt) {
+    if (stage) {
         displayHand(t->dealer->playerHand, t->dealer);
     }
     else newlines(1);
@@ -205,7 +176,7 @@ void displayTable(table *t, int dealt) {
     while (1) {/*All conditions eventually return or break loop*/
         
         /*Display player's hand and appropriate number of spaces to next player*/
-        if (dealt) {
+        if (stage) {
             displayPlayerHand(t->players[i]);
             /*Spaces algorithm*/
             if (i < t->NO_OF_PLAYERS - 1) {
@@ -219,68 +190,11 @@ void displayTable(table *t, int dealt) {
          Prints a prompt for player to enter the desired bet amount. Once entered, 
          displayTable() is called recursively to display the amount entered for the 
          player and to move on to next player.*/
-        else {
+		else {
+			getBets(t);
+			break;
+		}
+    }
 
-            spaces(36 * t->currPlayer);
-            printf("Enter bet amount: ");
-            /*Error handling loop*/
-            while (1) {
-                scanf_s(" %d", &bet);
-                if ((bet >= 0) && (bet <= 1000)) break;/*break loop if in range*/
-                /*Error message*/
-                printf("\nERROR: Bet must be between $1 - $1000\nEnter bet amount: ");
-            }
-            t->players[t->currPlayer]->bet = bet;
-            t->players[t->currPlayer]->chips -= bet;
-            
-            /*exit function, stop recursion if last player*/
-            if (t->currPlayer == t->NO_OF_PLAYERS - 1) {
-                t->currPlayer = 0;/*reset currPlayer for next line*/
-                return;
-            }
-            t->currPlayer++;
-            
-            /*Recusively called for players 2 and higher*/
-            displayTable(t, 0);
-            return;/*extra recursive record exited*/
-        }
-    }
-    
-    /*Alert line display:
-     Displays an alert message when player has won, gotten blackjack, busted, lost, pushed
-     (as determined by the assessHand() function) and prints appropriate number of spaces 
-     to next player as per algorithms below*/
-    newlines(1);
-    tabs(line1Tabs);
-    for (i = 0; i < t->NO_OF_PLAYERS; i++) {
-        if (t->players[i]->playerHand->bust) {
-            printf("BUSTED! ($%d-)", t->players[i]->bet);
-            spaces(23 - (int)log10((double)t->players[i]->bet));
-        }
-        else if (t->players[i]->playerHand->hasBlackjack) {
-            printf("BLACKJACK! ($%d+)", (int)((t->players[i]->bet * 3) / 2));
-            spaces(20 - (int)log10((double)((t->players[i]->bet * 3) / 2)));
-        }
-        else if (t->players[i]->playerHand->win) {
-            printf("WIN ($%d+)", t->players[i]->bet * 2);
-            spaces(27 - (int)log10((double)(t->players[i]->bet * 2)));
-        }
-        else if (t->players[i]->playerHand->lose) {
-            printf("LOSE ($%d-)", t->players[i]->bet);
-            spaces(26 - (int)log10((double)t->players[i]->bet));
-        }
-        else if (t->players[i]->playerHand->push) {
-            printf("PUSH ($0+)");
-            spaces(26);
-        }
-        else spaces(36);
-    }
-    newlines(1);
-    tabs(line1Tabs);
-    promptBuffer = 36 * t->currPlayer;
-    spaces(promptBuffer);
-    t->buffer = promptBuffer;
-    t->margin = line1Tabs;
-    
 }
 
