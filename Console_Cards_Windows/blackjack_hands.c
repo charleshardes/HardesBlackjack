@@ -20,6 +20,7 @@
 #include "blackjack_structs.h"
 #include "blackjack_players.h"
 #include "blackjack_hands.h"
+#include "blackjack_UIX.h"
 
 void _initHand(hand *h) {
     
@@ -75,6 +76,9 @@ void setAllHands(table *t) {
 
 	/*create hand struct for dealer*/
 	setNewHand(t->dealer->playerHand);
+
+	/*reset handsAreDealt attribute back to false*/
+	t->handsAreDealt = 0;
 }
 
 void _deleteHand(hand *h) {
@@ -97,17 +101,6 @@ int isPair(hand *h) {
     }
     return 0;
 }
-
-/*unnecessary function
-int isBlackJack(hand *h) {
-    assert(h);
-    if (((isHiAce(h->cards[0])) && (h->cards[1]->value->weight == 10)) ||
-         ((isHiAce(h->cards[1])) && (h->cards[0]->value->weight == 10))) {
-        return 1;
-    }
-    else return 0;
-}
- */
 
 void assessHand(hand *h, int stayed) {
     
@@ -157,15 +150,11 @@ void assessHand(hand *h, int stayed) {
 
 void displayHand(hand *h, player *p) {
     
-    int i, cardsInHand;
+    int i;
     assert(h);
     
-    cardsInHand = h->cardCount;
-    
-    for (i = 0; i < cardsInHand; i++) {
+	for (i = 0; i < h->cardCount; i++) {
         displayCard(h->cards[i]);
-        if (i == cardsInHand - 1) {break;}/*if last card, don't print a space*/
-        printf(" ");
     }
 }
 

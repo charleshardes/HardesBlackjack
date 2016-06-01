@@ -40,18 +40,17 @@ table *setTable() {
 int getPlayers() {
     
     int i, noPlayers;
-    char buffer[BUFFERSIZE];
     
     do {
-        printf("Enter a number of human players between 0 - 4\n");
-        scanf_s("%d", &noPlayers);
+		/*issue prompt and take input for number of human players*/
+		prompt_noHumanPlayers();
+		noPlayers = input_noHumanPlayers();
     } while ((noPlayers > 4) || (noPlayers < 0));
     
     for (i = 0; i < noPlayers; i++) {
-        printf("Enter player %d's name:\n", (i + 1));
-        scanf_s(" %63s", buffer, 64);
-        /*printf("string entered: %s\n", buffer);*/newlines(1);
-        strcpy_s(playerArr[i], sizeof playerArr[i], buffer);
+		/*issue prompt and take input for names of human players*/
+		prompt_playerName(i + 1);
+        strcpy_s(playerArr[i], sizeof playerArr[i], input_playerName());
     }
     return noPlayers;
 }
@@ -62,8 +61,9 @@ int getComps(int maxComps) {
     assert((maxComps >= 0) && (maxComps <= 4));
     if (maxComps != 0) {
         do {
-            printf("Enter number of computer players between 0 - %d\n", maxComps);
-            scanf_s(" %d", &no_Comps);
+			/*issue prompt and take input for number of computer players*/
+			prompt_noCompPlayers(maxComps);
+			no_Comps = input_noCompPlayers();
         }while ((no_Comps < 0) || (no_Comps > maxComps));
     }
     return no_Comps;
@@ -121,21 +121,26 @@ void playerTurn(table *t, player *p, deck *d) {
     ans = 'd';
     assert((t) && (p) && (d));
     
+	/*loops the player's turn until stay or bust*/
     while ((ans != 's') && (p->playerHand->bust != 1)) {
-        printf("Hit: h\tStay: s\n");
-        newlines(1);
-        tabs(t->margin);
-        spaces(t->buffer);
-		scanf_s(" %c", &ans);
+
+		/*issue prompt and take input for player's turn*/
+		prompt_playerTurn(t);
+		ans = input_playerTurn();
         
+		/*player hits, deal card*/
         if (ans == 'h') {dealCard(t, d, p, 1);}
 
+		/*assess and update the hand after the player's turn*/
         assessHand(p->playerHand, (ans == 's' ? 1 : 0));
 
+		/*determine if the hand is now over; if so, prepare for next player by incrementing current player attribute*/
 		if (p->playerHand->hasEnded) {t->currPlayer++;}
 
-		displayTable(t, 1);
+		/*show updated table*/
+		displayTable(t);
 
+		/*display the hand feedback for all players/hands*/
 		handFeedBack_Display_ALL(t);
     }
 }
@@ -146,7 +151,7 @@ void dealerTurn(table *t, deck *d) {
     
     showCard(t->dealer->playerHand->cards[0]);
     Sleep(1000);
-    displayTable(t, 1);
+    displayTable(t);
     
     /*Condition for soft 17*/
     if ((t->dealer->playerHand->score == 17) &&
@@ -156,14 +161,14 @@ void dealerTurn(table *t, deck *d) {
             dealCard(t, d, t->dealer, 1);
             assessHand(t->dealer->playerHand, 0);
             Sleep(1000);
-            displayTable(t, 1);
+            displayTable(t);
     }
     
     while (t->dealer->playerHand->score < 17) {
         dealCard(t, d, t->dealer, 1);
         assessHand(t->dealer->playerHand, 0);
         Sleep(1000);
-        displayTable(t, 1);
+        displayTable(t);
     }
 }
 

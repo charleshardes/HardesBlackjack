@@ -127,38 +127,5 @@ void dealToPlayers(table *t, deck *d) {
     }
 }
     
-void displayTable(table *t, int stage) {
-    
-    int i;
-    assert(t);
-   
-	displayDealer(t);
-    
-    /*Player names, dollar amount line display */
-	displayPlayers(t);
-    
-    /*Current bet display line*/
-	displayAllBets(t);
 
-    /*Player hand display line:
-     Displays the player's hand if already dealt one or a prompt to enter the bet amount
-     if a hand not yet dealt to player.*/
-	tabs(t->margin);
-    i = 0;
-    while (1) {/*All conditions eventually return or break loop*/
-        
-        /*Display player's hand and appropriate number of spaces to next player*/
-        if (stage) {
-            displayPlayerHand(t->players[i]);
-            /*Spaces algorithm*/
-            if (i < t->NO_OF_PLAYERS - 1) {
-                spaces(36 - (t->players[i]->playerHand->cardCount * 2) -
-                       (t->players[i]->playerHand->cardCount - 1));
-                i++;
-            }/*condition for last player; exit loop*/
-            else break;
-        }
-		else break;
-    }
-}
 

@@ -118,31 +118,6 @@ void _deleteExtraCards() {
 }
 #endif
 
-/*
- Print a string representing the instance of struct card
- -----------------------------------------------------------------------------------------
- Parameters: struct card *c
- Preconditions: c is not null
- Postconditions: a string representing the card is printed to the console
- */
-void printCard(card *c) {
-    
-    char s[25];
-    assert(c);
-    strcpy_s(s, sizeof s, c->name);
-    printf("%s\tWeight: %d\t%s\n", c->abbr, c->value->weight, c->name);
-}
-
-void displayCard(card *c) {
-    
-    assert(c);
-    
-    if (c->shown == 1) {
-        printf("%s", c->abbr);
-    }
-    else printf("XX");
-}
-
 void showCard(card *c) {
     
     assert(c);

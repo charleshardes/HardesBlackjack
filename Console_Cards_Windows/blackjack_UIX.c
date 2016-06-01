@@ -54,12 +54,15 @@ void tabs(int t) {
     }
 }
 
+/*
+Alert line display:
+Displays an alert message when player has won, gotten blackjack, busted, lost, pushed
+(as determined by the assessHand() function) and prints appropriate number of spaces 
+to next player as per algorithms below
+*/
 void handFeedBack_Display_ALL(table *t) {
 
-	    /*Alert line display:
-     Displays an alert message when player has won, gotten blackjack, busted, lost, pushed
-     (as determined by the assessHand() function) and prints appropriate number of spaces 
-     to next player as per algorithms below*/
+
 
 	int promptBuffer, line1Tabs, i;
 	assert(t);
@@ -130,6 +133,7 @@ void getBets(table *t) {
 
 	int bet;
 
+	tabs(t->margin);
     spaces(36 * t->currPlayer);
 
     printf("Enter bet amount: ");
@@ -151,7 +155,7 @@ void getBets(table *t) {
     t->currPlayer++;
             
     /*Recusively called for players 2 and higher*/
-    displayTable(t, 0);
+    displayTable(t);
 
 	if (t->currPlayer == t->NO_OF_PLAYERS) {return;}
 
@@ -193,6 +197,27 @@ void displayPlayerHand(player *p) {
     displayHand(p->playerHand, p);
 }
 
+void displayAllPlayerHands(table *t) {
+
+	int i;
+
+	if (!t->handsAreDealt) {return;}
+	tabs(t->margin);
+
+	for (i = 0; i < t->NO_OF_PLAYERS; i++) {/*All conditions eventually return or break loop*/
+        
+        /*Display player's hand and appropriate number of spaces to next player*/
+
+        displayPlayerHand(t->players[i]);
+        /*Spaces algorithm*/
+        if (i < t->NO_OF_PLAYERS - 1) {
+            spaces(35 - (t->players[i]->playerHand->cardCount * 2) -
+                    (t->players[i]->playerHand->cardCount - 1));
+        }/*condition for last player; exit loop*/
+        else break;
+    }
+}
+
 void displayPlayers(table *t) {
 	
 	int i;
@@ -226,4 +251,112 @@ void displayAllBets(table *t) {
 		displayBet(t->players[i]->bet);
     }
     newlines(1);
+}
+
+void displayTable(table *t) {
+    
+    assert(t);
+   
+	displayDealer(t);
+    
+    /*Player names, dollar amount line display */
+	displayPlayers(t);
+    
+    /*Current bet display line*/
+	displayAllBets(t);
+
+    /*Player hand display line:  Displays the player's hand if already dealt one*/
+	displayAllPlayerHands(t);
+}
+
+void prompt_noHumanPlayers() {printf("Enter a number of human players between 0 - 4\n");}
+
+int input_noHumanPlayers() {
+
+	int noPlayers;
+
+	scanf_s("%d", &noPlayers);
+	return noPlayers;
+}  
+
+void prompt_playerName(int playerNo) {printf("Enter player %d's name:\n", playerNo);}
+
+char *input_playerName() {
+
+	static char buffer[BUFFERSIZE];
+
+	scanf_s(" %63s", buffer, 64);
+    newlines(1);
+
+	return buffer;
+}
+
+void prompt_noCompPlayers(int maxComps) {printf("Enter number of computer players between 0 - %d\n", maxComps);}
+
+int input_noCompPlayers() {
+    
+	int no_Comps;
+	scanf_s(" %d", &no_Comps);
+
+	return no_Comps;
+}
+
+void prompt_playerTurn(table *t) {
+
+	assert(t);
+    printf("Hit: h\tStay: s\n");
+    newlines(1);
+    tabs(t->margin);
+    spaces(t->buffer);
+}
+
+char input_playerTurn() {
+
+	char ans;
+	ans = 'd';
+
+	scanf_s(" %c", &ans);
+	return ans;
+}
+
+/*
+ Print a string representing the instance of struct card
+ -----------------------------------------------------------------------------------------
+ Parameters: struct card *c
+ Preconditions: c is not null
+ Postconditions: a string representing the card is printed to the console
+ */
+void printCard(card *c) {
+    
+    char s[25];
+    assert(c);
+    strcpy_s(s, sizeof s, c->name);
+    printf("%s\tWeight: %d\t%s\n", c->abbr, c->value->weight, c->name);
+}
+
+void displayCard(card *c) {
+    
+    assert(c);
+    
+    if (c->shown == 1) {
+        printf("%s ", c->abbr);
+    }
+    else printf("XX ");
+}
+
+/*
+ Loops the printCard function for every struct card in the struct deck.
+ -----------------------------------------------------------------------------------------
+ Parameters: deck *d
+ Preconditions: d is not null
+ Postconditions: the printCard function is called on every struct card in the struct deck.
+ */
+void printDeck(deck *d) {
+    
+    int i;
+    assert(d);
+    
+    for (i = 0; i < NO_OF_CARDS; i++){
+        printCard(d->cards[i]);
+    }
 }

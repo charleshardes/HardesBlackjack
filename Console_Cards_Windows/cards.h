@@ -41,16 +41,6 @@ void makeExtraCards(card *c[]);
 
 void _deleteExtraCards();
 
-/*
- Print a string representing the instance of struct card
-*/
-void printCard(card *c);
-
-/*
- Print the abbreviation of the card, if shown. If not, print "XX"
- */
-void displayCard(card *c);
-
 void showCard(card *c);
 
 void hideCard(card *c);

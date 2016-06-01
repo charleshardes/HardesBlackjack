@@ -123,23 +123,6 @@ void _deleteDeck(deck *d){
 }
 
 /*
- Loops the printCard function for every struct card in the struct deck.
- -----------------------------------------------------------------------------------------
- Parameters: deck *d
- Preconditions: d is not null
- Postconditions: the printCard function is called on every struct card in the struct deck.
- */
-void printDeck(deck *d) {
-    
-    int i;
-    assert(d);
-    
-    for (i = 0; i < NO_OF_CARDS; i++){
-        printCard(d->cards[i]);
-    }
-}
-
-/*
  Shuffles any struct deck of any size greater than 0. This funciton is meant to be used to
  shuffle full decks as well as discard piles to be used as partial decks. It returns a deck
  of the same size with randomly shuffled cards.

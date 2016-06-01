@@ -23,6 +23,4 @@ void pileToDeck(table *t, deck *d);
 
 void dealToPlayers(table *t, deck *d);
 
-void displayTable(table *t, int dealt);
-
 #endif /* defined(__Console_Cards__blackjack_table__) */

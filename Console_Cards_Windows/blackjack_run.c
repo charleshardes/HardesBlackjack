@@ -52,7 +52,7 @@ int main(int argc, const char * argv[]) {
 		setAllHands(BJTable);
 
 		/*Display the table before bets taken*/
-        displayTable(BJTable, 0);
+        displayTable(BJTable);
 
 		/*Take bets from all players*/
 		getBets(BJTable);
@@ -60,7 +60,7 @@ int main(int argc, const char * argv[]) {
 		/*Deal starting hand to each player and dealer*/
         dealStartingHands(BJTable, BJdeck);
 
-        displayTable(BJTable, 1);
+        displayTable(BJTable);
 		handFeedBack_Display_ALL(BJTable);
 		
         /*Loop through all players' turns*/
@@ -78,7 +78,7 @@ int main(int argc, const char * argv[]) {
 
         takeScores(BJTable);
 
-        displayTable(BJTable, 1);
+        displayTable(BJTable);
 		handFeedBack_Display_ALL(BJTable);
         
 		cont = continueGamePrompt(BJTable);
