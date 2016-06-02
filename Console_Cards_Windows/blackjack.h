@@ -23,10 +23,14 @@ void dealStartingHands(table *t, deck *d);
 
 void playerTurn(table *t, player *p, deck *d);
 
+void playerTurn_ALL(table *t, deck *d);
+
 void dealerTurn(table *t, deck *d);
 
 void takeScores(table *t);
 
 int getComps(int maxComps);
+
+void cleanUp(table *t, deck *d);
 
 #endif /* defined(__Console_Cards__blackjack__) */

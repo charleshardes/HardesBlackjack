@@ -128,21 +128,33 @@ void playerTurn(table *t, player *p, deck *d) {
 		prompt_playerTurn(t);
 		ans = input_playerTurn();
         
-		/*player hits, deal card*/
-        if (ans == 'h') {dealCard(t, d, p, 1);}
+		/*if player hits/doubles down, deal card*/
+		if ((ans == 'h') || (ans == 'd')) {
+			dealCard(t, d, p, 1);
+			if (ans == 'd') {p->playerHand->doubledDown = 1;}/*record that hand has doubled down*/
+		}
 
 		/*assess and update the hand after the player's turn*/
         assessHand(p->playerHand, (ans == 's' ? 1 : 0));
 
-		/*determine if the hand is now over; if so, prepare for next player by incrementing current player attribute*/
-		if (p->playerHand->hasEnded) {t->currPlayer++;}
-
 		/*show updated table*/
 		displayTable(t);
 
-		/*display the hand feedback for all players/hands*/
-		handFeedBack_Display_ALL(t);
+		/*if hand is over (determined by assessHand), prepare for next player by exiting turn loop*/
+		if (p->playerHand->hasEnded) {break;}
     }
+}
+
+void playerTurn_ALL(table *t, deck *d) {
+		
+	assert(t);
+
+    /*Loop through all players' turns*/
+	for (t->currPlayer = 0; t->currPlayer < t->NO_OF_PLAYERS; t->currPlayer++) {
+		if (t->players[t->currPlayer]->playerHand->hasEnded) continue;/*iterate if turn over*/
+		playerTurn(t, t->players[t->currPlayer], d);/*calls driver for each individual player turn*/
+    }
+    t->currPlayer = 0;/*set currPlayer counter back to start after loop finishes*/
 }
 
 void dealerTurn(table *t, deck *d) {
@@ -242,4 +254,9 @@ void takeScores(table *t) {
             t->players[i]->chips += t->players[i]->bet;
         }
     }
+}
+
+void cleanUp(table *t, deck *d) {
+    _deleteTable(t);
+    _deleteDeck(d);
 }

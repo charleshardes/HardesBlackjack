@@ -11,11 +11,13 @@
 
 #include <stdio.h>
 
-void spaces(int s);
+void CL_spaces(int s);
 
-void newlines(int n);
+void CL_newlines(int n);
 
-void tabs(int t);
+void CL_tabs(int t);
+
+void CL_setPrompt(table *t);
 
 void handFeedBack_Display_ALL(table *t);
 

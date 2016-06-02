@@ -52,7 +52,7 @@ struct table {
     int NO_OF_COMPS;
     deck *discardPile;
     int currPlayer;
-    int buffer;
+    int spacing;
     int margin;
 	int handsAreDealt;
 };

@@ -28,12 +28,12 @@
 #include "blackjack_run.h"
 
 
-
 int main(int argc, const char * argv[]) {
 
-	int i, cont;
-	table *BJTable;
-	deck *BJdeck;
+	int cont;/* boolean 1 or 0 (True/False) variable used only for determining whether 
+			 user has chosen to continue (deal again) or quit the program*/
+	table *BJTable;/* pointer to main BlackJack Table object created and used in the program */
+	deck *BJdeck;/*   pointer to main BlackJack Deck object created and used in the program */
     
 	/*get the # of players, players' names, # of comps, create the table, 
 	return a pointer to it*/
@@ -45,7 +45,8 @@ int main(int argc, const char * argv[]) {
 	/*shuffle the deck*/
     BJdeck = shuffle(BJdeck);
     
-	/*Loop through hands; Loop is broken when user chooses to exit and quit program*/
+	/*Main game driver loops through playing blackjack hands against the dealer until loop is 
+	broken when user chooses not to deal again, but to exit and quit program*/
     do {
 
 		/*(re)create and (re)initialize all new hand objects for each player before each turn*/
@@ -60,40 +61,31 @@ int main(int argc, const char * argv[]) {
 		/*Deal starting hand to each player and dealer*/
         dealStartingHands(BJTable, BJdeck);
 
+		/*Show players their dealt hands and feedback if they have blackjack*/
         displayTable(BJTable);
-		handFeedBack_Display_ALL(BJTable);
-		
-        /*Loop through all players' turns*/
-        for (i = 0; i < (BJTable->NO_OF_PLAYERS); i++) {
+		//handFeedBack_Display_ALL(BJTable);
 
-            BJTable->currPlayer = i;
-            playerTurn(BJTable, BJTable->players[i], BJdeck);			
-        }
-
-		
+		/*Each player plays their hand*/
+		playerTurn_ALL(BJTable, BJdeck);
         
-        BJTable->currPlayer = 0;
-        
+		/*Dealer plays their hand*/
         dealerTurn(BJTable, BJdeck);
 
+		/*Player scores are computed, compared against dealer's*/
         takeScores(BJTable);
 
+		/*Show final results of the hand with feedback of win/loss/push*/
         displayTable(BJTable);
-		handFeedBack_Display_ALL(BJTable);
+		//handFeedBack_Display_ALL(BJTable);
         
+		/*Prompt to deal again or quit the game/program*/
 		cont = continueGamePrompt(BJTable);
 
-
-        
-        
-    }while (cont == 1);
+    }while (cont == 1);/*Driver loop continues until user quits*/
     
-
-    _deleteTable(BJTable);
-    _deleteDeck(BJdeck);
-    
-    
-    
-    
-    return 0;
+	/*After quitting the game, clean up: delete and free up all allocated memory
+	Then, exit program*/
+	cleanUp(BJTable, BJdeck);
+  
+    return 0;/*exit program with successfull return value*/
 }

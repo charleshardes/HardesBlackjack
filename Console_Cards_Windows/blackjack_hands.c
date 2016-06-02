@@ -143,7 +143,7 @@ void assessHand(hand *h, int stayed) {
     }
 
 	/*determine if the hand is now over*/
-	if ((stayed) || (h->hasBlackjack) || (h->bust)) {h->hasEnded = 1;}
+	if ((stayed) || (h->hasBlackjack) || (h->bust) || (h->doubledDown)) {h->hasEnded = 1;}
 
     h->score = sum;
 }

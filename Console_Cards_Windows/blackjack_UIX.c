@@ -26,7 +26,7 @@
 #include "blackjack_run.h"
 #include "blackjack_UIX.h"
 
-void spaces(int s) {
+void CL_spaces(int s) {
     
     int i;
     for(i = 0; i < s; i++) {
@@ -34,7 +34,7 @@ void spaces(int s) {
     }
 }
 
-void newlines(int n) {
+void CL_newlines(int n) {
     
     int i;
     assert(n >= 0);
@@ -44,7 +44,7 @@ void newlines(int n) {
     }
 }
 
-void tabs(int t) {
+void CL_tabs(int t) {
     
     int i;
     assert(t >= 0);
@@ -52,6 +52,18 @@ void tabs(int t) {
     for (i = 0; i < t; i++) {
         printf("\t");
     }
+}
+
+void CL_setPrompt(table *t) {
+
+	assert(t);
+
+	/* set spacing to appropriate spaces */
+	t->spacing = t->currPlayer * 36;
+
+	CL_tabs(t->margin);
+	(t->players[t->currPlayer]->playerHand->hasEnded ? 
+		CL_spaces(t->spacing + 36) : CL_spaces(t->spacing));
 }
 
 /*
@@ -62,24 +74,21 @@ to next player as per algorithms below
 */
 void handFeedBack_Display_ALL(table *t) {
 
-
-
-	int promptBuffer, line1Tabs, i;
+	int i;
 	assert(t);
 
-	line1Tabs = (int) (12 - (t->NO_OF_PLAYERS * 2.5));
+	if (!t->handsAreDealt) {return;}/*escape this function if hands not yet dealt*/
 
-    newlines(1);
-    tabs(line1Tabs);
+    CL_newlines(1);
+	CL_tabs(t->margin);
+
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
 		CL_handFeedBack_Display(t, i);
     }
-    newlines(1);
-    tabs(line1Tabs);
-    promptBuffer = 36 * t->currPlayer;
-    spaces(promptBuffer);
-    t->buffer = promptBuffer;
-    t->margin = line1Tabs;
+    CL_newlines(1);
+
+	/*set prompt for next player*/
+    CL_setPrompt(t);
 }
 
 
@@ -87,25 +96,25 @@ void CL_handFeedBack_Display(table *t, int player) {
 
 	if (t->players[player]->playerHand->bust) {
         printf("BUSTED! ($%d-)", t->players[player]->bet);
-        spaces(23 - (int)log10((double)t->players[player]->bet));
+        CL_spaces(23 - (int)log10((double)t->players[player]->bet));
     }
     else if (t->players[player]->playerHand->hasBlackjack) {
         printf("BLACKJACK! ($%d+)", (int)((t->players[player]->bet * 3) / 2));
-        spaces(20 - (int)log10((double)((t->players[player]->bet * 3) / 2)));
+        CL_spaces(20 - (int)log10((double)((t->players[player]->bet * 3) / 2)));
     }
     else if (t->players[player]->playerHand->win) {
         printf("WIN ($%d+)", t->players[player]->bet * 2);
-        spaces(27 - (int)log10((double)(t->players[player]->bet * 2)));
+        CL_spaces(27 - (int)log10((double)(t->players[player]->bet * 2)));
     }
     else if (t->players[player]->playerHand->lose) {
         printf("LOSE ($%d-)", t->players[player]->bet);
-        spaces(26 - (int)log10((double)t->players[player]->bet));
+        CL_spaces(26 - (int)log10((double)t->players[player]->bet));
     }
     else if (t->players[player]->playerHand->push) {
         printf("PUSH ($0+)");
-        spaces(26);
+        CL_spaces(26);
     }
-    else spaces(36);
+    else CL_spaces(36);
 }
 
 int continueGamePrompt(table *t) {
@@ -113,7 +122,7 @@ int continueGamePrompt(table *t) {
 	char ans;
 	assert(t);
 
-    newlines(2);
+    CL_newlines(2);
     printf("Deal: d; Quit: q\n");
     ans = getchar();
     ans = getchar();
@@ -133,8 +142,8 @@ void getBets(table *t) {
 
 	int bet;
 
-	tabs(t->margin);
-    spaces(36 * t->currPlayer);
+	/* set CL prompt to correct location on screen */
+	CL_setPrompt(t);
 
     printf("Enter bet amount: ");
     /*Error handling loop*/
@@ -149,15 +158,13 @@ void getBets(table *t) {
             
     /*exit function, stop recursion if last player*/
     if (t->currPlayer == t->NO_OF_PLAYERS - 1) {
-        t->currPlayer = 0;/*reset currPlayer for next line*/
+        t->currPlayer = 0;/*reset currPlayer to 0 for next line*/
         return;
     }
     t->currPlayer++;
             
     /*Recusively called for players 2 and higher*/
     displayTable(t);
-
-	if (t->currPlayer == t->NO_OF_PLAYERS) {return;}
 
 	getBets(t);
     return;/*extra recursive record exited*/
@@ -166,17 +173,18 @@ void getBets(table *t) {
 void displayDealer(table *t) {
 
 	/*Dealer display line*/
-    newlines(5);
-    tabs(9);
+    CL_newlines(5);
+    CL_tabs(9);
     displayPlayer(t->dealer);
-    newlines(2);
-    tabs(9);
+    CL_newlines(2);
+    CL_tabs(9);
+
     /*Condition that hand has already been dealt*/
 	if (t->handsAreDealt) {
         displayHand(t->dealer->playerHand, t->dealer);
     }
-    else newlines(1);
-    newlines(6);
+    else CL_newlines(1);
+    CL_newlines(6);
 }
 
 void displayPlayer(player *p) {
@@ -187,7 +195,7 @@ void displayPlayer(player *p) {
     else {printf("%s     $%d", p->name, p->chips);}
 
 	/*algorithm to print the number of spaces to next player - characters used in previous player*/
-    spaces(30 - strlen(p->name) - (((int) log10((double)p->chips))  + 1));
+    CL_spaces(30 - strlen(p->name) - (((int) log10((double)p->chips))  + 1));
 }
 
 void displayPlayerHand(player *p) {
@@ -202,7 +210,7 @@ void displayAllPlayerHands(table *t) {
 	int i;
 
 	if (!t->handsAreDealt) {return;}
-	tabs(t->margin);
+	CL_tabs(t->margin);
 
 	for (i = 0; i < t->NO_OF_PLAYERS; i++) {/*All conditions eventually return or break loop*/
         
@@ -211,7 +219,7 @@ void displayAllPlayerHands(table *t) {
         displayPlayerHand(t->players[i]);
         /*Spaces algorithm*/
         if (i < t->NO_OF_PLAYERS - 1) {
-            spaces(35 - (t->players[i]->playerHand->cardCount * 2) -
+            CL_spaces(35 - (t->players[i]->playerHand->cardCount * 2) -
                     (t->players[i]->playerHand->cardCount - 1));
         }/*condition for last player; exit loop*/
         else break;
@@ -223,11 +231,11 @@ void displayPlayers(table *t) {
 	int i;
 	assert(t);
 
-	tabs(t->margin);
+	CL_tabs(t->margin);
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
         displayPlayer(t->players[i]);
     }
-    newlines(1);
+    CL_newlines(1);
 }
 
 void displayBet(int bet) {
@@ -236,9 +244,9 @@ void displayBet(int bet) {
         
     /*number of spaces to next player algorithm*/
     if (bet > 0) {
-        spaces(27 - ((int)log10((double)bet)  + 1));
+        CL_spaces(27 - ((int)log10((double)bet)  + 1));
     }
-    else spaces(26);
+    else CL_spaces(26);
 }
 
 void displayAllBets(table *t) {
@@ -246,11 +254,11 @@ void displayAllBets(table *t) {
 	int i;
 	assert(t);
 
-	tabs(t->margin);
+	CL_tabs(t->margin);
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
 		displayBet(t->players[i]->bet);
     }
-    newlines(1);
+    CL_newlines(1);
 }
 
 void displayTable(table *t) {
@@ -267,6 +275,9 @@ void displayTable(table *t) {
 
     /*Player hand display line:  Displays the player's hand if already dealt one*/
 	displayAllPlayerHands(t);
+
+	/*Hand feedback diplay line: alerts to show blackjack, bust, win/lose/push*/
+	handFeedBack_Display_ALL(t);
 }
 
 void prompt_noHumanPlayers() {printf("Enter a number of human players between 0 - 4\n");}
@@ -286,7 +297,7 @@ char *input_playerName() {
 	static char buffer[BUFFERSIZE];
 
 	scanf_s(" %63s", buffer, 64);
-    newlines(1);
+    CL_newlines(1);
 
 	return buffer;
 }
@@ -304,10 +315,18 @@ int input_noCompPlayers() {
 void prompt_playerTurn(table *t) {
 
 	assert(t);
+
     printf("Hit: h\tStay: s\n");
-    newlines(1);
-    tabs(t->margin);
-    spaces(t->buffer);
+
+	/*Allow player the option of doubling down if this is their first hit of the hand*/
+	if (t->players[t->currPlayer]->playerHand->cardCount == 2) {
+		CL_setPrompt(t);
+		printf("Double Down: d\n");
+	}
+    CL_newlines(1);
+
+	/* Set CL prompt for next player */
+	CL_setPrompt(t);
 }
 
 char input_playerTurn() {
