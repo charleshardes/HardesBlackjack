@@ -45,10 +45,10 @@
     <ClCompile Include="blackjack_run.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="blackjack_CLI.c">
+    <ClCompile Include="blackjack_GUI.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="blackjack_GUI.c">
+    <ClCompile Include="blackjack_CLI.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

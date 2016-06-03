@@ -1,3 +1,4 @@
+#pragma once
 //
 //  blackjack_GUI.c
 //  Console_Cards
@@ -5,6 +6,9 @@
 //  Created by Charles Hardes on 3/28/15.
 //  Copyright (c) 2015 Charles Hardes. All rights reserved.
 //
+
+#if ( UIX != 0 )
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -225,3 +229,5 @@ void displayPlayerName(player *p) {
 void prompt_HitStay() {printf("Hit: h\tStay: s\n");}
 
 void prompt_DoubleDown() {printf("Double Down: d\n");}
+
+#endif

@@ -1,3 +1,4 @@
+#pragma once
 //
 //  blackjack_GUI.h
 //  Console_Cards
