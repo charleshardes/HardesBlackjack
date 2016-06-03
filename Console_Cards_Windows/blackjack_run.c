@@ -56,7 +56,7 @@ int main(int argc, const char * argv[]) {
         displayTable(BJTable);
 
 		/*Take bets from all players*/
-		getBets(BJTable);
+		getBets_ALL(BJTable);
         
 		/*Deal starting hand to each player and dealer*/
         dealStartingHands(BJTable, BJdeck);

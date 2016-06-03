@@ -45,6 +45,12 @@
     <ClCompile Include="blackjack_run.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="blackjack_CLI.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="blackjack_GUI.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="blackjack.h">
@@ -87,6 +93,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="blackjack_run.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_GUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_CLI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

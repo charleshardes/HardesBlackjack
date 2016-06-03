@@ -31,6 +31,8 @@ void takeScores(table *t);
 
 int getComps(int maxComps);
 
+void doubleDown(player *p);
+
 void cleanUp(table *t, deck *d);
 
 #endif /* defined(__Console_Cards__blackjack__) */

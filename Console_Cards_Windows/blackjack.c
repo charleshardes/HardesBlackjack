@@ -24,6 +24,7 @@
 #include "blackjack_players.h"
 #include "blackjack_table.h"
 #include "blackjack_UIX.h"
+#include "blackjack_CLI.h"
 #include "blackjack.h"
 
 table *setTable() {
@@ -131,7 +132,9 @@ void playerTurn(table *t, player *p, deck *d) {
 		/*if player hits/doubles down, deal card*/
 		if ((ans == 'h') || (ans == 'd')) {
 			dealCard(t, d, p, 1);
-			if (ans == 'd') {p->playerHand->doubledDown = 1;}/*record that hand has doubled down*/
+			if (ans == 'd') {
+				doubleDown(p);
+			}
 		}
 
 		/*assess and update the hand after the player's turn*/
@@ -162,7 +165,7 @@ void dealerTurn(table *t, deck *d) {
     assert((t) && (d));
     
     showCard(t->dealer->playerHand->cards[0]);
-    Sleep(1000);
+    Sleep(1000);/* wait a second between each card dealer draws */
     displayTable(t);
     
     /*Condition for soft 17*/
@@ -254,6 +257,13 @@ void takeScores(table *t) {
             t->players[i]->chips += t->players[i]->bet;
         }
     }
+}
+
+void doubleDown(player *p) {
+	assert(p);
+	p->chips -= p->bet;
+	p->bet *= 2;
+	p->playerHand->doubledDown = 1;
 }
 
 void cleanUp(table *t, deck *d) {

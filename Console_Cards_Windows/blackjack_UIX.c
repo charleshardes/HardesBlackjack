@@ -25,46 +25,7 @@
 #include "blackjack.h"
 #include "blackjack_run.h"
 #include "blackjack_UIX.h"
-
-void CL_spaces(int s) {
-    
-    int i;
-    for(i = 0; i < s; i++) {
-        printf(" ");
-    }
-}
-
-void CL_newlines(int n) {
-    
-    int i;
-    assert(n >= 0);
-    
-    for (i = 0; i < n; i++) {
-        printf("\n");
-    }
-}
-
-void CL_tabs(int t) {
-    
-    int i;
-    assert(t >= 0);
-    
-    for (i = 0; i < t; i++) {
-        printf("\t");
-    }
-}
-
-void CL_setPrompt(table *t) {
-
-	assert(t);
-
-	/* set spacing to appropriate spaces */
-	t->spacing = t->currPlayer * 36;
-
-	CL_tabs(t->margin);
-	(t->players[t->currPlayer]->playerHand->hasEnded ? 
-		CL_spaces(t->spacing + 36) : CL_spaces(t->spacing));
-}
+#include "blackjack_CLI.h"
 
 /*
 Alert line display:
@@ -83,7 +44,7 @@ void handFeedBack_Display_ALL(table *t) {
 	CL_tabs(t->margin);
 
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
-		CL_handFeedBack_Display(t, i);
+		handFeedBack_Display(t, i);
     }
     CL_newlines(1);
 
@@ -91,28 +52,22 @@ void handFeedBack_Display_ALL(table *t) {
     CL_setPrompt(t);
 }
 
-
-void CL_handFeedBack_Display(table *t, int player) {
+void handFeedBack_Display(table *t, int player) {
 
 	if (t->players[player]->playerHand->bust) {
-        printf("BUSTED! ($%d-)", t->players[player]->bet);
-        CL_spaces(23 - (int)log10((double)t->players[player]->bet));
+        busted_Display(t, player);
     }
     else if (t->players[player]->playerHand->hasBlackjack) {
-        printf("BLACKJACK! ($%d+)", (int)((t->players[player]->bet * 3) / 2));
-        CL_spaces(20 - (int)log10((double)((t->players[player]->bet * 3) / 2)));
+		blackjack_Display(t, player);
     }
     else if (t->players[player]->playerHand->win) {
-        printf("WIN ($%d+)", t->players[player]->bet * 2);
-        CL_spaces(27 - (int)log10((double)(t->players[player]->bet * 2)));
+        win_Display(t, player);
     }
     else if (t->players[player]->playerHand->lose) {
-        printf("LOSE ($%d-)", t->players[player]->bet);
-        CL_spaces(26 - (int)log10((double)t->players[player]->bet));
+        lose_Display(t, player);
     }
     else if (t->players[player]->playerHand->push) {
-        printf("PUSH ($0+)");
-        CL_spaces(26);
+        push_Display(t, player);
     }
     else CL_spaces(36);
 }
@@ -123,50 +78,44 @@ int continueGamePrompt(table *t) {
 	assert(t);
 
     CL_newlines(2);
-    printf("Deal: d; Quit: q\n");
-    ans = getchar();
-    ans = getchar();
+
+	prompt_Continue();
+
+	ans = input_Continue();
+
     if (ans == 'd') {
         clearTable(t);
 		return 1;
     }
     else if (ans == 'q') {return 0;}
     else {
-		printf("ERROR");
+		error_ContinueGame();
 		continueGamePrompt(t);
 		return 0;
 	}
 }
 
-void getBets(table *t) {
+void getBets_ALL(table *t) {
 
-	int bet;
-
-	/* set CL prompt to correct location on screen */
+	/* position the CL prompt for bets */
 	CL_setPrompt(t);
 
-    printf("Enter bet amount: ");
-    /*Error handling loop*/
-    while (1) {
-        scanf_s(" %d", &bet);
-		if ((bet >= 0) && (bet <= t->players[t->currPlayer]->chips)) break;/*break loop if in range*/
-        /*Error message*/
-        printf("\nERROR: Improper bet amount\nEnter bet amount: ");
-    }
-    t->players[t->currPlayer]->bet = bet;
-    t->players[t->currPlayer]->chips -= bet;
-            
+	/*prompt current player for a bet, accepts bet input, and handles errors */
+	getBet(t);
+
     /*exit function, stop recursion if last player*/
     if (t->currPlayer == t->NO_OF_PLAYERS - 1) {
         t->currPlayer = 0;/*reset currPlayer to 0 for next line*/
         return;
     }
     t->currPlayer++;
-            
-    /*Recusively called for players 2 and higher*/
+    
+	/* show table with updated bet entered */
     displayTable(t);
 
-	getBets(t);
+    /*Recusively called for players 2 and higher; acts as loop*/
+	getBets_ALL(t);
+
     return;/*extra recursive record exited*/
 }
 
@@ -191,8 +140,8 @@ void displayPlayer(player *p) {
     
     assert(p);
     
-    if (p->dealer == 1) {printf("%s", p->name);}
-    else {printf("%s     $%d", p->name, p->chips);}
+	if (p->dealer == 1) {diplayDealerName(p);} /*print "Dealer" to screen at appropriate place */
+    else {displayPlayerName(p);}
 
 	/*algorithm to print the number of spaces to next player - characters used in previous player*/
     CL_spaces(30 - strlen(p->name) - (((int) log10((double)p->chips))  + 1));
@@ -238,17 +187,6 @@ void displayPlayers(table *t) {
     CL_newlines(1);
 }
 
-void displayBet(int bet) {
-
-	printf("Bet:    $%d", bet);
-        
-    /*number of spaces to next player algorithm*/
-    if (bet > 0) {
-        CL_spaces(27 - ((int)log10((double)bet)  + 1));
-    }
-    else CL_spaces(26);
-}
-
 void displayAllBets(table *t) {
 
 	int i;
@@ -280,102 +218,25 @@ void displayTable(table *t) {
 	handFeedBack_Display_ALL(t);
 }
 
-void prompt_noHumanPlayers() {printf("Enter a number of human players between 0 - 4\n");}
+void getBet(table *t) {
 
-int input_noHumanPlayers() {
-
-	int noPlayers;
-
-	scanf_s("%d", &noPlayers);
-	return noPlayers;
-}  
-
-void prompt_playerName(int playerNo) {printf("Enter player %d's name:\n", playerNo);}
-
-char *input_playerName() {
-
-	static char buffer[BUFFERSIZE];
-
-	scanf_s(" %63s", buffer, 64);
-    CL_newlines(1);
-
-	return buffer;
-}
-
-void prompt_noCompPlayers(int maxComps) {printf("Enter number of computer players between 0 - %d\n", maxComps);}
-
-int input_noCompPlayers() {
-    
-	int no_Comps;
-	scanf_s(" %d", &no_Comps);
-
-	return no_Comps;
-}
-
-void prompt_playerTurn(table *t) {
-
+	int bet;
 	assert(t);
 
-    printf("Hit: h\tStay: s\n");
+    /*Error handling loop*/
+    while (1) {
+		
+		prompt_betAmount();/*prompts user to enter a bet */
+		bet = input_betAmount();/*takes user input*/
 
-	/*Allow player the option of doubling down if this is their first hit of the hand*/
-	if (t->players[t->currPlayer]->playerHand->cardCount == 2) {
-		CL_setPrompt(t);
-		printf("Double Down: d\n");
-	}
-    CL_newlines(1);
+		/*break loop if amount is in proper range*/
+		if ((bet >= 0) && (bet <= t->players[t->currPlayer]->chips)) break;
 
-	/* Set CL prompt for next player */
-	CL_setPrompt(t);
-}
-
-char input_playerTurn() {
-
-	char ans;
-	ans = 'd';
-
-	scanf_s(" %c", &ans);
-	return ans;
-}
-
-/*
- Print a string representing the instance of struct card
- -----------------------------------------------------------------------------------------
- Parameters: struct card *c
- Preconditions: c is not null
- Postconditions: a string representing the card is printed to the console
- */
-void printCard(card *c) {
-    
-    char s[25];
-    assert(c);
-    strcpy_s(s, sizeof s, c->name);
-    printf("%s\tWeight: %d\t%s\n", c->abbr, c->value->weight, c->name);
-}
-
-void displayCard(card *c) {
-    
-    assert(c);
-    
-    if (c->shown == 1) {
-        printf("%s ", c->abbr);
+		/*Error message and loop back to prompt if bad input*/
+		error_inputBet();
     }
-    else printf("XX ");
+	/*set the player's bet attribute according to bet and subtract from chips */
+    t->players[t->currPlayer]->bet = bet;
+    t->players[t->currPlayer]->chips -= bet;
 }
 
-/*
- Loops the printCard function for every struct card in the struct deck.
- -----------------------------------------------------------------------------------------
- Parameters: deck *d
- Preconditions: d is not null
- Postconditions: the printCard function is called on every struct card in the struct deck.
- */
-void printDeck(deck *d) {
-    
-    int i;
-    assert(d);
-    
-    for (i = 0; i < NO_OF_CARDS; i++){
-        printCard(d->cards[i]);
-    }
-}

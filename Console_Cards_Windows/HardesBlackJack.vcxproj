@@ -128,6 +128,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="blackjack.c" />
+    <ClCompile Include="blackjack_CLI.c" />
+    <ClCompile Include="blackjack_GUI.c" />
     <ClCompile Include="blackjack_hands.c" />
     <ClCompile Include="blackjack_players.c" />
     <ClCompile Include="blackjack_table.c" />
@@ -140,7 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="blackjack.h" />
+    <ClInclude Include="blackjack_CLI.h" />
     <ClInclude Include="blackjack_globals.h" />
+    <ClInclude Include="blackjack_GUI.h" />
     <ClInclude Include="blackjack_hands.h" />
     <ClInclude Include="blackjack_players.h" />
     <ClInclude Include="blackjack_structs.h" />
