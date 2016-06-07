@@ -31,14 +31,13 @@ void _initHand(hand *h) {
     h->starting = NO_CARDS_START;
     h->score = 0;
     h->bust = 0;
-    h->canSplit = 0;
     h->hasBlackjack = 0;
     h->cardCount = 0;
     h->hiAces = 0;
     h->win = 0;
     h->lose = 0;
     h->push = 0;
-    h->split = NULL;
+    h->splitHand = NULL;
     h->canSplit = 0;
     h->hasSplit = 0;
     h->hasInsurance = 0;
@@ -84,12 +83,7 @@ void setAllHands(table *t) {
 
 void _deleteHand(hand *h) {
     assert(h);
-    
-    /*if hand has recursive hand property, delete it recursively*/
-    if (h->hasSplit) {
-        assert(h->split);
-        _deleteHand(h->split);
-    }
+	h = NULL;
     free(h);
 }
 
@@ -121,8 +115,10 @@ void assessHand(hand *h, int stayed) {
         if (isPair(h)) {
             h->canSplit = 1;
         }
+		else h->canSplit = 0;
+
         /*determine if player has blackjack*/
-        else if (sum == 21) {
+        if (sum == 21) {
             h->hasBlackjack = 1;
         }
     }
@@ -166,6 +162,15 @@ void discardHand(table *t, hand *h) {
     int i, cardCount;
     assert(h);
 
+	/*if the hand has been split, the split hands must be discarded and also deleted */
+	if (h->splitHand != NULL) {
+		do {h->splitHand = h->splitHand->splitHand;} while (h->splitHand != NULL);
+		discardHand(t, h->splitHand);
+		_deleteHand(h->splitHand);
+		discardHand(t, h);
+		return;
+	}
+
     /*If function is called on an empty hand, should not produce an error; just do nothing and return*/
     if (!h->cardCount) return;
     
@@ -175,11 +180,11 @@ void discardHand(table *t, hand *h) {
         _pushCard(t->discardPile, h->cards[i]);
         h->cards[i] = NULL;
         h->cardCount--;
-        
+      
         /*If hand is split, recursively call function on the split hand(s)*/
-        if (h->hasSplit) {
+/*        if (h->hasSplit) {
             discardHand(t, h->split);
-        }
+        }*/
     }
     /*reset all hand properties*/
     _initHand(h);

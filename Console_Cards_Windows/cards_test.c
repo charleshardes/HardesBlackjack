@@ -17,6 +17,7 @@
 #include "cards.h"
 #include "decks.h"
 #include "cards_test.h"
+#include "blackjack_CLI.h"
 
 
 /*******************MAIN*********************/

@@ -73,4 +73,8 @@ void prompt_HitStay();
 
 void prompt_DoubleDown();
 
+void prompt_Split();
+
+char input_Split();
+
 #endif

@@ -1,4 +1,3 @@
-#pragma once
 //
 //  blackjack_GUI.c
 //  Console_Cards
@@ -6,7 +5,7 @@
 //  Created by Charles Hardes on 3/28/15.
 //  Copyright (c) 2015 Charles Hardes. All rights reserved.
 //
-
+#pragma once
 #if ( UIX != 0 )
 
 #include <stdlib.h>

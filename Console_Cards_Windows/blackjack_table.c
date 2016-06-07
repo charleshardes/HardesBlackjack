@@ -123,7 +123,7 @@ void dealToPlayers(table *t, deck *d) {
     
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
         if (t->players[i]->playerHand->bust) {continue;}
-        dealCard(t,d, t->players[i], 1);
+		dealCard(t,d, t->players[i], t->players[i]->playerHand, 1);
     }
 }
     

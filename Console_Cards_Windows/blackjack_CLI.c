@@ -242,3 +242,7 @@ void displayPlayerName(player *p) {
 void prompt_HitStay() {printf("Hit: h\tStay: s\n");}
 
 void prompt_DoubleDown() {printf("Double Down: d\n");}
+
+void prompt_Split() {printf("Split?: (y/n) ");}
+
+char input_Split() {return input_Continue();}/* reused input_Continue() because def. is same */

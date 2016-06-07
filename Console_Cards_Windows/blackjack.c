@@ -70,16 +70,16 @@ int getComps(int maxComps) {
     return no_Comps;
 }
 
-void dealCard(table *t, deck *d, player *p, int shown) {
+void dealCard(table *t, deck *d, player *p, hand *h, int shown) {
     
     card *dealt, **curr;
     int i = 0;
-    assert((d) && (p));
+    assert((t) && (d) && (p) && (h));
     assert(!isEmpty(d));
     
     dealt = _popCard(d);/*get top card from deck, assign to variable dealt*/
     dealt->shown = shown;
-    curr = p->playerHand->cards;
+    curr = h->cards;
     
     /*cycle through cards in hand to find last one, preparing to add an additional card in first empty slot*/
     while (curr[i] != NULL) {
@@ -87,8 +87,8 @@ void dealCard(table *t, deck *d, player *p, int shown) {
     }
     /*assigns (deals) popped card to player's hand*/
     curr[i] = dealt;
-    if ((strcmp(dealt->value->name, "Ace") == 0)) {p->playerHand->hiAces++;}/*if ace, increment ace counter*/
-    p->playerHand->cardCount++;
+    if ((strcmp(dealt->value->name, "Ace") == 0)) {h->hiAces++;}/*if ace, increment ace counter*/
+    h->cardCount++;
     
     /*If card dealt was last in deck, put all discarded cards back in deck and shuffle*/
     if (isEmpty(d)) {
@@ -104,9 +104,9 @@ void dealStartingHands(table *t, deck *d) {
     assert((t) && (d));
 
     dealToPlayers(t, d);
-    dealCard(t, d, t->dealer, 0);
+	dealCard(t, d, t->dealer, t->dealer->playerHand, 0);
     dealToPlayers(t, d);
-    dealCard(t, d, t->dealer, 1);
+	dealCard(t, d, t->dealer, t->dealer->playerHand, 1);
     
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
         assessHand(t->players[i]->playerHand, 0);
@@ -116,14 +116,40 @@ void dealStartingHands(table *t, deck *d) {
 	t->handsAreDealt= 1;
 }
 
-void playerTurn(table *t, player *p, deck *d) {
+void playerTurn(table *t, player *p, hand *h, deck *d) {
 
     char ans;
     ans = 'd';
-    assert((t) && (p) && (d));
+    assert((t) && (p) && (d) && (h));
+
+	/* If the hand can split, prompt user whether they want to split, manage the split */
+	if (h->canSplit) {
+		prompt_Split();
+		ans = input_Split();
+		if (ans == 'y') {
+			while (h->splitHand != NULL) {
+				h->splitHand->hasSplit = 1;
+				h->splitHand = h->splitHand->splitHand;
+			}
+			h->splitHand = createHand();
+			h->splitHand->cards[0] = h->cards[1];
+			h->splitHand->cardCount = 1;
+			h->cards[1] = NULL;
+			h->cardCount = 1;
+			h->hasSplit = 1;
+			dealCard(t, d, p, h, 1);
+			dealCard(t, d, p, h->splitHand, 1);
+			assessHand(h, 0);
+			assessHand(h->splitHand, 0);
+			displayTable(t);
+			playerTurn(t, p, h, d);
+			return;
+		}
+		else if (ans == 'n') displayTable(t);
+	}
     
 	/*loops the player's turn until stay or bust*/
-    while ((ans != 's') && (p->playerHand->bust != 1)) {
+    while ((ans != 's') && (h->bust != 1)) {
 
 		/*issue prompt and take input for player's turn*/
 		prompt_playerTurn(t);
@@ -131,20 +157,23 @@ void playerTurn(table *t, player *p, deck *d) {
         
 		/*if player hits/doubles down, deal card*/
 		if ((ans == 'h') || (ans == 'd')) {
-			dealCard(t, d, p, 1);
+			dealCard(t, d, p, h, 1);
 			if (ans == 'd') {
 				doubleDown(p);
 			}
 		}
 
 		/*assess and update the hand after the player's turn*/
-        assessHand(p->playerHand, (ans == 's' ? 1 : 0));
+        assessHand(h, (ans == 's' ? 1 : 0));
 
 		/*show updated table*/
 		displayTable(t);
 
 		/*if hand is over (determined by assessHand), prepare for next player by exiting turn loop*/
-		if (p->playerHand->hasEnded) {break;}
+		if (h->hasEnded) {
+			if (h->hasSplit) {playerTurn(t, p, h->splitHand, d);}
+			break;
+		}
     }
 }
 
@@ -155,7 +184,7 @@ void playerTurn_ALL(table *t, deck *d) {
     /*Loop through all players' turns*/
 	for (t->currPlayer = 0; t->currPlayer < t->NO_OF_PLAYERS; t->currPlayer++) {
 		if (t->players[t->currPlayer]->playerHand->hasEnded) continue;/*iterate if turn over*/
-		playerTurn(t, t->players[t->currPlayer], d);/*calls driver for each individual player turn*/
+		playerTurn(t, t->players[t->currPlayer], t->players[t->currPlayer]->playerHand, d);/*calls driver for each individual player turn*/
     }
     t->currPlayer = 0;/*set currPlayer counter back to start after loop finishes*/
 }
@@ -173,14 +202,14 @@ void dealerTurn(table *t, deck *d) {
         (t->dealer->playerHand->cardCount == 2) &&
         (isHiAce(t->dealer->playerHand->cards[0]) ||
          isHiAce(t->dealer->playerHand->cards[1]))) {
-            dealCard(t, d, t->dealer, 1);
+			dealCard(t, d, t->dealer, t->dealer->playerHand, 1);
             assessHand(t->dealer->playerHand, 0);
             Sleep(1000);
             displayTable(t);
     }
     
     while (t->dealer->playerHand->score < 17) {
-        dealCard(t, d, t->dealer, 1);
+		dealCard(t, d, t->dealer, t->dealer->playerHand, 1);
         assessHand(t->dealer->playerHand, 0);
         Sleep(1000);
         displayTable(t);

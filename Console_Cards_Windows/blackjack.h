@@ -17,11 +17,11 @@ table *setTable();
 
 int getPlayers();
 
-void dealCard(table *t, deck *d, player *p, int shown);
+void dealCard(table *t, deck *d, player *p, hand *h, int shown);
 
 void dealStartingHands(table *t, deck *d);
 
-void playerTurn(table *t, player *p, deck *d);
+void playerTurn(table *t, player *p, hand *h, deck *d);
 
 void playerTurn_ALL(table *t, deck *d);
 
