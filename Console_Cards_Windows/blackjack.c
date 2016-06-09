@@ -124,15 +124,19 @@ void playerTurn(table *t, player *p, hand *h, deck *d) {
 
 	/* If the hand can split, prompt user whether they want to split, manage the split */
 	if (h->canSplit) {
+		CL_setPrompt(t);
 		prompt_Split();
 		ans = input_Split();
 		if (ans == 'y') {
+			t->hasSplits = 1;
 			while (h->splitHand != NULL) {
 				h->splitHand->hasSplit = 1;
 				h->splitHand = h->splitHand->splitHand;
 			}
 			h->splitHand = createHand();
 			h->splitHand->cards[0] = h->cards[1];
+			h->splitHand->bet = h->bet;
+			p->chips -= h->bet;
 			h->splitHand->cardCount = 1;
 			h->cards[1] = NULL;
 			h->cardCount = 1;
@@ -152,6 +156,7 @@ void playerTurn(table *t, player *p, hand *h, deck *d) {
     while ((ans != 's') && (h->bust != 1)) {
 
 		/*issue prompt and take input for player's turn*/
+		CL_setPrompt(t);
 		prompt_playerTurn(t);
 		ans = input_playerTurn();
         
@@ -268,11 +273,11 @@ void takeScores(table *t) {
             
             /*Condition for player Blackjack; pays 3/2*/
             if (t->players[i]->playerHand->hasBlackjack) {
-                t->players[i]->chips += ((t->players[i]->bet * 3) / 2);
+                t->players[i]->chips += ((t->players[i]->playerHand->bet * 3) / 2);
             }
             /*all other wins pay 2/1*/
             else {
-                t->players[i]->chips += t->players[i]->bet * 2;
+                t->players[i]->chips += t->players[i]->playerHand->bet * 2;
             }
             t->players[i]->playerHand->win = 1;
         }
@@ -283,15 +288,15 @@ void takeScores(table *t) {
         /*Push condition for tying scores and no bust*/
         else if (t->players[i]->playerHand->score == t->dealer->playerHand->score) {
             t->players[i]->playerHand->push = 1;
-            t->players[i]->chips += t->players[i]->bet;
+            t->players[i]->chips += t->players[i]->playerHand->bet;
         }
     }
 }
 
 void doubleDown(player *p) {
 	assert(p);
-	p->chips -= p->bet;
-	p->bet *= 2;
+	p->chips -= p->playerHand->bet;
+	p->playerHand->bet *= 2;
 	p->playerHand->doubledDown = 1;
 }
 

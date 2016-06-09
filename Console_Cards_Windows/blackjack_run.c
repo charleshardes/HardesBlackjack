@@ -30,7 +30,7 @@
 
 int main(int argc, const char * argv[]) {
 
-	int cont;/* boolean 1 or 0 (True/False) variable used only for determining whether 
+	int cont, i;/* boolean 1 or 0 (True/False) variable used only for determining whether 
 			 user has chosen to continue (deal again) or quit the program*/
 	table *BJTable;/* pointer to main BlackJack Table object created and used in the program */
 	deck *BJdeck;/*   pointer to main BlackJack Deck object created and used in the program */
@@ -60,6 +60,16 @@ int main(int argc, const char * argv[]) {
         
 		/*Deal starting hand to each player and dealer*/
         dealStartingHands(BJTable, BJdeck);
+
+
+		/*************** FOR SPLIT TESTING PURPOSES ONLY ***************************/
+		
+		for (i = 0; i < BJTable->NO_OF_PLAYERS; i++) {
+			BJTable->players[i]->playerHand->canSplit = 1;
+		}
+
+		/***************************************************************************/
+
 
 		/*Show players their dealt hands and feedback if they have blackjack*/
         displayTable(BJTable);

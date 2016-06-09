@@ -64,6 +64,7 @@ void _initTable(table *t, int NO_OF_PLAYERS, int NO_OF_COMPS) {
     t->spacing = 0;
     t->margin = (int) (12 - (t->NO_OF_PLAYERS * 2.5));
 	t->handsAreDealt = 0;
+	t->hasSplits = 0;
 }
 
 table *createTable(int NO_OF_PLAYERS, int NO_OF_COMPS) {
@@ -97,9 +98,9 @@ void clearTable(table *t) {
     
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
         discardHand(t, t->players[i]->playerHand);
-        t->players[i]->bet = 0;
     }
     discardHand(t, t->dealer->playerHand);
+	t->hasSplits = 0;
 }
 
 /*Transfers all cards from the discard pile back into the deck*/

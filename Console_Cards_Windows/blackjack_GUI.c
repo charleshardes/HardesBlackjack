@@ -166,23 +166,23 @@ void printDeck(deck *d) {
 }
 
 void busted_Display(table *t, int player) {
-        printf("BUSTED! ($%d-)", t->players[player]->bet);
-        CL_spaces(23 - (int)log10((double)t->players[player]->bet));
+        printf("BUSTED! ($%d-)", t->players[player]->playerHand->bet);
+        CL_spaces(23 - (int)log10((double)t->players[player]->playerHand->bet));
 }
 
 void blackjack_Display(table *t, int player) {
-    printf("BLACKJACK! ($%d+)", (int)((t->players[player]->bet * 3) / 2));
-    CL_spaces(20 - (int)log10((double)((t->players[player]->bet * 3) / 2)));
+    printf("BLACKJACK! ($%d+)", (int)((t->players[player]->playerHand->bet * 3) / 2));
+    CL_spaces(20 - (int)log10((double)((t->players[player]->playerHand->bet * 3) / 2)));
 }
 
 void win_Display(table *t, int player) {
-    printf("WIN ($%d+)", t->players[player]->bet * 2);
-    CL_spaces(27 - (int)log10((double)(t->players[player]->bet * 2)));
+    printf("WIN ($%d+)", t->players[player]->playerHand->bet * 2);
+    CL_spaces(27 - (int)log10((double)(t->players[player]->playerHand->bet * 2)));
 }
 
 void lose_Display(table *t, int player) {
-    printf("LOSE ($%d-)", t->players[player]->bet);
-    CL_spaces(26 - (int)log10((double)t->players[player]->bet));
+    printf("LOSE ($%d-)", t->players[player]->playerHand->bet);
+    CL_spaces(26 - (int)log10((double)t->players[player]->playerHand->bet));
 }
 
 void push_Display(table *t, int player) {

@@ -33,6 +33,7 @@ struct hand {
     int insuranceAmt;
 	int doubledDown;
 	int hasEnded;
+	int bet;
 };
 
 struct player {
@@ -42,7 +43,6 @@ struct player {
     int pos;
     hand *playerHand;
     int chips;
-    int bet;
 };
 
 struct table {
@@ -55,6 +55,7 @@ struct table {
     int spacing;
     int margin;
 	int handsAreDealt;
+	int hasSplits;
 };
 
 #endif

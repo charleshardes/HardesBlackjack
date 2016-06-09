@@ -42,7 +42,6 @@ void _initPlayer(player *p, int pos, int isDealer, int isComputer) {
     p->playerHand = newHand;
     p->pos = pos;
     p->chips = STARTING_CHIPS;
-	p->bet = 0;
 }
 
 void _deletePlayer(player *p) {

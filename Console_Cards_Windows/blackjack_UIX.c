@@ -49,12 +49,13 @@ void handFeedBack_Display_ALL(table *t) {
     CL_newlines(1);
 
 	/*set prompt for next player*/
-    CL_setPrompt(t);
+    //CL_setPrompt(t);
 }
 
 void handFeedBack_Display(table *t, int player) {
 
-	if (t->players[player]->playerHand->bust) {
+	if (t->players[player]->playerHand == NULL) {CL_spaces(36);}
+	else if (t->players[player]->playerHand->bust) {
         busted_Display(t, player);
     }
     else if (t->players[player]->playerHand->hasBlackjack) {
@@ -161,10 +162,15 @@ void displayAllPlayerHands(table *t) {
 	if (!t->handsAreDealt) {return;}
 	CL_tabs(t->margin);
 
+	/*Display player's hand and appropriate number of spaces to next player*/
 	for (i = 0; i < t->NO_OF_PLAYERS; i++) {/*All conditions eventually return or break loop*/
         
-        /*Display player's hand and appropriate number of spaces to next player*/
-
+		/* condition for displaying split hands */
+		if (t->players[i]->playerHand == NULL) {
+			if (i == t->NO_OF_PLAYERS - 1) break;
+			CL_spaces(36);
+			continue;
+		}
         displayPlayerHand(t->players[i]);
         /*Spaces algorithm*/
         if (i < t->NO_OF_PLAYERS - 1) {
@@ -189,18 +195,31 @@ void displayPlayers(table *t) {
 
 void displayAllBets(table *t) {
 
-	int i;
+	int i, bet;
 	assert(t);
 
 	CL_tabs(t->margin);
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
-		displayBet(t->players[i]->bet);
+		if (t->players[i]->playerHand != NULL) {
+			bet = t->players[i]->playerHand->bet;
+			displayBet(bet);
+			if (i == t->NO_OF_PLAYERS - 1) break;        
+			else if (bet > 0) {/*number of spaces to next player algorithm*/
+				CL_spaces(27 - ((int)log10((double)bet)  + 1));
+			}
+			else CL_spaces(26);
+		}
+		else if (i == t->NO_OF_PLAYERS - 1) break;
+		else CL_spaces(36);
     }
-    CL_newlines(1);
+	CL_newlines(1);
 }
 
 void displayTable(table *t) {
     
+	int i, splitsNotDone;
+	hand *storeHands[4];
+
     assert(t);
    
 	displayDealer(t);
@@ -216,6 +235,43 @@ void displayTable(table *t) {
 
 	/*Hand feedback diplay line: alerts to show blackjack, bust, win/lose/push*/
 	handFeedBack_Display_ALL(t);
+
+	/*If there are hands that are split, a new bet and hand will be displayed underneath
+		the parent hand(s) it was split from */
+
+
+	//displaySplitHands(t);
+	//int i;
+	//hand *storeHands[4];
+
+	if (!t->hasSplits) return;
+
+	/*store the original playerHand for reversion back when done splitting */
+	for (i = 0; i < t->NO_OF_PLAYERS; i++) {
+		storeHands[i] = t->players[i]->playerHand;
+	}
+
+	splitsNotDone = 0;
+	do {
+		/* set the playerHand to the next splitHand in the linked list of splitHands */
+		for (i = 0; i < t->NO_OF_PLAYERS; i++) {
+			t->players[i]->playerHand = t->players[i]->playerHand->splitHand;
+			if (t->players[i]->playerHand != NULL) {
+				if (t->players[i]->playerHand->splitHand != NULL) {
+					splitsNotDone = 1;
+				}
+			}
+		}
+		displayAllBets(t);
+		displayAllPlayerHands(t);
+		handFeedBack_Display_ALL(t);
+
+	} while(splitsNotDone);
+
+	/* revert playerHands to original state */
+	for (i = 0; i < t->NO_OF_PLAYERS; i++) {
+		t->players[i]->playerHand = storeHands[i];
+	}
 }
 
 void getBet(table *t) {
@@ -236,7 +292,7 @@ void getBet(table *t) {
 		error_inputBet();
     }
 	/*set the player's bet attribute according to bet and subtract from chips */
-    t->players[t->currPlayer]->bet = bet;
+    t->players[t->currPlayer]->playerHand->bet = bet;
     t->players[t->currPlayer]->chips -= bet;
 }
 

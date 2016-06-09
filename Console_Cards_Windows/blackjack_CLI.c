@@ -63,20 +63,12 @@ void CL_setPrompt(table *t) {
 	t->spacing = t->currPlayer * 36;
 
 	CL_tabs(t->margin);
-	(t->players[t->currPlayer]->playerHand->hasEnded ? 
+	((t->players[t->currPlayer]->playerHand->hasEnded) && 
+		(t->players[t->currPlayer]->playerHand->splitHand == NULL) ? 
 		CL_spaces(t->spacing + 36) : CL_spaces(t->spacing));
 }
 
-void displayBet(int bet) {
-
-	printf("Bet:    $%d", bet);
-        
-    /*number of spaces to next player algorithm*/
-    if (bet > 0) {
-        CL_spaces(27 - ((int)log10((double)bet)  + 1));
-    }
-    else CL_spaces(26);
-}
+void displayBet(int bet) {printf("Bet:    $%d", bet);}
 
 void prompt_noHumanPlayers() {printf("Enter a number of human players between 0 - 4\n");}
 
@@ -180,23 +172,23 @@ void printDeck(deck *d) {
 }
 
 void busted_Display(table *t, int player) {
-        printf("BUSTED! ($%d-)", t->players[player]->bet);
-        CL_spaces(23 - (int)log10((double)t->players[player]->bet));
+        printf("BUSTED! ($%d-)", t->players[player]->playerHand->bet);
+        CL_spaces(23 - (int)log10((double)t->players[player]->playerHand->bet));
 }
 
 void blackjack_Display(table *t, int player) {
-    printf("BLACKJACK! ($%d+)", (int)((t->players[player]->bet * 3) / 2));
-    CL_spaces(20 - (int)log10((double)((t->players[player]->bet * 3) / 2)));
+    printf("BLACKJACK! ($%d+)", (int)((t->players[player]->playerHand->bet * 3) / 2));
+    CL_spaces(20 - (int)log10((double)((t->players[player]->playerHand->bet * 3) / 2)));
 }
 
 void win_Display(table *t, int player) {
-    printf("WIN ($%d+)", t->players[player]->bet * 2);
-    CL_spaces(27 - (int)log10((double)(t->players[player]->bet * 2)));
+    printf("WIN ($%d+)", t->players[player]->playerHand->bet * 2);
+    CL_spaces(27 - (int)log10((double)(t->players[player]->playerHand->bet * 2)));
 }
 
 void lose_Display(table *t, int player) {
-    printf("LOSE ($%d-)", t->players[player]->bet);
-    CL_spaces(26 - (int)log10((double)t->players[player]->bet));
+    printf("LOSE ($%d-)", t->players[player]->playerHand->bet);
+    CL_spaces(26 - (int)log10((double)t->players[player]->playerHand->bet));
 }
 
 void push_Display(table *t, int player) {

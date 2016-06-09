@@ -47,6 +47,7 @@ void _initHand(hand *h) {
 	for (i = 0; i < MAX_CARDS_IN_HAND; i++) {
 		h->cards[i] = NULL;
 	}
+	h->bet = 0;
 }
 
 hand *createHand() {
