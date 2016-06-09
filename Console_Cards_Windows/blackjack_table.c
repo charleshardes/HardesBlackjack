@@ -98,6 +98,7 @@ void clearTable(table *t) {
     
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
         discardHand(t, t->players[i]->playerHand);
+		t->players[i]->handCount = 0;
     }
     discardHand(t, t->dealer->playerHand);
 	t->hasSplits = 0;

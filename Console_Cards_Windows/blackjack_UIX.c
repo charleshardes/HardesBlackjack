@@ -191,19 +191,30 @@ void displayPlayers(table *t) {
         displayPlayer(t->players[i]);
     }
     CL_newlines(1);
+
 }
 
 void displayAllBets(table *t) {
 
-	int i, bet;
+	int i, bet, isSplit;
+	hand *h;
 	assert(t);
 
 	CL_tabs(t->margin);
     for (i = 0; i < t->NO_OF_PLAYERS; i++) {
-		if (t->players[i]->playerHand != NULL) {
-			bet = t->players[i]->playerHand->bet;
+		h = t->players[i]->playerHand;
+		isSplit = 0;
+		if (h != NULL) {
+			bet = h->bet;
+			if (h->handIndex) {
+				displayHandIndex(h);
+				isSplit = 1;
+			}
 			displayBet(bet);
-			if (i == t->NO_OF_PLAYERS - 1) break;        
+			if (i == t->NO_OF_PLAYERS - 1) break; 
+			else if (isSplit) {
+				CL_spaces(23 - ((int)log10((double)bet)  + 1));
+			}
 			else if (bet > 0) {/*number of spaces to next player algorithm*/
 				CL_spaces(27 - ((int)log10((double)bet)  + 1));
 			}

@@ -48,6 +48,7 @@ void _initHand(hand *h) {
 		h->cards[i] = NULL;
 	}
 	h->bet = 0;
+	h->handIndex = 0;
 }
 
 hand *createHand() {

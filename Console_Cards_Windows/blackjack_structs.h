@@ -34,6 +34,7 @@ struct hand {
 	int doubledDown;
 	int hasEnded;
 	int bet;
+	int handIndex;
 };
 
 struct player {
@@ -43,6 +44,7 @@ struct player {
     int pos;
     hand *playerHand;
     int chips;
+	int handCount;
 };
 
 struct table {

@@ -77,4 +77,6 @@ void prompt_Split();
 
 char input_Split();
 
+void displayHandIndex(hand *h);
+
 #endif

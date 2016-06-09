@@ -119,7 +119,9 @@ void dealStartingHands(table *t, deck *d) {
 void playerTurn(table *t, player *p, hand *h, deck *d) {
 
     char ans;
+
     ans = 'd';
+
     assert((t) && (p) && (d) && (h));
 
 	/* If the hand can split, prompt user whether they want to split, manage the split */
@@ -129,11 +131,18 @@ void playerTurn(table *t, player *p, hand *h, deck *d) {
 		ans = input_Split();
 		if (ans == 'y') {
 			t->hasSplits = 1;
+			p->handCount++;
 			while (h->splitHand != NULL) {
-				h->splitHand->hasSplit = 1;
 				h->splitHand = h->splitHand->splitHand;
 			}
 			h->splitHand = createHand();
+			if (!h->hasSplit) {/* condition that this is first splitting of hand */
+				h->handIndex = 1;
+				h->hasSplit = 1;
+			}
+			h->splitHand->handIndex = p->handCount;
+			
+			h->splitHand->hasSplit = 1;
 			h->splitHand->cards[0] = h->cards[1];
 			h->splitHand->bet = h->bet;
 			p->chips -= h->bet;
@@ -157,6 +166,9 @@ void playerTurn(table *t, player *p, hand *h, deck *d) {
 
 		/*issue prompt and take input for player's turn*/
 		CL_setPrompt(t);
+		if (h->hasSplit) {
+			displayHandIndex(h);
+		}
 		prompt_playerTurn(t);
 		ans = input_playerTurn();
         

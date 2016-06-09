@@ -238,3 +238,9 @@ void prompt_DoubleDown() {printf("Double Down: d\n");}
 void prompt_Split() {printf("Split?: (y/n) ");}
 
 char input_Split() {return input_Continue();}/* reused input_Continue() because def. is same */
+
+void displayHandIndex(hand *h) {
+
+	assert(h);
+	printf("(%d) ", h->handIndex);
+}
