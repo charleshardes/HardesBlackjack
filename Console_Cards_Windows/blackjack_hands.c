@@ -85,8 +85,8 @@ void setAllHands(table *t) {
 
 void _deleteHand(hand *h) {
     assert(h);
-	h = NULL;
     free(h);
+	h = NULL;
 }
 
 int isPair(hand *h) {
@@ -162,13 +162,25 @@ void displayHand(hand *h, player *p) {
 void discardHand(table *t, hand *h) {
     
     int i, cardCount;
+	hand *tempHand;
+	hand **PtrToPtr;
     assert(h);
 
 	/*if the hand has been split, the split hands must be discarded and also deleted */
 	if (h->splitHand != NULL) {
-		do {h->splitHand = h->splitHand->splitHand;} while (h->splitHand != NULL);
-		discardHand(t, h->splitHand);
-		_deleteHand(h->splitHand);
+		
+		/* set tempHand to last hand in linked list of split hands */
+		while (h->splitHand != NULL) {
+			tempHand = h;
+			do {
+				PtrToPtr = &tempHand->splitHand;
+				tempHand = tempHand->splitHand;
+			} while (tempHand->splitHand != NULL);
+			discardHand(t, tempHand);
+			_deleteHand(tempHand);
+			*PtrToPtr = NULL;
+		}
+
 		discardHand(t, h);
 		return;
 	}

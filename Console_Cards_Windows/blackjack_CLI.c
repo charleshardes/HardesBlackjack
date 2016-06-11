@@ -102,7 +102,7 @@ int input_noCompPlayers() {
 	return no_Comps;
 }
 
-void prompt_playerTurn(table *t) {
+void prompt_playerTurn(table *t, hand *h) {
 
 	assert(t);
 
@@ -110,7 +110,7 @@ void prompt_playerTurn(table *t) {
     prompt_HitStay();
 
 	/*Allow player the option of doubling down if this is their first hit of the hand*/
-	if (t->players[t->currPlayer]->playerHand->cardCount == 2) {
+	if (h->cardCount == 2) {
 		CL_setPrompt(t);
 		prompt_DoubleDown();
 	}
@@ -235,7 +235,10 @@ void prompt_HitStay() {printf("Hit: h\tStay: s\n");}
 
 void prompt_DoubleDown() {printf("Double Down: d\n");}
 
-void prompt_Split() {printf("Split?: (y/n) ");}
+void prompt_Split(hand *h) {
+	if (h->hasSplit) displayHandIndex(h);
+	printf("Split?: (y/n) ");
+}
 
 char input_Split() {return input_Continue();}/* reused input_Continue() because def. is same */
 

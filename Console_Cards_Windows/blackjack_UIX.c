@@ -262,10 +262,12 @@ void displayTable(table *t) {
 		storeHands[i] = t->players[i]->playerHand;
 	}
 
-	splitsNotDone = 0;
+	
 	do {
+		splitsNotDone = 0;
 		/* set the playerHand to the next splitHand in the linked list of splitHands */
 		for (i = 0; i < t->NO_OF_PLAYERS; i++) {
+			if (t->players[i]->playerHand == NULL) continue;
 			t->players[i]->playerHand = t->players[i]->playerHand->splitHand;
 			if (t->players[i]->playerHand != NULL) {
 				if (t->players[i]->playerHand->splitHand != NULL) {

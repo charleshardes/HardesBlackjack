@@ -119,30 +119,45 @@ void dealStartingHands(table *t, deck *d) {
 void playerTurn(table *t, player *p, hand *h, deck *d) {
 
     char ans;
+	hand *tempHand;
 
     ans = 'd';
 
     assert((t) && (p) && (d) && (h));
 
+	/*****************************FOR TESTING PURPOSES ONLY*****************************/
+	h->canSplit = 1;//enable every hand to be able to split
+	/***********************************************************************************/
+
 	/* If the hand can split, prompt user whether they want to split, manage the split */
 	if (h->canSplit) {
 		CL_setPrompt(t);
-		prompt_Split();
+		prompt_Split(h);
 		ans = input_Split();
+
 		if (ans == 'y') {
 			t->hasSplits = 1;
 			p->handCount++;
-			while (h->splitHand != NULL) {
-				h->splitHand = h->splitHand->splitHand;
-			}
+			
+			/* Insert new link into linked list of split hands */
+			tempHand = h->splitHand;
 			h->splitHand = createHand();
+			h->splitHand->splitHand = tempHand;
+			
+			/* if first split, set hand index and hasSplit indicator to 1 */
 			if (!h->hasSplit) {/* condition that this is first splitting of hand */
 				h->handIndex = 1;
 				h->hasSplit = 1;
 			}
-			h->splitHand->handIndex = p->handCount;
-			
 			h->splitHand->hasSplit = 1;
+
+			/* reindex linked list of split hands */
+			tempHand = h;
+			while (tempHand->splitHand != NULL) {
+				tempHand->splitHand->handIndex = tempHand->handIndex + 1;
+				tempHand = tempHand->splitHand;
+			}
+			
 			h->splitHand->cards[0] = h->cards[1];
 			h->splitHand->bet = h->bet;
 			p->chips -= h->bet;
@@ -150,11 +165,15 @@ void playerTurn(table *t, player *p, hand *h, deck *d) {
 			h->cards[1] = NULL;
 			h->cardCount = 1;
 			h->hasSplit = 1;
+
 			dealCard(t, d, p, h, 1);
 			dealCard(t, d, p, h->splitHand, 1);
+
 			assessHand(h, 0);
 			assessHand(h->splitHand, 0);
+
 			displayTable(t);
+
 			playerTurn(t, p, h, d);
 			return;
 		}
@@ -169,7 +188,7 @@ void playerTurn(table *t, player *p, hand *h, deck *d) {
 		if (h->hasSplit) {
 			displayHandIndex(h);
 		}
-		prompt_playerTurn(t);
+		prompt_playerTurn(t, h);
 		ans = input_playerTurn();
         
 		/*if player hits/doubles down, deal card*/
@@ -188,7 +207,7 @@ void playerTurn(table *t, player *p, hand *h, deck *d) {
 
 		/*if hand is over (determined by assessHand), prepare for next player by exiting turn loop*/
 		if (h->hasEnded) {
-			if (h->hasSplit) {playerTurn(t, p, h->splitHand, d);}
+			if (h->splitHand != NULL) {playerTurn(t, p, h->splitHand, d);}
 			break;
 		}
     }

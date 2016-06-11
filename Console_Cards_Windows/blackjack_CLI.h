@@ -33,7 +33,7 @@ void prompt_noCompPlayers(int maxComps);
 
 int input_noCompPlayers();
 
-void prompt_playerTurn(table *t);
+void prompt_playerTurn(table *t, hand *h);
 
 char input_playerTurn();
 
@@ -73,7 +73,7 @@ void prompt_HitStay();
 
 void prompt_DoubleDown();
 
-void prompt_Split();
+void prompt_Split(hand *h);
 
 char input_Split();
 
