@@ -53,16 +53,8 @@ void CL_setPrompt(table *t) {}
 
 
 
-void displayBet(int bet) {
 
-	printf("Bet:    $%d", bet);
-        
-    /*number of spaces to next player algorithm*/
-    if (bet > 0) {
-        CL_spaces(27 - ((int)log10((double)bet)  + 1));
-    }
-    else CL_spaces(26);
-}
+void displayBet(int bet) {printf("Bet:    $%d", bet);}
 
 void prompt_noHumanPlayers() {printf("Enter a number of human players between 0 - 4\n");}
 
@@ -96,7 +88,7 @@ int input_noCompPlayers() {
 	return no_Comps;
 }
 
-void prompt_playerTurn(table *t) {
+void prompt_playerTurn(table *t, hand *h) {
 
 	assert(t);
 
@@ -104,7 +96,7 @@ void prompt_playerTurn(table *t) {
     prompt_HitStay();
 
 	/*Allow player the option of doubling down if this is their first hit of the hand*/
-	if (t->players[t->currPlayer]->playerHand->cardCount == 2) {
+	if (h->cardCount == 2) {
 		CL_setPrompt(t);
 		prompt_DoubleDown();
 	}
@@ -228,5 +220,18 @@ void displayPlayerName(player *p) {
 void prompt_HitStay() {printf("Hit: h\tStay: s\n");}
 
 void prompt_DoubleDown() {printf("Double Down: d\n");}
+
+void prompt_Split(hand *h) {
+	if (h->hasSplit) displayHandIndex(h);
+	printf("Split?: (y/n) ");
+}
+
+char input_Split() {return input_Continue();}/* reused input_Continue() because def. is same */
+
+void displayHandIndex(hand *h) {
+
+	assert(h);
+	printf("(%d) ", h->handIndex);
+}
 
 #endif

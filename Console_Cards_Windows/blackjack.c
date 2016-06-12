@@ -126,7 +126,7 @@ void playerTurn(table *t, player *p, hand *h, deck *d) {
     assert((t) && (p) && (d) && (h));
 
 	/*****************************FOR TESTING PURPOSES ONLY*****************************/
-	h->canSplit = 1;//enable every hand to be able to split
+	//h->canSplit = 1;//enable every hand to be able to split
 	/***********************************************************************************/
 
 	/* If the hand can split, prompt user whether they want to split, manage the split */

@@ -124,10 +124,10 @@ void displayDealer(table *t) {
 
 	/*Dealer display line*/
     CL_newlines(5);
-    CL_tabs(9);
+    CL_tabs(5);
     displayPlayer(t->dealer);
     CL_newlines(2);
-    CL_tabs(9);
+    CL_tabs(5);
 
     /*Condition that hand has already been dealt*/
 	if (t->handsAreDealt) {
