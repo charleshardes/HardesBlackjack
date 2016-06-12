@@ -23,11 +23,6 @@ void _initDeck(deck *d);
 deck *createDeck();
 
 /*
- Loops the printCard function for every struct card in the struct deck.
- */
-void printDeck(deck *d);
-
-/*
  Free the memory allocated to every struct card in the struct deck. Then, free the struct deck.
  */
 void _deleteDeck(deck *d);

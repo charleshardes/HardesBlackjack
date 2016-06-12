@@ -17,6 +17,7 @@
 #include "cards.h"
 #include "decks.h"
 #include "cards_test.h"
+#include "blackjack_CLI.h"
 
 
 /*******************MAIN*********************/
@@ -25,11 +26,13 @@ int main(int argc, const char * argv[]) {
     // insert code here...
     
     char *trump = "false";
+	deck *Standard, *shuffled, *reshuffled;
+	card *popper;
     
     printf("Hello, World!\n");
     printf("welcome to BLACK JIGGITY JACK, JACK!\n\n\n");
     
-    deck *Standard = createDeck();
+	Standard = createDeck();
     printDeck(Standard);
     
     setTrumpSuit(suitArr[3]);
@@ -65,13 +68,11 @@ int main(int argc, const char * argv[]) {
     
     setHiAce(Standard->cards[12]);
     printf("Is first ace hi? %d\tIs second ace hi? %d\n", isHiAce(Standard->cards[12]), isHiAce(Standard->cards[25]));
-    
-    deck *shuffled, *reshuffled;
+
     shuffled = shuffle(Standard);
     reshuffled = shuffle(shuffled);
     printDeck(reshuffled);
     
-    card *popper;
     popper = _popCard(reshuffled);
     printf("first card from the top: \n\t%s\n", popper->name);
     popper = _popCard(reshuffled);

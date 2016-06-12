@@ -13,22 +13,26 @@
 
 char playerArr[4][10];
 
-void spaces(int s);
-
-void newlines(int n);
-
-void tabs(int t);
+table *setTable();
 
 int getPlayers();
 
+void dealCard(table *t, deck *d, player *p, hand *h, int shown);
+
 void dealStartingHands(table *t, deck *d);
 
-void playerTurn(table *t, player *p, deck *d);
+void playerTurn(table *t, player *p, hand *h, deck *d);
+
+void playerTurn_ALL(table *t, deck *d);
 
 void dealerTurn(table *t, deck *d);
 
 void takeScores(table *t);
 
 int getComps(int maxComps);
+
+void doubleDown(player *p);
+
+void cleanUp(table *t, deck *d);
 
 #endif /* defined(__Console_Cards__blackjack__) */

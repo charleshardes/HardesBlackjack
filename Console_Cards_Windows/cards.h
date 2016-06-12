@@ -17,8 +17,9 @@ cardSuit *suitArr[NO_OF_SUITS];
 cardValue *valueArr[NO_OF_CARD_VALUES];
 card *cardArr[NO_OF_CARDS];
 cardValue *hi_loAceArr[NO_OF_SUITS];
+#if NO_OF_EXTRA_CARDS != 0
 card *extraCardsArr[NO_OF_EXTRA_CARDS];
-
+#endif
 
 /*
  Initialize a struct card with pointers to structs cardValue and cardSuit, setting the cardValue
@@ -39,16 +40,6 @@ card *createCard(cardValue *cv, cardSuit *s);
 void makeExtraCards(card *c[]);
 
 void _deleteExtraCards();
-
-/*
- Print a string representing the instance of struct card
-*/
-void printCard(card *c);
-
-/*
- Print the abbreviation of the card, if shown. If not, print "XX"
- */
-void displayCard(card *c);
 
 void showCard(card *c);
 

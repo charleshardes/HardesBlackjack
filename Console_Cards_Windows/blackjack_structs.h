@@ -22,15 +22,19 @@ struct hand {
     int bust;
     int canSplit;
     int hasSplit;
+	hand *splitHand;
     int hasBlackjack;
     int cardCount;
     int hiAces;
     int win;
     int lose;
     int push;
-    hand *split;
     int hasInsurance;
     int insuranceAmt;
+	int doubledDown;
+	int hasEnded;
+	int bet;
+	int handIndex;
 };
 
 struct player {
@@ -40,7 +44,7 @@ struct player {
     int pos;
     hand *playerHand;
     int chips;
-    int bet;
+	int handCount;
 };
 
 struct table {
@@ -50,8 +54,10 @@ struct table {
     int NO_OF_COMPS;
     deck *discardPile;
     int currPlayer;
-    int buffer;
+    int spacing;
     int margin;
+	int handsAreDealt;
+	int hasSplits;
 };
 
 #endif

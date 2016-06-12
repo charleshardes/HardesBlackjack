@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="blackjack.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="blackjack_hands.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="blackjack_players.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="blackjack_table.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cards.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cards_suits.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cards_values.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="decks.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="blackjack_UIX.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="blackjack_run.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="blackjack_GUI.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="blackjack_CLI.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="blackjack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="decks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_hands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_players.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_structs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cards.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cards_globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cards_structs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cards_suits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cards_values.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_UIX.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_run.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_GUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blackjack_CLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -19,8 +19,4 @@ void _deletePlayer(player *p);
 
 void newPlayerHand(player *p);
 
-void displayPlayer(player *p);
-
-void displayPlayerHand(player *p);
-
 #endif /* defined(__Console_Cards__blackjack_players__) */

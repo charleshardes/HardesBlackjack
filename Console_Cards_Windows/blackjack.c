@@ -9,7 +9,8 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
-#include <unistd.h>
+//#include <unistd.h>
+#include <Windows.h>
 #include "cards_globals.h"
 #include "cards_structs.h"
 #include "cards_suits.h"
@@ -22,53 +23,35 @@
 #include "blackjack_hands.h"
 #include "blackjack_players.h"
 #include "blackjack_table.h"
+#include "blackjack_UIX.h"
+#include "blackjack_CLI.h"
 #include "blackjack.h"
 
-void spaces(int s) {
-    
-    int i;
-    for(i = 0; i < s; i++) {
-        printf(" ");
-    }
-}
+table *setTable() {
 
-void newlines(int n) {
-    
-    int i;
-    assert(n >= 0);
-    
-    for (i = 0; i < n; i++) {
-        printf("\n");
-    }
-}
+	int no_Comps, no_Human_Players, no_Total_Players;
 
-void tabs(int t) {
-    
-    int i;
-    assert(t >= 0);
-    
-    for (i = 0; i < t; i++) {
-        printf("\t");
-    }
+    no_Human_Players = getPlayers();
+    no_Comps = getComps(4 - no_Human_Players);
+    no_Total_Players = no_Human_Players + no_Comps;
+
+	return createTable(no_Total_Players, no_Comps);
 }
 
 int getPlayers() {
     
-    static const int BUFFERSIZE = 10;
-    
     int i, noPlayers;
-    char buffer[BUFFERSIZE];
     
     do {
-        printf("Enter a number of human players between 0 - 4\n");
-        scanf("%d", &noPlayers);
+		/*issue prompt and take input for number of human players*/
+		prompt_noHumanPlayers();
+		noPlayers = input_noHumanPlayers();
     } while ((noPlayers > 4) || (noPlayers < 0));
     
     for (i = 0; i < noPlayers; i++) {
-        printf("Enter player %d's name:\n", (i + 1));
-        scanf(" %s", buffer);
-        /*printf("string entered: %s\n", buffer);*/newlines(1);
-        strcpy(playerArr[i], buffer);
+		/*issue prompt and take input for names of human players*/
+		prompt_playerName(i + 1);
+        strcpy_s(playerArr[i], sizeof playerArr[i], input_playerName());
     }
     return noPlayers;
 }
@@ -79,53 +62,167 @@ int getComps(int maxComps) {
     assert((maxComps >= 0) && (maxComps <= 4));
     if (maxComps != 0) {
         do {
-            printf("Enter number of computer players between 0 - %d\n", maxComps);
-            scanf(" %d", &no_Comps);
+			/*issue prompt and take input for number of computer players*/
+			prompt_noCompPlayers(maxComps);
+			no_Comps = input_noCompPlayers();
         }while ((no_Comps < 0) || (no_Comps > maxComps));
     }
     return no_Comps;
 }
 
-
-
-void dealStartingHands(table *t, deck *d) {
+void dealCard(table *t, deck *d, player *p, hand *h, int shown) {
     
-    assert((t) && (d));
-    int i;
+    card *dealt, **curr;
+    int i = 0;
+    assert((t) && (d) && (p) && (h));
+    assert(!isEmpty(d));
     
-    dealToPlayers(t, d);
-    dealCard(t, d, t->dealer, 0);
-    dealToPlayers(t, d);
-    dealCard(t, d, t->dealer, 1);
+    dealt = _popCard(d);/*get top card from deck, assign to variable dealt*/
+    dealt->shown = shown;
+    curr = h->cards;
     
-    for (i = 0; i < t->NO_OF_PLAYERS; i++) {
-        assessHand(t->players[i]->playerHand);
+    /*cycle through cards in hand to find last one, preparing to add an additional card in first empty slot*/
+    while (curr[i] != NULL) {
+        i++;
     }
-    assessHand(t->dealer->playerHand);
+    /*assigns (deals) popped card to player's hand*/
+    curr[i] = dealt;
+    if ((strcmp(dealt->value->name, "Ace") == 0)) {h->hiAces++;}/*if ace, increment ace counter*/
+    h->cardCount++;
     
-    //displayTable(t);
+    /*If card dealt was last in deck, put all discarded cards back in deck and shuffle*/
+    if (isEmpty(d)) {
+        pileToDeck(t, d);
+        shuffle(d);
+        shuffle(d);
+    }
 }
 
-void playerTurn(table *t, player *p, deck *d) {
+void dealStartingHands(table *t, deck *d) {
+
+    int i;    
+    assert((t) && (d));
+
+    dealToPlayers(t, d);
+	dealCard(t, d, t->dealer, t->dealer->playerHand, 0);
+    dealToPlayers(t, d);
+	dealCard(t, d, t->dealer, t->dealer->playerHand, 1);
+    
+    for (i = 0; i < t->NO_OF_PLAYERS; i++) {
+        assessHand(t->players[i]->playerHand, 0);
+    }
+    assessHand(t->dealer->playerHand, 0);
+    
+	t->handsAreDealt= 1;
+}
+
+void playerTurn(table *t, player *p, hand *h, deck *d) {
 
     char ans;
-    ans = 'd';
-    assert((t) && (p) && (d));
-    
-    while ((ans != 's') && (p->playerHand->bust != 1)) {
-        printf("Hit: h\tStay: s\n");
-        newlines(1);
-        tabs(t->margin);
-        spaces(t->buffer);
-        ans = getchar();
-        
-        if (ans == 'h') {
-            dealCard(t, d, p, 1);
-        }
-        assessHand(p->playerHand);
-        displayTable(t, 1);
+	hand *tempHand;
 
+    ans = 'd';
+
+    assert((t) && (p) && (d) && (h));
+
+	/*****************************FOR TESTING PURPOSES ONLY*****************************/
+	h->canSplit = 1;//enable every hand to be able to split
+	/***********************************************************************************/
+
+	/* If the hand can split, prompt user whether they want to split, manage the split */
+	if (h->canSplit) {
+		CL_setPrompt(t);
+		prompt_Split(h);
+		ans = input_Split();
+
+		if (ans == 'y') {
+			t->hasSplits = 1;
+			p->handCount++;
+			
+			/* Insert new link into linked list of split hands */
+			tempHand = h->splitHand;
+			h->splitHand = createHand();
+			h->splitHand->splitHand = tempHand;
+			
+			/* if first split, set hand index and hasSplit indicator to 1 */
+			if (!h->hasSplit) {/* condition that this is first splitting of hand */
+				h->handIndex = 1;
+				h->hasSplit = 1;
+			}
+			h->splitHand->hasSplit = 1;
+
+			/* reindex linked list of split hands */
+			tempHand = h;
+			while (tempHand->splitHand != NULL) {
+				tempHand->splitHand->handIndex = tempHand->handIndex + 1;
+				tempHand = tempHand->splitHand;
+			}
+			
+			h->splitHand->cards[0] = h->cards[1];
+			h->splitHand->bet = h->bet;
+			p->chips -= h->bet;
+			h->splitHand->cardCount = 1;
+			h->cards[1] = NULL;
+			h->cardCount = 1;
+			h->hasSplit = 1;
+
+			dealCard(t, d, p, h, 1);
+			dealCard(t, d, p, h->splitHand, 1);
+
+			assessHand(h, 0);
+			assessHand(h->splitHand, 0);
+
+			displayTable(t);
+
+			playerTurn(t, p, h, d);
+			return;
+		}
+		else if (ans == 'n') displayTable(t);
+	}
+    
+	/*loops the player's turn until stay or bust*/
+    while ((ans != 's') && (h->bust != 1)) {
+
+		/*issue prompt and take input for player's turn*/
+		CL_setPrompt(t);
+		if (h->hasSplit) {
+			displayHandIndex(h);
+		}
+		prompt_playerTurn(t, h);
+		ans = input_playerTurn();
+        
+		/*if player hits/doubles down, deal card*/
+		if ((ans == 'h') || (ans == 'd')) {
+			dealCard(t, d, p, h, 1);
+			if (ans == 'd') {
+				doubleDown(p);
+			}
+		}
+
+		/*assess and update the hand after the player's turn*/
+        assessHand(h, (ans == 's' ? 1 : 0));
+
+		/*show updated table*/
+		displayTable(t);
+
+		/*if hand is over (determined by assessHand), prepare for next player by exiting turn loop*/
+		if (h->hasEnded) {
+			if (h->splitHand != NULL) {playerTurn(t, p, h->splitHand, d);}
+			break;
+		}
     }
+}
+
+void playerTurn_ALL(table *t, deck *d) {
+		
+	assert(t);
+
+    /*Loop through all players' turns*/
+	for (t->currPlayer = 0; t->currPlayer < t->NO_OF_PLAYERS; t->currPlayer++) {
+		if (t->players[t->currPlayer]->playerHand->hasEnded) continue;/*iterate if turn over*/
+		playerTurn(t, t->players[t->currPlayer], t->players[t->currPlayer]->playerHand, d);/*calls driver for each individual player turn*/
+    }
+    t->currPlayer = 0;/*set currPlayer counter back to start after loop finishes*/
 }
 
 void dealerTurn(table *t, deck *d) {
@@ -133,25 +230,25 @@ void dealerTurn(table *t, deck *d) {
     assert((t) && (d));
     
     showCard(t->dealer->playerHand->cards[0]);
-    sleep(1);
-    displayTable(t, 1);
+    Sleep(1000);/* wait a second between each card dealer draws */
+    displayTable(t);
     
     /*Condition for soft 17*/
     if ((t->dealer->playerHand->score == 17) &&
         (t->dealer->playerHand->cardCount == 2) &&
         (isHiAce(t->dealer->playerHand->cards[0]) ||
          isHiAce(t->dealer->playerHand->cards[1]))) {
-            dealCard(t, d, t->dealer, 1);
-            assessHand(t->dealer->playerHand);
-            sleep(1);
-            displayTable(t, 1);
+			dealCard(t, d, t->dealer, t->dealer->playerHand, 1);
+            assessHand(t->dealer->playerHand, 0);
+            Sleep(1000);
+            displayTable(t);
     }
     
     while (t->dealer->playerHand->score < 17) {
-        dealCard(t, d, t->dealer, 1);
-        assessHand(t->dealer->playerHand);
-        sleep(1);
-        displayTable(t, 1);
+		dealCard(t, d, t->dealer, t->dealer->playerHand, 1);
+        assessHand(t->dealer->playerHand, 0);
+        Sleep(1000);
+        displayTable(t);
     }
 }
 
@@ -207,11 +304,11 @@ void takeScores(table *t) {
             
             /*Condition for player Blackjack; pays 3/2*/
             if (t->players[i]->playerHand->hasBlackjack) {
-                t->players[i]->chips += ((t->players[i]->bet * 3) / 2);
+                t->players[i]->chips += ((t->players[i]->playerHand->bet * 3) / 2);
             }
             /*all other wins pay 2/1*/
             else {
-                t->players[i]->chips += t->players[i]->bet * 2;
+                t->players[i]->chips += t->players[i]->playerHand->bet * 2;
             }
             t->players[i]->playerHand->win = 1;
         }
@@ -222,7 +319,19 @@ void takeScores(table *t) {
         /*Push condition for tying scores and no bust*/
         else if (t->players[i]->playerHand->score == t->dealer->playerHand->score) {
             t->players[i]->playerHand->push = 1;
-            t->players[i]->chips += t->players[i]->bet;
+            t->players[i]->chips += t->players[i]->playerHand->bet;
         }
     }
+}
+
+void doubleDown(player *p) {
+	assert(p);
+	p->chips -= p->playerHand->bet;
+	p->playerHand->bet *= 2;
+	p->playerHand->doubledDown = 1;
+}
+
+void cleanUp(table *t, deck *d) {
+    _deleteTable(t);
+    _deleteDeck(d);
 }

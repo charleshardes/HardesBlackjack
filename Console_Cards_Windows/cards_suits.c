@@ -38,7 +38,7 @@ void _initCardSuit(cardSuit *v, const char *s){
     
     v->trump = 0;
     v->weight = 0;
-    strcpy(v->name, s);
+    strcpy_s(v->name, sizeof v->name, s);
     temp = v->name[0];
     if (temp >= 'A') {/*if first letter of s is capital*/
         v->abbr = temp + 'a' - 'A';/*convert to lowercase*/
@@ -59,7 +59,7 @@ cardSuit *createCardSuit(const char *s){
     struct cardSuit *newCardSuit;
     assert(s);
     
-    newCardSuit = malloc(sizeof(cardSuit));
+    newCardSuit = (cardSuit *) malloc(sizeof(cardSuit));
     _initCardSuit(newCardSuit, s);
     return newCardSuit;
 }

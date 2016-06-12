@@ -38,7 +38,7 @@ void _initCardValue(cardValue *cv, const char *name, const int value) {
     
     assert((cv != NULL) && (name != NULL));
     
-    strcpy(cv->name, name);
+    strcpy_s(cv->name, sizeof cv->name, name);
     cv->weight = value;
     
     /*if the card is a ten, its abbreviation is 'T'*/

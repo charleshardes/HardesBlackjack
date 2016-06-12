@@ -26,7 +26,7 @@ player *createPlayer(char *name, int pos, int isDealer, int isComputer) {
     assert(((isDealer == 1) || (isDealer == 0)) && ((isComputer == 1) || (isComputer == 0)));
     
     newPlayer = (player *)malloc(sizeof(player));
-    strcpy(newPlayer->name, name);
+    strcpy_s(newPlayer->name, sizeof newPlayer->name, name);
     _initPlayer(newPlayer, pos, isDealer, isComputer);
     return newPlayer;
 }
@@ -42,6 +42,7 @@ void _initPlayer(player *p, int pos, int isDealer, int isComputer) {
     p->playerHand = newHand;
     p->pos = pos;
     p->chips = STARTING_CHIPS;
+	p->handCount = 1;
 }
 
 void _deletePlayer(player *p) {
@@ -50,26 +51,3 @@ void _deletePlayer(player *p) {
     free(p);
 }
 
-void newPlayerHand(player *p) {
-    assert(p);
-    setNewHand(p->playerHand);
-}
-
-void displayPlayer(player *p) {
-    
-    assert(p);
-    
-    if (p->dealer == 1) {
-        printf("%s", p->name);
-    }
-    else {
-        printf("%s     $%d", p->name, p->chips);
-    }
-}
-
-void displayPlayerHand(player *p) {
-    
-    assert(p);
-    if (p->dealer == 1) {return;}
-    displayHand(p->playerHand, p);
-}

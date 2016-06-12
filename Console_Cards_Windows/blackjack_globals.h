@@ -11,6 +11,10 @@
 
 static const int NO_CARDS_START = 2;
 static const int STARTING_CHIPS = 1000;
+static const int MAX_CARDS_IN_HAND = 22;
+//for display purposes
+#define BUFFERSIZE 64
 
+#define UIX 0
 
 #endif

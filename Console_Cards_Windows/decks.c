@@ -36,7 +36,7 @@
  */
 void _initDeck(deck *d){
     
-    int g, h,i, j, k = 0;
+    int h, i, j, k = 0;
     assert(d);
     assert(NO_OF_CARDS == NO_OF_DECKS * ((NO_OF_SUITS * NO_OF_CARD_VALUES) + NO_OF_EXTRA_CARDS));
     
@@ -45,9 +45,9 @@ void _initDeck(deck *d){
     if (HI_LO_ACES == 1) {
         makeHiLoAces(hi_loAceArr);/*fills the global array of pointers to separate card structs (so that changing one ace to hi/lo does not change all aces to hi/lo.*/
     }
-    if (NO_OF_EXTRA_CARDS > 0) {
+	#if NO_OF_EXTRA_CARDS > 0
         makeExtraCards(extraCardsArr);
-    }
+	#endif
     
     /*deck loop*/
     for (h = 0; h < NO_OF_DECKS; h++) {
@@ -65,9 +65,11 @@ void _initDeck(deck *d){
                 k++;
             }
         }
-        for (g = 0; g < NO_OF_EXTRA_CARDS; g++) {
-            d->cards[k] = extraCardsArr[g];
-        }
+		#if NO_OF_EXTRA_CARDS > 0
+			for (i = 0; i < NO_OF_EXTRA_CARDS; i++) {
+				d->cards[k] = extraCardsArr[i];
+			}
+		#endif
     }
     d->cards_left = NO_OF_CARDS;
     d->top = d->cards[NO_OF_CARDS - 1];
@@ -110,30 +112,14 @@ void _deleteDeck(deck *d){
             _deleteCardValue(hi_loAceArr[h]);
         }
     }
-    if (NO_OF_EXTRA_CARDS > 0) {
+	#if (NO_OF_EXTRA_CARDS > 0)
     _deleteExtraCards(extraCardsArr);
-    }
+	#endif
+
     for (i = 0; i < NO_OF_CARDS; i++) {
         _deleteCard(d->cards[i]);
     }
     free(d);
-}
-
-/*
- Loops the printCard function for every struct card in the struct deck.
- -----------------------------------------------------------------------------------------
- Parameters: deck *d
- Preconditions: d is not null
- Postconditions: the printCard function is called on every struct card in the struct deck.
- */
-void printDeck(deck *d) {
-    
-    int i;
-    assert(d);
-    
-    for (i = 0; i < NO_OF_CARDS; i++){
-        printCard(d->cards[i]);
-    }
 }
 
 /*
@@ -219,9 +205,12 @@ int isEmpty(deck *d) {
 }
 
 void clearDeck(deck *d) {
+
+	int i = 0;
     assert(d);
-    
-    int i;
+
+
+
     /*make all cards null*/
     for (i = 0; i < NO_OF_CARDS; i++) {
         d->cards[i] = NULL;

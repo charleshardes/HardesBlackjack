@@ -17,14 +17,10 @@ table *createTable(int NO_OF_PLAYERS, int NO_OF_COMPS);
 
 void _deleteTable(table *t);
 
-void dealCard(table *t, deck *d, player *p, int shown);
-
 void clearTable(table *t);
 
 void pileToDeck(table *t, deck *d);
 
 void dealToPlayers(table *t, deck *d);
-
-void displayTable(table *t, int dealt);
 
 #endif /* defined(__Console_Cards__blackjack_table__) */

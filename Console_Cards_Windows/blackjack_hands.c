@@ -18,27 +18,37 @@
 #include "cards_test.h"
 #include "blackjack_globals.h"
 #include "blackjack_structs.h"
+#include "blackjack_players.h"
 #include "blackjack_hands.h"
+#include "blackjack_UIX.h"
+#include "blackjack_CLI.h"
 
 void _initHand(hand *h) {
     
+	int i;
     assert(h);
     
     h->starting = NO_CARDS_START;
     h->score = 0;
     h->bust = 0;
-    h->canSplit = 0;
     h->hasBlackjack = 0;
     h->cardCount = 0;
     h->hiAces = 0;
     h->win = 0;
     h->lose = 0;
     h->push = 0;
-    h->split = NULL;
+    h->splitHand = NULL;
     h->canSplit = 0;
     h->hasSplit = 0;
     h->hasInsurance = 0;
     h->insuranceAmt = 0;
+	h->doubledDown = 0;
+	h->hasEnded = 0;
+	for (i = 0; i < MAX_CARDS_IN_HAND; i++) {
+		h->cards[i] = NULL;
+	}
+	h->bet = 0;
+	h->handIndex = 0;
 }
 
 hand *createHand() {
@@ -57,16 +67,26 @@ void setNewHand(hand *h) {
     _initHand(h);
 }
 
+void setAllHands(table *t) {
+
+	int i;
+
+	/*create hand structs for each player*/
+	for (i = 0; i < (t->NO_OF_PLAYERS); i++) {
+		setNewHand(t->players[i]->playerHand);
+    }
+
+	/*create hand struct for dealer*/
+	setNewHand(t->dealer->playerHand);
+
+	/*reset handsAreDealt attribute back to false*/
+	t->handsAreDealt = 0;
+}
 
 void _deleteHand(hand *h) {
     assert(h);
-    
-    /*if hand has recursive hand property, delete it recursively*/
-    if (h->hasSplit) {
-        assert(h->split);
-        _deleteHand(h->split);
-    }
     free(h);
+	h = NULL;
 }
 
 int isPair(hand *h) {
@@ -79,18 +99,7 @@ int isPair(hand *h) {
     return 0;
 }
 
-/*unnecessary function
-int isBlackJack(hand *h) {
-    assert(h);
-    if (((isHiAce(h->cards[0])) && (h->cards[1]->value->weight == 10)) ||
-         ((isHiAce(h->cards[1])) && (h->cards[0]->value->weight == 10))) {
-        return 1;
-    }
-    else return 0;
-}
- */
-
-void assessHand(hand *h) {
+void assessHand(hand *h, int stayed) {
     
     int sum, i;
     assert(h);
@@ -108,8 +117,10 @@ void assessHand(hand *h) {
         if (isPair(h)) {
             h->canSplit = 1;
         }
+		else h->canSplit = 0;
+
         /*determine if player has blackjack*/
-        else if (sum == 21) {
+        if (sum == 21) {
             h->hasBlackjack = 1;
         }
     }
@@ -124,25 +135,25 @@ void assessHand(hand *h) {
             }
             setLoAce(h->cards[i]);
             h->hiAces--;
-            assessHand(h);/*RECURSION!*/
+            assessHand(h, stayed);/*RECURSION!*/
             return;
         }
         h->bust = 1;
     }
+
+	/*determine if the hand is now over*/
+	if ((stayed) || (h->hasBlackjack) || (h->bust) || (h->doubledDown)) {h->hasEnded = 1;}
+
     h->score = sum;
 }
 
 void displayHand(hand *h, player *p) {
     
-    int i, cardsInHand;
+    int i;
     assert(h);
     
-    cardsInHand = h->cardCount;
-    
-    for (i = 0; i < cardsInHand; i++) {
+	for (i = 0; i < h->cardCount; i++) {
         displayCard(h->cards[i]);
-        if (i == cardsInHand - 1) {break;}/*if last card, don't print a space*/
-        printf(" ");
     }
 }
 
@@ -150,9 +161,30 @@ void displayHand(hand *h, player *p) {
  card pointers on the table to the discard pile*/
 void discardHand(table *t, hand *h) {
     
-    assert(h);
     int i, cardCount;
-    
+	hand *tempHand;
+	hand **PtrToPtr;
+    assert(h);
+
+	/*if the hand has been split, the split hands must be discarded and also deleted */
+	if (h->splitHand != NULL) {
+		
+		/* set tempHand to last hand in linked list of split hands */
+		while (h->splitHand != NULL) {
+			tempHand = h;
+			do {
+				PtrToPtr = &tempHand->splitHand;
+				tempHand = tempHand->splitHand;
+			} while (tempHand->splitHand != NULL);
+			discardHand(t, tempHand);
+			_deleteHand(tempHand);
+			*PtrToPtr = NULL;
+		}
+
+		discardHand(t, h);
+		return;
+	}
+
     /*If function is called on an empty hand, should not produce an error; just do nothing and return*/
     if (!h->cardCount) return;
     
@@ -162,11 +194,11 @@ void discardHand(table *t, hand *h) {
         _pushCard(t->discardPile, h->cards[i]);
         h->cards[i] = NULL;
         h->cardCount--;
-        
+      
         /*If hand is split, recursively call function on the split hand(s)*/
-        if (h->hasSplit) {
+/*        if (h->hasSplit) {
             discardHand(t, h->split);
-        }
+        }*/
     }
     /*reset all hand properties*/
     _initHand(h);
