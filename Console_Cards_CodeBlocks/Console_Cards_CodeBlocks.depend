@@ -57,7 +57,7 @@
 1459729655 c:\cygwin64\home\gerald\hardesblackjack\console_cards_codeblocks\blackjack.h
 	<stdio.h>
 
-1459729655 source:c:\cygwin64\home\gerald\hardesblackjack\console_cards_codeblocks\blackjack_hands.c
+1462759420 source:c:\cygwin64\home\gerald\hardesblackjack\console_cards_codeblocks\blackjack_hands.c
 	<stdlib.h>
 	<stdio.h>
 	<assert.h>
@@ -73,7 +73,7 @@
 	"blackjack_structs.h"
 	"blackjack_hands.h"
 
-1459729655 source:c:\cygwin64\home\gerald\hardesblackjack\console_cards_codeblocks\blackjack_players.c
+1462754999 source:c:\cygwin64\home\gerald\hardesblackjack\console_cards_codeblocks\blackjack_players.c
 	<stdlib.h>
 	<stdio.h>
 	<assert.h>
@@ -90,7 +90,7 @@
 	"blackjack_hands.h"
 	"blackjack_players.h"
 
-1459729655 source:c:\cygwin64\home\gerald\hardesblackjack\console_cards_codeblocks\blackjack_table.c
+1462756590 source:c:\cygwin64\home\gerald\hardesblackjack\console_cards_codeblocks\blackjack_table.c
 	<stdlib.h>
 	<stdio.h>
 	<assert.h>

@@ -21,9 +21,11 @@
 #include "blackjack_hands.h"
 
 void _initHand(hand *h) {
-    
+
     assert(h);
-    
+
+    int i;
+
     h->starting = NO_CARDS_START;
     h->score = 0;
     h->bust = 0;
@@ -39,28 +41,32 @@ void _initHand(hand *h) {
     h->hasSplit = 0;
     h->hasInsurance = 0;
     h->insuranceAmt = 0;
+
+    for (i = 0; i < 22; i++) {
+        h->cards[i] = NULL;
+    }
 }
 
 hand *createHand() {
-    
+
     hand *newHand;
-    
+
     newHand = (hand *)malloc(sizeof(hand));
     _initHand(newHand);
     return newHand;
 }
 
 void setNewHand(hand *h) {
-    
+
     assert(h);
-    
+
     _initHand(h);
 }
 
 
 void _deleteHand(hand *h) {
     assert(h);
-    
+
     /*if hand has recursive hand property, delete it recursively*/
     if (h->hasSplit) {
         assert(h->split);
@@ -91,11 +97,11 @@ int isBlackJack(hand *h) {
  */
 
 void assessHand(hand *h) {
-    
+
     int sum, i;
     assert(h);
     assert(h->cardCount >= h->starting);
-    
+
     sum = 0;
     /*add up all card values*/
     for (i = 0; i < h->cardCount; i++) {
@@ -103,7 +109,7 @@ void assessHand(hand *h) {
     }
     /*when starting hand is dealt, check for pairs and blackjack*/
     if (h->cardCount == h->starting) {
-        
+
         /*condition that starting hand is a pair*/
         if (isPair(h)) {
             h->canSplit = 1;
@@ -115,7 +121,7 @@ void assessHand(hand *h) {
     }
     /*determine if player has busted*/
     else if (sum > 21) {
-        
+
         /*determine if player has a high ace that must be turned into low ace*/
         if (h->hiAces > 0) {
             i = 0;
@@ -133,12 +139,12 @@ void assessHand(hand *h) {
 }
 
 void displayHand(hand *h, player *p) {
-    
+
     int i, cardsInHand;
     assert(h);
-    
+
     cardsInHand = h->cardCount;
-    
+
     for (i = 0; i < cardsInHand; i++) {
         displayCard(h->cards[i]);
         if (i == cardsInHand - 1) {break;}/*if last card, don't print a space*/
@@ -146,23 +152,23 @@ void displayHand(hand *h, player *p) {
     }
 }
 
-/*Takes every hand on the table including the dealer's and calls discardHand() to assign all 
+/*Takes every hand on the table including the dealer's and calls discardHand() to assign all
  card pointers on the table to the discard pile*/
 void discardHand(table *t, hand *h) {
-    
+
     assert(h);
     int i, cardCount;
-    
+
     /*If function is called on an empty hand, should not produce an error; just do nothing and return*/
     if (!h->cardCount) return;
-    
+
     /*for every card in hand, push its pointer into discardPile, make its slot in h->cards null, decrease cardcount*/
     cardCount = h->cardCount;
     for (i = 0; i < cardCount; i++) {
         _pushCard(t->discardPile, h->cards[i]);
         h->cards[i] = NULL;
         h->cardCount--;
-        
+
         /*If hand is split, recursively call function on the split hand(s)*/
         if (h->hasSplit) {
             discardHand(t, h->split);
