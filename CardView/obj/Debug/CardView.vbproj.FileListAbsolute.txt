@@ -1,0 +1,10 @@
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\CardView\bin\Debug\CardView.exe.config
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\CardView\bin\Debug\CardView.exe
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\CardView\bin\Debug\CardView.pdb
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\CardView\bin\Debug\CardView.xml
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\CardView\obj\Debug\CardView.Form1.resources
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\CardView\obj\Debug\CardView.Resources.resources
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\CardView\obj\Debug\CardView.vbproj.GenerateResource.Cache
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\CardView\obj\Debug\CardView.exe
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\CardView\obj\Debug\CardView.xml
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\CardView\obj\Debug\CardView.pdb
