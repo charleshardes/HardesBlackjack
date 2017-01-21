@@ -5,8 +5,6 @@
 //  Created by Charles Hardes on 3/28/15.
 //  Copyright (c) 2015 Charles Hardes. All rights reserved.
 //
-#pragma once
-#if ( UIX != 0 )
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -111,7 +109,7 @@ char input_playerTurn() {
 	char ans;
 	ans = 'd';
 
-	scanf_s(" %c", &ans);
+	scanf_s(" %c", &ans, sizeof(ans));
 	return ans;
 }
 
@@ -234,4 +232,3 @@ void displayHandIndex(hand *h) {
 	printf("(%d) ", h->handIndex);
 }
 
-#endif

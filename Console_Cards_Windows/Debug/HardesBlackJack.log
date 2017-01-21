@@ -1,5 +1,7 @@
-﻿Build started 6/12/2016 3:24:45 PM.
-
-Build succeeded.
-
-Time Elapsed 00:00:00.04
+﻿  blackjack_GUI.c
+blackjack_GUI.c(112): warning C4473: 'scanf_s' : not enough arguments passed for format string
+  blackjack_GUI.c(112): note: placeholders and their parameters expect 2 variadic arguments, but 1 were provided
+  blackjack_GUI.c(112): note: the missing variadic argument 2 is required by format string '%c'
+  blackjack_GUI.c(112): note: this argument is used as a buffer size
+  HardesBlackJack.vcxproj -> C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\HardesBlackJack.exe
+  HardesBlackJack.vcxproj -> C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\HardesBlackJack.pdb (Full PDB)

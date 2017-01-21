@@ -21,7 +21,11 @@
 #include "blackjack_players.h"
 #include "blackjack_hands.h"
 #include "blackjack_UIX.h"
+#if ( UIX == 0 )
 #include "blackjack_CLI.h"
+#elif ( UIX == 1 )
+#include "blackjack_GUI.h"
+#endif
 
 void _initHand(hand *h) {
     

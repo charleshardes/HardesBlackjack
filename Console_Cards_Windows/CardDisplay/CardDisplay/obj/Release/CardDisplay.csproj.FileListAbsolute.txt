@@ -1,0 +1,9 @@
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\bin\Release\CardDisplay.exe.config
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\bin\Release\CardDisplay.exe
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\bin\Release\CardDisplay.pdb
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\obj\Release\CardDisplay.csprojResolveAssemblyReference.cache
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\obj\Release\CardDisplay.DisplayHand.resources
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\obj\Release\CardDisplay.Properties.Resources.resources
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\obj\Release\CardDisplay.csproj.GenerateResource.Cache
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\obj\Release\CardDisplay.exe
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\obj\Release\CardDisplay.pdb
