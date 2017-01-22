@@ -1,0 +1,5 @@
+C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\TestCard2\bin\Debug\TestCard2.dll
+C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\TestCard2\bin\Debug\TestCard2.pdb
+C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\TestCard2\obj\Debug\TestCard2.dll
+C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\TestCard2\obj\Debug\TestCard2.pdb
+C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\TestCard2\obj\Debug\TestCard2.csprojResolveAssemblyReference.cache

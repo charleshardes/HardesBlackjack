@@ -1,5 +1,18 @@
-﻿Build started 6/12/2016 3:24:45 PM.
-
-Build succeeded.
-
-Time Elapsed 00:00:00.04
+﻿  decks.c
+  cards_values.c
+  cards_suits.c
+  cards.c
+  blackjack_table.c
+  blackjack_run.c
+  blackjack_players.c
+  blackjack_hands.c
+  blackjack_UIX.c
+  blackjack_CLI.c
+blackjack_CLI.c(128): warning C4473: 'scanf_s' : not enough arguments passed for format string
+  blackjack_CLI.c(128): note: placeholders and their parameters expect 2 variadic arguments, but 1 were provided
+  blackjack_CLI.c(128): note: the missing variadic argument 2 is required by format string '%c'
+  blackjack_CLI.c(128): note: this argument is used as a buffer size
+  blackjack.c
+  Generating Code...
+  HardesBlackJack.vcxproj -> C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\Debug\HardesBlackJack.exe
+  HardesBlackJack.vcxproj -> C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\Debug\HardesBlackJack.pdb (Full PDB)
