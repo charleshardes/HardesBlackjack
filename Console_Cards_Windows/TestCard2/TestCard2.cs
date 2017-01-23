@@ -33,20 +33,23 @@ namespace TestCard2
                 switch (i)
                 {
                     case 0:
+                        this.Players[i] = player1;
                         this.Players[i].Cards[0] = "d4";
                         this.Players[i].Cards[1] = "sk";
-                        this.Players[i].Name = player1.Name;
+                        //this.Players[i].Name = player1.Name;
 
                         break;
                     case 1:
+                        this.Players[i] = player2;
                         this.Players[i].Cards[0] = "c9";
                         this.Players[i].Cards[1] = "dj";
-                        this.Players[i].Name = player2.Name;
+                        //this.Players[i].Name = player2.Name;
                         break;
                     case 2:
+                        this.Players[i]=player3;
                         this.Players[i].Cards[0] = "h8";
                         this.Players[i].Cards[1] = "sA";
-                        this.Players[i].Name = player3.Name;
+                        //this.Players[i].Name = player3.Name;
                         break;
                 }
             }
