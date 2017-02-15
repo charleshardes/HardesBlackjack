@@ -18,8 +18,17 @@ namespace TestCard2
             SortedList<string, int> sDeck = new SortedList<string, int>();
             string sNextCard;
             IList<string> sDeck2 = new List<string>();
-            int CardsInDeck = 52;
+            int iCardsInDeck = 52;
+            public int CardsInDeck
+            {
+                set { iCardsInDeck = value; }
+                get { return iCardsInDeck; }
+            }
             public Deck()
+            {
+                Shuffle();   
+            }
+            public IList<string> Shuffle()
             {
                 sDeck.Add("sA", 1);
                 sDeck.Add("s2", 2);
@@ -126,15 +135,30 @@ namespace TestCard2
                 sDeck2.Add("cj");
                 sDeck2.Add("cq");
                 sDeck2.Add("ck");
+                return sDeck2;
             }
             public string NextCard()
             {
                 Random random = new Random();
-                int num = random.Next(1, CardsInDeck);
+                int num;
+                if (CardsInDeck > 0)
+                {
+                    num = random.Next(CardsInDeck);
+                }
+                else
+                {
+                    num = random.Next(CardsInDeck);
+                }
+                
                 sNextCard = sDeck2[num];
                 sDeck2.Remove(sNextCard);
-                CardsInDeck--;
+                iCardsInDeck--;
                 return sNextCard;
+            }
+
+            internal void Remove(object sNextCard)
+            {
+                throw new NotImplementedException();
             }
         }
     } //End Game
@@ -164,50 +188,67 @@ namespace TestCard2
 
         public DealCards2(int iplayers, player player1, player player2, player player3, dealer dealer, Game.Deck myDeck)
         {
-            for (int i = 0; i < iplayers; i++)
-            {
-                switch (i)
-                {
-                    case 0:
-                        this.Players[i] = player1;
-                        this.Players[i].Cards.Add(myDeck.NextCard());
-                        this.Players[i].Cards.Add(myDeck.NextCard());
-                        //this.Players[i].Name = player1.Name;
+        //    DrawCard DrawCard = new DrawCard();
+        //    for (int i = 0; i < iplayers; i++)
+        //    {
+        //        switch (i)
+        //        {
+        //            case 0:
+        //                this.Players[i] = player1;
+        //                this.Players[i].Cards.Add(DrawCard.NewCard(myDeck));
+        //                this.Players[i].Cards.Add(DrawCard.NewCard(myDeck));
+        //                //this.Players[i].Cards.Add(myDeck.NextCard());
+        //                //this.Players[i].Cards.Add(myDeck.NextCard());
+        //                //this.Players[i].Name = player1.Name;
 
-                        break;
-                    case 1:
-                        this.Players[i] = player2;
-                        this.Players[i].Cards.Add(myDeck.NextCard());
-                        this.Players[i].Cards.Add(myDeck.NextCard());
-                        //this.Players[i].Name = player2.Name;
-                        break;
-                    case 2:
-                        this.Players[i] = player3;
-                        this.Players[i].Cards.Add(myDeck.NextCard());
-                        this.Players[i].Cards.Add(myDeck.NextCard());
-                        //this.Players[i].Name = player3.Name;
-                        break;
-                }
-            }
-            this.DealerHand = dealer;
-            this.DealerHand.Cards.Add(myDeck.NextCard());
-            this.DealerHand.Cards.Add(myDeck.NextCard());
+        //                break;
+        //            case 1:
+        //                this.Players[i] = player2;
+        //                this.Players[i].Cards.Add(DrawCard.NewCard(myDeck));
+        //                this.Players[i].Cards.Add(DrawCard.NewCard(myDeck));
+        //                //this.Players[i].Name = player2.Name;
+        //                break;
+        //            case 2:
+        //                this.Players[i] = player3;
+        //                this.Players[i].Cards.Add(DrawCard.NewCard(myDeck));
+        //                this.Players[i].Cards.Add(DrawCard.NewCard(myDeck));
+        //                //Players[i].Cards.Add(
+        //                //this.Players[i].Name = player3.Name;
+        //                break;
+        //        }
+        //    }
+        //    this.DealerHand = dealer;
+        //    this.DealerHand.Cards.Add(DrawCard.NewCard(myDeck));
+        //    this.DealerHand.Cards.Add(DrawCard.NewCard(myDeck));
+        //}
+
+        //public class DrawCard   
+        //{  
+        //    private string sDrawCard;
+        //    public string Drawcard
+        //    {
+        //        get { return sDrawCard; }  
+        //    }
+        //    public string NewCard(Game.Deck myDeck)
+        //    {
+        //        Random random = new Random();
+        //        int num;
+        //        if (myDeck.CardsInDeck > 0)
+        //        {
+        //            num = random.Next(myDeck.CardsInDeck);
+        //        }
+        //        else
+        //        {
+        //            myDeck = new Game.Deck();
+        //            num = random.Next(myDeck.CardsInDeck);
+        //        }
+
+        //        sDrawCard = myDeck.NextCard();
+        //        myDeck.Remove(sDrawCard);
+        //        myDeck.CardsInDeck--;
+        //        return sDrawCard;
+        //    }
         }
-
-        public class DrawCard   
-        {  
-            private string sDrawCard = "";
-            public string Drawcard
-            {
-                get { return sDrawCard; }  
-            }
-            public DrawCard(Game.Deck myDeck, player myPlayer)
-            {
-                sDrawCard = myDeck.NextCard();
-                int NumCards = myPlayer.Cards.Count;
-                myPlayer.Cards[NumCards] = sDrawCard;
-            }
-         }
         public class Calc
         {
             private int iCCount;
@@ -270,6 +311,7 @@ namespace TestCard2
             IList<string> sCards = new List<string>();
             private int iBet;
             private int iCount;
+            private int iChipBalance;
 
             public IList<string> Cards
             {
@@ -289,7 +331,10 @@ namespace TestCard2
             public int Bet
             {
                 get { return iBet; }
-                set { iBet = value; }
+                set
+                {   iBet = value;
+                    iChipBalance -= iBet;
+                }
             }
             public int Count
             { get
@@ -297,7 +342,41 @@ namespace TestCard2
                     iCount = myCalc.CCount(sCards);
                     return iCount;
                 }
-            }    
+            }  
+            public int ChipBalance
+            {
+                get { return iChipBalance; }
+                set { iChipBalance = value; }
+            }  
+            public int CalcResult(int DealerCount)
+            {
+                Boolean push = Convert.ToBoolean(DealerCount == iCount);
+                Boolean win = Convert.ToBoolean(DealerCount < iCount);
+                Boolean lose = Convert.ToBoolean(DealerCount > iCount);
+                Boolean DealerBust = Convert.ToBoolean(DealerCount > 21);
+                Boolean PlayerBust = Convert.ToBoolean(iCount > 21);
+
+                if (PlayerBust)
+                {
+                    return iChipBalance;
+                }
+                else if (DealerBust)
+                {
+                    return (iChipBalance += (iBet * 2));
+                }
+                else if (win)
+                {
+                    return (iChipBalance += (iBet * 2));
+                }
+                else if (lose)
+                {
+                    return iChipBalance;
+                }
+                else //push
+                {
+                    return (iChipBalance += iBet);
+                }
+            }
         }
         public class dealer
         {
