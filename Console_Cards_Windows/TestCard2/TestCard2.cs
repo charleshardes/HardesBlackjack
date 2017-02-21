@@ -140,6 +140,7 @@ namespace TestCard2
             public string NextCard()
             {
                 Random random = new Random();
+                //I'm here
                 int num;
                 if (CardsInDeck > 0)
                 {
