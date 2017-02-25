@@ -7,14 +7,14 @@
     <framework targetVersion="4.5.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="HelloDLL.exe.manifest" size="4571">
+    <dependentAssembly dependencyType="install" codebase="HelloDLL.exe.manifest" size="4572">
       <assemblyIdentity name="HelloDLL.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>CKhmzEO4qhNB6GxoQemz5r3JLwvKQ6swwOQdvW9p5nU=</dsig:DigestValue>
+        <dsig:DigestValue>LVBbKngbs27fORMQ9j71DRuLotfhV28gq8yxSscLnBE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

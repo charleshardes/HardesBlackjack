@@ -11,6 +11,8 @@
 #include <assert.h>
 #include <string.h>
 #include <math.h>
+//#include <signal.h>
+#include <Windows.h>
 #include "cards_globals.h"
 #include "cards_structs.h"
 #include "cards_suits.h"
@@ -54,7 +56,11 @@ void CL_setPrompt(table *t) {}
 
 void displayBet(int bet) {printf("Bet:    $%d", bet);}
 
-void prompt_noHumanPlayers() {printf("Enter a number of human players between 0 - 4\n");}
+void prompt_noHumanPlayers() {
+	//printf("Enter a number of human players between 0 - 4\n");
+	Sleep(10000);
+	exit(0);
+}
 
 int input_noHumanPlayers() {
 

@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HelloDLL.exe" size="7680">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HelloDLL.exe" size="10240">
       <assemblyIdentity name="HelloDLL" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>roOtcWTa/pPuhTRh4ToRfwW3OxUhmJ2sfQTu1b+2F1M=</dsig:DigestValue>
+        <dsig:DigestValue>ZXssT+x+efW4h4xjAuBdRaiKDyRVX/DXY3fQbd+mcJY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
