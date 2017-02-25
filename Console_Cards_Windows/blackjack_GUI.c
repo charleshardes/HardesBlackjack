@@ -56,38 +56,29 @@ void CL_setPrompt(table *t) {}
 
 void displayBet(int bet) {printf("Bet:    $%d", bet);}
 
-void prompt_noHumanPlayers() {
-	//printf("Enter a number of human players between 0 - 4\n");
-	Sleep(10000);
-	exit(0);
-}
+void prompt_noHumanPlayers() {}
 
 int input_noHumanPlayers() {
 
-	int noPlayers;
+	int noPlayers = 1;
 
-	scanf_s("%d", &noPlayers);
 	return noPlayers;
 }  
 
-void prompt_playerName(int playerNo) {printf("Enter player %d's name:\n", playerNo);}
+void prompt_playerName(int playerNo) {}
 
 char *input_playerName() {
 
-	static char buffer[BUFFERSIZE];
-
-	scanf_s(" %63s", buffer, 64);
-    CL_newlines(1);
+	static char buffer[BUFFERSIZE] = "Charles";
 
 	return buffer;
 }
 
-void prompt_noCompPlayers(int maxComps) {printf("Enter number of computer players between 0 - %d\n", maxComps);}
+void prompt_noCompPlayers(int maxComps) {}
 
 int input_noCompPlayers() {
     
-	int no_Comps;
-	scanf_s(" %d", &no_Comps);
+	int no_Comps = 0;
 
 	return no_Comps;
 }
