@@ -27,6 +27,9 @@
 #include "blackjack_UIX.h"
 #include "blackjack_CLI.h"
 
+#pragma once
+#if (UIX == 0)
+
 void CL_spaces(int s) {
     
     int i;
@@ -247,3 +250,5 @@ void displayHandIndex(hand *h) {
 	assert(h);
 	printf("(%d) ", h->handIndex);
 }
+
+#endif

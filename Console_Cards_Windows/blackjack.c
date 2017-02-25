@@ -24,7 +24,11 @@
 #include "blackjack_players.h"
 #include "blackjack_table.h"
 #include "blackjack_UIX.h"
+#if ( UIX == 0 )
 #include "blackjack_CLI.h"
+#elif ( UIX == 1 )
+#include "blackjack_GUI.h"
+#endif
 #include "blackjack.h"
 
 table *setTable() {
@@ -126,7 +130,7 @@ void playerTurn(table *t, player *p, hand *h, deck *d) {
     assert((t) && (p) && (d) && (h));
 
 	/*****************************FOR TESTING PURPOSES ONLY*****************************/
-	h->canSplit = 1;//enable every hand to be able to split
+	//h->canSplit = 1;//enable every hand to be able to split
 	/***********************************************************************************/
 
 	/* If the hand can split, prompt user whether they want to split, manage the split */

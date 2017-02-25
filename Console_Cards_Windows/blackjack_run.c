@@ -25,6 +25,11 @@
 #include "blackjack_table.h"
 #include "blackjack.h"
 #include "blackjack_UIX.h"
+#if ( UIX == 0 )
+#include "blackjack_CLI.h"
+#elif ( UIX == 1 )
+#include "blackjack_GUI.h"
+#endif
 #include "blackjack_run.h"
 
 

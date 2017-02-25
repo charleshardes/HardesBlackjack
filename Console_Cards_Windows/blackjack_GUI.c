@@ -5,14 +5,14 @@
 //  Created by Charles Hardes on 3/28/15.
 //  Copyright (c) 2015 Charles Hardes. All rights reserved.
 //
-#pragma once
-#if ( UIX != 0 )
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
 #include <math.h>
+//#include <signal.h>
+#include <Windows.h>
 #include "cards_globals.h"
 #include "cards_structs.h"
 #include "cards_suits.h"
@@ -53,18 +53,14 @@ void CL_setPrompt(table *t) {}
 
 
 
-void displayBet(int bet) {
 
-	printf("Bet:    $%d", bet);
-        
-    /*number of spaces to next player algorithm*/
-    if (bet > 0) {
-        CL_spaces(27 - ((int)log10((double)bet)  + 1));
-    }
-    else CL_spaces(26);
+void displayBet(int bet) {printf("Bet:    $%d", bet);}
+
+void prompt_noHumanPlayers() {
+	//printf("Enter a number of human players between 0 - 4\n");
+	Sleep(10000);
+	exit(0);
 }
-
-void prompt_noHumanPlayers() {printf("Enter a number of human players between 0 - 4\n");}
 
 int input_noHumanPlayers() {
 
@@ -96,7 +92,7 @@ int input_noCompPlayers() {
 	return no_Comps;
 }
 
-void prompt_playerTurn(table *t) {
+void prompt_playerTurn(table *t, hand *h) {
 
 	assert(t);
 
@@ -104,7 +100,7 @@ void prompt_playerTurn(table *t) {
     prompt_HitStay();
 
 	/*Allow player the option of doubling down if this is their first hit of the hand*/
-	if (t->players[t->currPlayer]->playerHand->cardCount == 2) {
+	if (h->cardCount == 2) {
 		CL_setPrompt(t);
 		prompt_DoubleDown();
 	}
@@ -119,7 +115,7 @@ char input_playerTurn() {
 	char ans;
 	ans = 'd';
 
-	scanf_s(" %c", &ans);
+	scanf_s(" %c", &ans, sizeof(ans));
 	return ans;
 }
 
@@ -229,4 +225,16 @@ void prompt_HitStay() {printf("Hit: h\tStay: s\n");}
 
 void prompt_DoubleDown() {printf("Double Down: d\n");}
 
-#endif
+void prompt_Split(hand *h) {
+	if (h->hasSplit) displayHandIndex(h);
+	printf("Split?: (y/n) ");
+}
+
+char input_Split() {return input_Continue();}/* reused input_Continue() because def. is same */
+
+void displayHandIndex(hand *h) {
+
+	assert(h);
+	printf("(%d) ", h->handIndex);
+}
+

@@ -25,7 +25,11 @@
 #include "blackjack.h"
 #include "blackjack_run.h"
 #include "blackjack_UIX.h"
+#if ( UIX == 0 )
 #include "blackjack_CLI.h"
+#elif ( UIX == 1 )
+#include "blackjack_GUI.h"
+#endif
 
 /*
 Alert line display:
@@ -124,10 +128,10 @@ void displayDealer(table *t) {
 
 	/*Dealer display line*/
     CL_newlines(5);
-    CL_tabs(9);
+    CL_tabs(5);
     displayPlayer(t->dealer);
     CL_newlines(2);
-    CL_tabs(9);
+    CL_tabs(5);
 
     /*Condition that hand has already been dealt*/
 	if (t->handsAreDealt) {

@@ -23,6 +23,11 @@
 #include "blackjack_players.h"
 #include "blackjack_table.h"
 #include "blackjack_UIX.h"
+#if ( UIX == 0 )
+#include "blackjack_CLI.h"
+#elif ( UIX == 1 )
+#include "blackjack_GUI.h"
+#endif
 #include "blackjack.h"
 
 
@@ -62,7 +67,7 @@ void _initTable(table *t, int NO_OF_PLAYERS, int NO_OF_COMPS) {
 
 	t->currPlayer = 0;
     t->spacing = 0;
-    t->margin = (int) (12 - (t->NO_OF_PLAYERS * 2.5));
+    t->margin = (int) (10 - (t->NO_OF_PLAYERS * 2.5));
 	t->handsAreDealt = 0;
 	t->hasSplits = 0;
 }

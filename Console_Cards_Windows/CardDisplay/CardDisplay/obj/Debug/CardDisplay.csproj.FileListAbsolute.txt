@@ -1,0 +1,18 @@
+c:\users\gerald\documents\visual studio 2012\Projects\CardDisplay\CardDisplay\bin\Debug\CardDisplay.exe.config
+c:\users\gerald\documents\visual studio 2012\Projects\CardDisplay\CardDisplay\bin\Debug\CardDisplay.exe
+c:\users\gerald\documents\visual studio 2012\Projects\CardDisplay\CardDisplay\bin\Debug\CardDisplay.pdb
+c:\users\gerald\documents\visual studio 2012\Projects\CardDisplay\CardDisplay\obj\Debug\CardDisplay.csprojResolveAssemblyReference.cache
+c:\users\gerald\documents\visual studio 2012\Projects\CardDisplay\CardDisplay\obj\Debug\CardDisplay.Properties.Resources.resources
+c:\users\gerald\documents\visual studio 2012\Projects\CardDisplay\CardDisplay\obj\Debug\CardDisplay.csproj.GenerateResource.Cache
+c:\users\gerald\documents\visual studio 2012\Projects\CardDisplay\CardDisplay\obj\Debug\CardDisplay.exe
+c:\users\gerald\documents\visual studio 2012\Projects\CardDisplay\CardDisplay\obj\Debug\CardDisplay.pdb
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\CardDisplay\CardDisplay\obj\Debug\CardDisplay.DisplayHand.resources
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\bin\Debug\CardDisplay.exe.config
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\obj\Debug\CardDisplay.exe
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\obj\Debug\CardDisplay.pdb
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\bin\Debug\CardDisplay.exe
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\bin\Debug\CardDisplay.pdb
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\obj\Debug\CardDisplay.csprojResolveAssemblyReference.cache
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\obj\Debug\CardDisplay.DisplayHand.resources
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\obj\Debug\CardDisplay.Properties.Resources.resources
+C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\CardDisplay\CardDisplay\obj\Debug\CardDisplay.csproj.GenerateResource.Cache
