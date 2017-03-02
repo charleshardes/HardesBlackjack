@@ -159,7 +159,7 @@
     <ClCompile Include="..\..\cards_suits.c" />
     <ClCompile Include="..\..\cards_values.c" />
     <ClCompile Include="..\..\decks.c" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="BJLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\blackjack.h" />

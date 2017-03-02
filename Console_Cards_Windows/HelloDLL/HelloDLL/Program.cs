@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
+using Dlltest;
 
 
 
@@ -25,42 +26,7 @@ namespace HelloDLL {
     }
 
 
-    //-----------------------------------TEST STRUCTS------------------------------------------
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct testStruct {
-        public int five;
-        public int seven;
-    };
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct charStruct {
-        public byte a;
-        public byte b;
-    };
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct stringStruct
-    {
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
-        public char[] str1;
-
-        //[MarshalAs(UnmanagedType.LPStr)]
-        public IntPtr str2;
-    };
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct structInStruct
-    {
-        public IntPtr rts;
-    };
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct structArray
-    {
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
-        public IntPtr[] rts;
-    };
+    
 
 
 
@@ -186,149 +152,6 @@ namespace HelloDLL {
         /// The main entry point for the application.
         /// </summary>
         /// 
-
-
-        /*
-        [DllImport(Constants.dllPath)]
-        public static extern int Display7MyDLL();
-
-        [DllImport(Constants.dllPath)]
-        public static extern int Display8MyDLL();
-
-
-
-        [DllImport(Constants.dllPath)]
-        public static extern int DLLcreateTable(int a, int b);
-
-        [DllImport(Constants.dllPath)]
-        public static extern int readTest();
-
-        [DllImport(Constants.dllPath)]
-        public static extern void DLLdisplayBet(int bet);
-        */
-
-        [DllImport(Constants.dllPath)]
-        public static extern void DLLhideCard(ref card c);
-
-        [DllImport(Constants.dllPath)]
-        public static extern int runBlackjack(ref table t);
-
-
-
-        //-------------------------------testStruct test calls--------------------------------
-
-
-
-
-        [DllImport(Constants.dllPath)]
-        public static extern void testTheTestStruct1();
-
-        [DllImport(Constants.dllPath)]
-        public static extern int testTheTestStruct2();
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int testTheTestStruct3(testStruct ts);
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern testStruct testTheTestStruct4();
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void testTheTestStruct5(ref testStruct ts);
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr testTheTestStruct6(ref testStruct ts);
-
-
-
-        //---------------------------charStruct test calls---------------------------------------------
-
-
-
-        [DllImport(Constants.dllPath)]
-        public static extern void testTheCharStruct1();
-
-        [DllImport(Constants.dllPath)]
-        public static extern char testTheCharStruct2();
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void testTheCharStruct3(charStruct cs);
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern charStruct testTheCharStruct4();
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void testTheCharStruct5(ref charStruct ts);
-
-
-
-
-
-        //------------------------------stringStruct test calls--------------------------------------
-
-
-
-
-        [DllImport(Constants.dllPath)]
-        public static extern void testTheStringStruct1();
-
-        [DllImport(Constants.dllPath)]
-        public static extern IntPtr testTheStringStruct2();
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void testTheStringStruct3(stringStruct ss);
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern stringStruct testTheStringStruct4();
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void testTheStringStruct5(ref stringStruct ss);
-
-
-
-        //------------------------------------structInStruct Tests-----------------------------------------------
-
-        [DllImport(Constants.dllPath)]
-        public static extern void testTheStructInStruct1();
-
-        [DllImport(Constants.dllPath)]
-        public static extern int testTheStructInStruct2();
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void testTheStructInStruct3(structInStruct sis);
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern structInStruct testTheStructInStruct4();
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void testTheStructInStruct5(ref structInStruct sis);
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr testTheStructInStruct6(ref structInStruct sis);
-
-
-
-        //-----------------------------------------structArray Tests-------------------------
-
-        //new shit for gitss
-
-        [DllImport(Constants.dllPath)]
-        public static extern void testTheStructArr1();
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int testTheStructArr3(structArray sa);
-
-        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void testTheStructArr5(ref structArray sa);
-
-        //-----------------------------END TEST STRUCT DEFS----------------------------------------------------
-
-
-
-
-        [DllImport(Constants.dllPath, CallingConvention =CallingConvention.Cdecl)]
-        public static extern void DLLChangeCardVal(ref cardValue cv);
-
-
         //------------------------------------------BJ DEFS----------------------------------
 
         [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
@@ -352,34 +175,9 @@ namespace HelloDLL {
         [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void DLLsetAllHands(ref table t);
 
+        public static IntPtr setTable(int NO_OF_PLAYERS, int NO_OF_COMPS, string[] stringArr) {
 
-        [STAThread]
-        static void Main() {
-
-            int NO_OF_PLAYERS, NO_OF_COMPS;
             table BJtable;
-            deck BJdeck, BJdeck2;
-            IntPtr d2, d3;
-            bool cont = true;
-            
-
-            /***********************GAME START*************************
-             * initialize GUI stuff, do variable declarations, etc here
-             * 
-             * 
-             * ********************************************************
-            
-
-
-            /*********************** GET PLAYER INPUT FROM FORM*********
-             * Present first game form here, get number of human players,
-             * number of computer players, names of human players
-
-            ***********************************************************/
-            NO_OF_PLAYERS = 4;
-            NO_OF_COMPS = 0;
-            string[] stringArr = { "Charles", "Theresa", "Charlie", "Nathanael" };
-
 
             player[] p = new player[NO_OF_PLAYERS];
 
@@ -388,271 +186,42 @@ namespace HelloDLL {
             BJtable = (table)Marshal.PtrToStructure(t, typeof(table));
 
             for (int i = 0; i < NO_OF_PLAYERS + NO_OF_COMPS; i++) {
-               p[i] = (player)Marshal.PtrToStructure(BJtable.players[i], typeof(player));
+                p[i] = (player)Marshal.PtrToStructure(BJtable.players[i], typeof(player));
             }
+
+            return t;
+        }
+
+        public static IntPtr createDeck() {
 
             IntPtr d = DLLcreateDeck();
 
-            BJdeck = (deck)Marshal.PtrToStructure(d, typeof(deck));
+            deck BJdeck = (deck)Marshal.PtrToStructure(d, typeof(deck));
 
-            d2 = DLLshuffle(ref BJdeck);
+            IntPtr d2 = DLLshuffle(ref BJdeck);
 
-            BJdeck2 = (deck)Marshal.PtrToStructure(d2, typeof(deck));
+            deck BJdeck2 = (deck)Marshal.PtrToStructure(d2, typeof(deck));
 
+            return d2;
+        }
 
-            //************************GAME LOOP*************************
-            do {
+        public static void setHands(table t) {
 
-                DLLsetAllHands(ref BJtable);
 
+            DLLsetAllHands(ref t);
+        }
 
-                cont = false;
-            } while (cont == true);
+        [STAThread]
+        static void Main() {
 
+            Dlltest.Program.RunAllTests();
 
+            int five = 5;
 
+            five += 5;
 
+            IntPtr t = DLLSetTable(1, 0, null);
 
-
-
-
-
-
-            DLLcleanUp(ref BJtable, ref BJdeck);
-
-            return;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //-------------------TESTING testStruct----------------------------------------//
-
-            testTheTestStruct1();
-
-            int val = testTheTestStruct2();
-
-            testStruct ts;
-            ts.five = 5;
-            ts.seven = 7;
-
-            testTheTestStruct3(ts);
-
-            testStruct ts2 = testTheTestStruct4();
-
-            testTheTestStruct5(ref ts2);
-
-            IntPtr ptr = testTheTestStruct6(ref ts2);
-            testStruct ts3 = (testStruct)Marshal.PtrToStructure(ptr, typeof(testStruct));
-
-            //----------------------------TESTING charStruct--------------------------------------//
-
-            testTheCharStruct1();
-
-            char aChar = testTheCharStruct2();
-
-            charStruct cs;
-            cs.a = (byte) 'a';
-            cs.b = (byte) 'b';
-
-            testTheCharStruct3(cs);
-
-            charStruct cs2 = testTheCharStruct4();
-
-            testTheCharStruct5(ref cs2);
-
-
-            //----------------------------TESTING stringStruct--------------------------------------//
-
-            testTheStringStruct1();
-
-            IntPtr anIntPtr = testTheStringStruct2();
-
-
-            string aStr1 = Marshal.PtrToStringAnsi(anIntPtr);
-
-            stringStruct ss;
-            string toArr = "abcde";
-            ss.str1 = toArr.ToCharArray(0, 5);
-
-            string toArr2 = "defgh";
-            ss.str2 = Marshal.StringToHGlobalAnsi(toArr2);
-
-            testTheStringStruct3(ss);
-
-            //stringStruct ss2 = testTheStringStruct4();
-
-            testTheStringStruct5(ref ss);
-            string strOut1 = new string(ss.str1);
-            string strOut2 = Marshal.PtrToStringAnsi(ss.str2);
-
-            //--------------------------------TESTING STRUCT IN STRUCT------------------------------------------
-
-            testTheStructInStruct1();
-
-            int five = testTheStructInStruct2();
-
-            structInStruct sis1, sis2, sis3, sis4;
-            testStruct ts4, ts5;
-
-            ts4.five = 5;
-            ts4.seven = 7;
-
-            IntPtr ip = Marshal.AllocHGlobal(Marshal.SizeOf(ts4));
-            Marshal.StructureToPtr(ts4, ip, false);
-
-            sis1.rts = ip;
-            sis3.rts = ip;
-
-            testTheStructInStruct3(sis1);
-
-            
-
-            //sis2 = testTheStructInStruct4();
-
-            
-
-            testTheStructInStruct5(ref sis3);
-
-            
-
-            IntPtr ip2 = Marshal.AllocHGlobal(Marshal.SizeOf(sis3));
-
-            ip2 = testTheStructInStruct6(ref sis3);
-
-            sis4 = (structInStruct)Marshal.PtrToStructure(ip2, typeof(structInStruct));
-
-            ts5 = (testStruct)Marshal.PtrToStructure(sis4.rts, typeof(testStruct));
-
-            Marshal.FreeHGlobal(ip);
-            //Marshal.FreeHGlobal(ip2);
-
-
-
-            //------------------------Testing structArray-----------------------------------
-
-
-            testTheStructArr1();
-
-            structArray sa;
-            IntPtr[] tsa = new IntPtr[5];
-            testStruct[] TS = new testStruct[5];
-            testStruct[] TS2 = new testStruct[5];
-            sa.rts = tsa;
-
-            for (int i = 0; i < 5; i++) {
-
-                TS[i].five = 5 + i;
-                TS[i].seven = 7 + i;
-
-                sa.rts[i] = Marshal.AllocHGlobal(Marshal.SizeOf(TS[i]));
-                Marshal.StructureToPtr(TS[i], sa.rts[i], false);
-            }
-
-            five = testTheStructArr3(sa);
-
-
-
-            //IntPtr SA = Marshal.AllocHGlobal(Marshal.SizeOf(sa));
-            //Marshal.StructureToPtr(sa, SA, false);
-
-            testTheStructArr5(ref sa);
-
-            for (int i = 0; i < 5; i++)
-            {
-                TS2[i] = (testStruct)Marshal.PtrToStructure(sa.rts[i], typeof(testStruct));
-            }
-
-
-            //---------------------Cleanup-------------------------------------------
-            for (int i = 0; i < 5; i++)
-            {
-                Marshal.FreeHGlobal(sa.rts[i]);
-            }
-
-
-
-
-
-            //runBlackjack(ref t);
-
-            //Marshal.FreeHGlobal(SA);
-
-            //------------------------------------------------------------------------
-
-            /*Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());*/
-
-            //int output;
-            //byte temp = 4;
-
-
-            /*
-            using (FileStream
-                F = new FileStream(Constants.newInPath, FileMode.Create)) {
-
-                output = Display7MyDLL();
-                output = Display8MyDLL();
-
-                //output -= 5;
-
-
-                //write temp var to "newIn.txt"
-                //F.WriteByte(temp);
-
-                //set seek to the beginning of the file
-                //F.Seek(0, SeekOrigin.Begin);
-
-                //make sure the file has been written to and can be read from
-                //output = F.ReadByte();
-
-                //call the DLL function readTest to make sure it can also read the file 
-                //output = readTest();
-
-                
-                runIt R  = new runIt(runBlackjack);
-                int returnVal = R();
-                
-
-                DLLcreateTable(4, 0);
-                runBlackjack();
-
-                F.Close();
-
-                //DLLdisplayBet(700);
-            }*/
         }
     }
 }
