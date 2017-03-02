@@ -1,0 +1,19 @@
+C:\Users\Adam Speight\Documents\Visual Studio 2008\Projects\PlayingCards\PlayingCards\bin\Debug\PlayingCards.exe
+C:\Users\Adam Speight\Documents\Visual Studio 2008\Projects\PlayingCards\PlayingCards\bin\Debug\PlayingCards.pdb
+C:\Users\Adam Speight\Documents\Visual Studio 2008\Projects\PlayingCards\PlayingCards\bin\Debug\PlayingCards.xml
+C:\Users\Adam Speight\Documents\Visual Studio 2008\Projects\PlayingCards\PlayingCards\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Adam Speight\Documents\Visual Studio 2008\Projects\PlayingCards\PlayingCards\obj\Debug\WindowsApplication1.Form1.resources
+C:\Users\Adam Speight\Documents\Visual Studio 2008\Projects\PlayingCards\PlayingCards\obj\Debug\WindowsApplication1.Resources.resources
+C:\Users\Adam Speight\Documents\Visual Studio 2008\Projects\PlayingCards\PlayingCards\obj\Debug\PlayingCards.vbproj.GenerateResource.Cache
+C:\Users\Adam Speight\Documents\Visual Studio 2008\Projects\PlayingCards\PlayingCards\obj\Debug\PlayingCards.exe
+C:\Users\Adam Speight\Documents\Visual Studio 2008\Projects\PlayingCards\PlayingCards\obj\Debug\PlayingCards.xml
+C:\Users\Adam Speight\Documents\Visual Studio 2008\Projects\PlayingCards\PlayingCards\obj\Debug\PlayingCards.pdb
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\PlayingCards\obj\Debug\PlayingCards.exe
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\PlayingCards\obj\Debug\PlayingCards.xml
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\PlayingCards\obj\Debug\PlayingCards.pdb
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\PlayingCards\bin\Debug\PlayingCards.exe
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\PlayingCards\bin\Debug\PlayingCards.pdb
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\PlayingCards\bin\Debug\PlayingCards.xml
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\PlayingCards\obj\Debug\WindowsApplication1.Form1.resources
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\PlayingCards\obj\Debug\WindowsApplication1.Resources.resources
+C:\Users\Gerald\Documents\Visual Studio 2012\Projects\PlayingCards\obj\Debug\PlayingCards.vbproj.GenerateResource.Cache
