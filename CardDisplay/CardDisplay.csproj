@@ -124,9 +124,17 @@
     <None Include="bin\Debug\cards_gif\dj.gif" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TestCard2\TestCard2.csproj">
+    <ProjectReference Include="..\Console_Cards_Windows\HelloDLL\HelloDLL\HelloDLL.csproj">
+      <Project>{97be7e8c-ad4d-47a2-897b-76444c5b5a6b}</Project>
+      <Name>HelloDLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Console_Cards_Windows\TestCard2\TestCard2.csproj">
       <Project>{0dc91dd8-ad96-4a22-9452-430dab804727}</Project>
       <Name>TestCard2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestCard2\GameState.csproj">
+      <Project>{4e7027b0-a1b4-400c-b5a0-e9e3ceaad9c5}</Project>
+      <Name>GameState</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

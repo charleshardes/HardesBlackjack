@@ -6,33 +6,43 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestCard2;
+using GameState;
 using System.Windows.Forms;
 
 
-namespace CardDisplay
-{
-    public partial class DisplayHand : Form
-    {
-        public DisplayHand()
-           
-        {
+namespace CardDisplay {
+
+    public partial class DisplayHand : Form {
+
+        public DisplayHand(int NO_OF_PLAYERS, int NO_OF_COMPS, string[] players) {
+
             InitializeComponent();
             //this.Invalidate();
+
+            this.Game = new Game(NO_OF_PLAYERS, NO_OF_COMPS, players);
         }
 
-        public int NumPlayers
-        {
+        /****************** REDUNDANT *************************************/
+        public int NumPlayers {
             get { return iplayers; }
             set { iplayers = value; }
         }
-        private Game.Deck Deck = new Game.Deck(); //Game.Deck is class of TestCard2
+        //I don't like this. Why make the Deck class a member of DisplayHand directly? I want the Game class
+        //to be the member defined and instantiated here, which in itself will instantiate the Deck and Table
+        //Structs from DLL. This will happen in GameState.cs in the Game class definition
+        //private Game.Deck Deck = new Game.Deck(); //Game.Deck is class of TestCard2
+
+        public Game Game;
+
+        /******* REDUNDANT **********************************/
         //Deck of cards used until no cards left, 
         //when nuber of cards left in the deck is 1, a new instance will be created 
         private int iplayers; //number of players 
         IList<DealCards2.player> Players = new List<DealCards2.player>(); //list of players.  DealCards2.player is class of TestCard2
         private string NextCard;
         private DealCards2.dealer Dealer = new DealCards2.dealer();  //DealCards2.dealer is class of TestCard2
+
+
         private IList<PictureBox> DealerBoxes = new List<PictureBox>();
         //The following picture box objects are used to display the first two cards of a new game
         PictureBox pbDC1 = new PictureBox();
@@ -84,14 +94,16 @@ namespace CardDisplay
             myPictureBox.BringToFront();
             myPictureBox.Invalidate();
         }
+
+/*
         private void Deal_A_Card(DealCards2.player Player)
         {
             //As cards are being added cards are being added to the players' cards (hand)
-            if (Deck.CardsInDeck < 2)
+            if (Game.Deck.cards_left < 2)
             {
-                Deck = new Game.Deck();
+                Game.Deck = new HelloDLL.deck();
             }
-            Player.Cards.Add(Deck.NextCard());
+            Player.Cards.Add(Game.Deck.top);
         }
         private void Deal_A_Card(DealCards2.dealer Dealer)
         {
@@ -102,7 +114,7 @@ namespace CardDisplay
             }
             Dealer.Cards.Add(Deck.NextCard());
         }
-
+*/
         private void FormatCard(PictureBox PictureBox, int X, int Y)
         {
             //Formats the picture box to the desired location on the form and the dimensions
@@ -124,15 +136,15 @@ namespace CardDisplay
             for (int i = 0; i < iplayers; i++)
             //Deal first card
             {
-                Deal_A_Card(Players[i]);
+                //Deal_A_Card(Players[i]);
             }
-            Deal_A_Card( Dealer);
+            //Deal_A_Card( Dealer);
             for (int i = 0; i < iplayers; i++)
             //Deal second card
             {
-                Deal_A_Card( Players[i]);
+                //Deal_A_Card( Players[i]);
             }
-            Deal_A_Card( Dealer);
+            //Deal_A_Card( Dealer);
             
             //Format the pictureboxes to diplay the cards
             FormatCard(pbDC1, 5, 3);
@@ -181,7 +193,7 @@ namespace CardDisplay
                 }
             }
             btnDeal.Enabled = false;
-            lblCardCount.Text = Deck.CardsInDeck.ToString();
+            lblCardCount.Text = Game.Deck.cards_left.ToString();
         }//End btnDeal_Click
      
         private void label1_Click(object sender, EventArgs e)
@@ -191,7 +203,7 @@ namespace CardDisplay
         private void DisplayHand_Load(object sender, EventArgs e)
         {
 
-            
+            //***************THIS IS BASICALLY GET BETS FROM THE C LOGIC*********************
             for (int i = 0; i < iplayers; i++)
             //Initialize the total chip count and the default bet for each player
             {
@@ -272,7 +284,7 @@ namespace CardDisplay
                     btnP2Stay.Enabled = true;
                 }
             }
-            lblCardCount.Text = Deck.CardsInDeck.ToString();
+            lblCardCount.Text = Game.Deck.cards_left.ToString();
         }
 
         private void Hit(DealCards2.player Player, Panel PlayerCards, Label lblCount, Button btnHit, Button btnStay)
@@ -288,7 +300,7 @@ namespace CardDisplay
             CardBox.SizeMode = PictureBoxSizeMode.StretchImage;
             CardBox.Location = new Point(X + ((NumCards - 1) * 15), 3);
             PlayerCards.Controls.Add(CardBox);
-            NextCard = Deck.NextCard();
+            //NextCard = Deck.NextCard();
             //calls the NextCard method of the Deck object to get the new card
             ShowCard(NextCard, CardBox);
             Player.Cards.Add(NextCard);
@@ -309,7 +321,7 @@ namespace CardDisplay
                     this.DealerHand();
                 }
             }
-            lblCardCount.Text = Deck.CardsInDeck.ToString();
+            lblCardCount.Text = Game.Deck.cards_left.ToString();
         }
         private void DealerHand()
         {
@@ -325,7 +337,7 @@ namespace CardDisplay
                 DealerBox.SizeMode = PictureBoxSizeMode.StretchImage;
                 DealerBox.Location = new Point(X + ((i+1) * 15), 3);
                 panelDlrCards.Controls.Add(DealerBox);
-                NextCard = Deck.NextCard();
+                //NextCard = Deck.NextCard();
                 ShowCard(NextCard, DealerBox);
                 Dealer.Cards.Add(NextCard);
             }
@@ -350,7 +362,7 @@ namespace CardDisplay
                 }
             }
             
-            lblCardCount.Text = Deck.CardsInDeck.ToString();
+            lblCardCount.Text = Game.Deck.cards_left.ToString();
         }
 
         private void ShowCard(string v, Control control)
@@ -369,7 +381,7 @@ namespace CardDisplay
                     this.DealerHand();
                 }
             }
-            lblCardCount.Text = Deck.CardsInDeck.ToString();
+            lblCardCount.Text = Game.Deck.cards_left.ToString();
         }
 
         private void btnP2Inc_Click(object sender, EventArgs e)
