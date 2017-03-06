@@ -7,8 +7,8 @@
     <ProjectGuid>{4E7027B0-A1B4-400C-B5A0-E9E3CEAAD9C5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestCard2</RootNamespace>
-    <AssemblyName>TestCard2</AssemblyName>
+    <RootNamespace>GameState</RootNamespace>
+    <AssemblyName>GameState</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

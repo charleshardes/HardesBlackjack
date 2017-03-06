@@ -62,6 +62,15 @@ void _initTable(table *t, int NO_OF_PLAYERS, int NO_OF_COMPS) {
     for (i = 0; i < NO_OF_CARDS; i++) {
         t->discardPile->cards[i] = NULL;
     }
+
+	for (i = 0; i < NO_OF_SUITS; i++) {
+		t->discardPile->suits[i] = suitArr[i];
+	}
+
+	for (i = 0; i < NO_OF_CARD_VALUES; i++) {
+		t->discardPile->values[i] = valueArr[i];
+	}
+
     t->discardPile->cards_left = 0;
     t->discardPile->top = NULL;
 

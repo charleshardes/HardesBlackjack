@@ -59,7 +59,7 @@ void _initDeck(deck *d) {
 			d->suits[i] = suitArr[i];
 			/*cardValue loop*/
 			for (j = 0; j < NO_OF_CARD_VALUES; j++) {
-				d->values[i] = valueArr[i];
+				if (!i) {d->values[j] = valueArr[j];}//just one set of values to deck
 				d->cards[k] = createCard(valueArr[j], suitArr[i]);
 				if ((HI_LO_ACES == 1) && (strcmp(d->cards[k]->value->name, "Ace") == 0)) {
 					d->cards[k]->value = hi_loAceArr[i];
