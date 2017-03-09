@@ -32,9 +32,6 @@ namespace CardDisplay
         private void button1_Click(object sender, EventArgs e) {
             int i;
             int no_of_players, no_of_comps;
-            IntPtr BJtablePtr;
-            table BJtable;
-            
 
             if (int.TryParse(this.txtNumPlayers.Text, out i)) {
 
@@ -60,7 +57,7 @@ namespace CardDisplay
                     DisplayHand frm = new DisplayHand(no_of_players, no_of_comps, playerNames);
                     frm.NumPlayers = no_of_players + no_of_comps;
 
-                    //HelloDLL.player Playa;
+                    
                     for (i = 0; i < no_of_players + no_of_comps; i++) {
                         switch (i) {
                             case 0:

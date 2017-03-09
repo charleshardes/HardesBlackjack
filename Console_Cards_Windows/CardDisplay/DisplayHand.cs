@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using GameState;
 using System.Windows.Forms;
+using HelloDLL;
 
 
 namespace CardDisplay {
-
+    
     public partial class DisplayHand : Form {
 
         public DisplayHand(int NO_OF_PLAYERS, int NO_OF_COMPS, string[] players) {
@@ -87,6 +88,18 @@ namespace CardDisplay {
         private void ShowCard(string Card, PictureBox myPictureBox)
         {
             //called everytime is card is displayed
+
+            if (Card.Length <= 2) {
+
+                //modify the string to match the GIF file
+                char[] charArray = Card.ToCharArray();
+                Array.Reverse(charArray);
+                if (charArray[0] == 't' || charArray[0] == 'j' || charArray[0] == 'q' || charArray[0] == 'k' || charArray[0] == 'a') {
+                    charArray[0] = Char.ToUpper(charArray[0]);
+                }
+                Card = new string(charArray);
+            }
+
             string FileName = System.Windows.Forms.Application.StartupPath + "\\cards_gif\\" + Card + ".gif";
             Image Card_image1 = Image.FromFile(FileName);
             myPictureBox.Image = Card_image1;
@@ -126,8 +139,17 @@ namespace CardDisplay {
 
         private void btnDeal_Click(object sender, EventArgs e)
         {
-            //Deals out the cards for a new blackjack hand.  Two cards to each player and the dealer
+            //This resets all player hands to their starting (not dealt a hand yet) state
+            BJinterface.DLLsetAllHands(ref Game.TableStruct);
 
+            //this gets the bet amount from the GUI, makes the applicable update to the player's hand class
+            //moved this here from DisplayHand_Load(), it's more appropriate here.
+            GetBetsALL();
+
+            //This deals out the starting hands to all players and dealer
+            BJinterface.DLLdealStartingHands(ref Game.TableStruct, ref Game.DeckStruct);
+
+            /*
             for (int i = 0; i < iplayers; i++)
             {
                 Players[i].Cards.Clear();
@@ -145,7 +167,8 @@ namespace CardDisplay {
                 //Deal_A_Card( Players[i]);
             }
             //Deal_A_Card( Dealer);
-            
+            */
+
             //Format the pictureboxes to diplay the cards
             FormatCard(pbDC1, 5, 3);
             FormatCard(pbDC2, 20, 3);
@@ -164,9 +187,9 @@ namespace CardDisplay {
 
             //Display dealer cards - first card is face down
             ShowCard("b2fv", pbDC1);
-            ShowCard(Dealer.Cards[1], pbDC2);
+            ShowCard(this.BJgame.gameTable.dealer.playerHand.cards[0].name, pbDC2);
             lblDealerCount.Text = "";
-            for (int i = 0;i< iplayers; i++)
+            for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++)
             //Display the cards for all players 
             {
                 switch (i)
@@ -200,35 +223,47 @@ namespace CardDisplay {
         {
 
         }
-        private void DisplayHand_Load(object sender, EventArgs e)
-        {
-
-            //***************THIS IS BASICALLY GET BETS FROM THE C LOGIC*********************
-            for (int i = 0; i < iplayers; i++)
-            //Initialize the total chip count and the default bet for each player
-            {
-                Players.Add(new DealCards2.player());
-                Players[i].Position = i;
-                switch (i)
-                {
-                    case 0:
-                        GetBet(txtP1Chips, txtP1Bet, Players[i]);
-                        break;
-                    case 1:
-                        panelPlayer2.Visible = true;
-                        GetBet(txtP2Chips, txtP2Bet, Players[i]);
-                        break;
-                }
-            }
+        private void DisplayHand_Load(object sender, EventArgs e) {
+            GetBetsALL();
         }
 
-        private void GetBet(TextBox txtChips, TextBox txtBet, DealCards2.player Player)
-        {
-            int ChipValue = int.Parse(txtChips.Text);
-            Player.ChipBalance = ChipValue;
-            int Bet = int.Parse(txtBet.Text);
-            ChipValue -= Bet;
-            txtChips.Text = ChipValue.ToString();
+        private void GetBetsALL() {
+
+            for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++) { 
+            //Initialize the total chip count and the default bet for each player
+
+                //Players.Add(new DealCards2.player());
+                //Players[i].Position = i;
+                switch (i) {
+                    case 0:
+                        GetBet(txtP1Chips, txtP1Bet, this.BJgame.gameTable.players[i]);
+                        continue;
+                    case 1:
+                        panelPlayer2.Visible = true;
+                        GetBet(txtP2Chips, txtP2Bet, this.BJgame.gameTable.players[i]);
+                        continue;
+                        /***************for when 4 players implemented***************
+                        case 2:
+                            panelPlayer3.Visible = true;
+                            GetBet(txtP3Chips, txtP3Bet, this.BJgame.gameTable.players[i]);
+                            continue;
+                        case 3:
+                            panelPlayer4.Visible = true;
+                            GetBet(txtP4Chips, txtP4Bet, this.BJgame.gameTable.players[i]);
+                            continue;
+                        */
+                }//end switch
+            }//end for loop
+        }
+
+        private void GetBet(TextBox txtChips, TextBox txtBet, GameState.Game.Table.Player Player) {
+
+            int bet = int.Parse(txtBet.Text);
+            int chips = Player.chips;
+            chips -= bet;
+            Player.playerHand.bet = bet;
+            Player.chips = chips;
+            txtChips.Text = chips.ToString();
         }
 
        
@@ -457,7 +492,7 @@ namespace CardDisplay {
                 Bet = int.Parse(txtP2Bet.Text);
                 ChipValue -= Bet;
                 txtP2Chips.Text = ChipValue.ToString();
-                //this.panelPlayer2.Visible = true;          
+                this.panelPlayer2.Visible = true;          
             }
             btnDeal.Enabled = true;
             btnBetP1Inc.Enabled = true;

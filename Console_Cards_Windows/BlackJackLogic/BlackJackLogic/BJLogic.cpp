@@ -142,7 +142,7 @@ extern "C" {
 		assert(t);
 		assert(d);
 
-		players = t->NO_OF_PLAYERS;
+		players = t->NO_OF_PLAYERS + t->NO_OF_COMPS;
 		_deletePlayer(t->dealer);
 
 		for (i = 0; i < players; i++) {
@@ -183,6 +183,55 @@ extern "C" {
 
 		/*reset handsAreDealt attribute back to false*/
 		t->handsAreDealt = 0;
+	}
+
+	__declspec(dllexport) void DLLdealStartingHands(table *t, deck *d) {
+
+		int i;
+		assert((t) && (d));
+
+		dealToPlayers(t, d);
+		dealCard(t, d, t->dealer, t->dealer->playerHand, 0);
+		dealToPlayers(t, d);
+		dealCard(t, d, t->dealer, t->dealer->playerHand, 1);
+
+		for (i = 0; i < t->NO_OF_PLAYERS; i++) {
+			assessHand(t->players[i]->playerHand, 0);
+		}
+		assessHand(t->dealer->playerHand, 0);
+
+		t->handsAreDealt = 1;
+	}
+
+
+	__declspec(dllexport) int getChips(table *t, int plyr) {
+		plyr--;
+		return t->players[plyr]->chips;
+	}
+	__declspec(dllexport) void setChips(table *t, int plyr, int chips) {
+		plyr--;
+		t->players[plyr]->chips = chips;
+	}
+
+	__declspec(dllexport) void setBet(table *t, int bet) {
+		hand *h;
+		assert(t);
+		
+		//get thte playerhand, set it to the furthest split hand not yet set
+		h = t->players[t->currPlayer]->playerHand;
+		while (h->hasSplit && h->bet == 0) {
+			h = h->splitHand;
+		}
+		h->bet = bet;
+
+		//increment currPlayer, reset if last player
+		if (t->currPlayer == t->NO_OF_PLAYERS - 1) {
+			t->currPlayer = 0;
+		}
+		else {
+			t->currPlayer++;
+		}
+
 	}
 
 #if ( 1 )

@@ -175,6 +175,18 @@ namespace HelloDLL {
         [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void DLLsetAllHands(ref table t);
 
+        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void DLLdealStartingHands(ref table t, ref deck d);
+
+        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int getChips(ref table t, int plyr);
+
+        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setChips(ref table t, int plyr, int chips);
+
+        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setBet(ref table t, int bet);
+
         public static IntPtr setTable(int NO_OF_PLAYERS, int NO_OF_COMPS, string[] stringArr) {
 
             table BJtable;

@@ -94,7 +94,7 @@ void _deleteTable(table *t) {
     int i, players;
     assert(t);
     
-    players = t->NO_OF_PLAYERS;
+    players = t->NO_OF_PLAYERS + t->NO_OF_COMPS;
     _deletePlayer(t->dealer);
     
     for (i = 0; i < players; i++) {
