@@ -11,25 +11,18 @@ using Dlltest;
 
 namespace HelloDLL {
 
-    
+
 
     //public delegate int runIt();
 
-    public static class Constants
-    {
-        public const string dllPath = @"C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\BlackJackLogic.dll";
-        //public const string dllPath = @"C:\Users\Charles Hardes\Source\Repos\HardesBlackJack\Console_Cards_Windows\Debug\BlackJackLogic.dll";
+    public static class Constants {
+
+        public const string dllPath = @"..\..\..\Debug\BlackJackLogic.dll";
         public const string newInPath = @"C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\bin\Debug\newIn.txt";
         public const int NO_OF_CARDS = 52;
         public const int NO_OF_SUITS = 4;
         public const int NO_OF_CARD_VALUES = 13;
     }
-
-
-    
-
-
-
 
 
 
@@ -234,8 +227,10 @@ namespace HelloDLL {
 
             five += 5;
 
-            IntPtr t = DLLSetTable(1, 0, null);
+            //IntPtr t = DLLSetTable(1, 0, null);
 
+            //string path = Path.GetFullPath(@"BlackJackLogic.dll");
+            string path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\");
         }
     }
 }

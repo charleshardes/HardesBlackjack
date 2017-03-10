@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using HelloDLL;
 
 namespace Dlltest {
 
     class Constants {
-        //public const string dllPath = @"C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\DLLtest.dll";
-        public const string dllPath = @"C:\Users\Charles Hardes\Source\Repos\HardesBlackJack\Console_Cards_Windows\Debug\DLLtest.dll";
+        
+        public const string dllPath = @"..\..\..\..\Debug\DLLtest.dll";
     }
 
 

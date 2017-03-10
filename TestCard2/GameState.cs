@@ -194,7 +194,7 @@ namespace GameState {
                     pos = Pstruct.pos;
                 }
 
-                private static player Pstruct;
+                private player Pstruct;
                 private bool dealer;
                 public bool computer;
                 public string name;
@@ -210,7 +210,6 @@ namespace GameState {
                     set {BJinterface.setChips(ref Game.TableStruct, pos, value);}
                 }
                 public int handCount {get {return Pstruct.handCount;}}
-
 
                 public class Hand {
 
@@ -261,7 +260,7 @@ namespace GameState {
                         }
                     }
                     public int handIndex { get { return Hstruct.handIndex; } }
-                    private static hand Hstruct;
+                    private hand Hstruct;
 
                 }//end Hand class def
             }//end Player class def

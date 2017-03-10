@@ -22,8 +22,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlackJackLogic", "BlackJackLogic\BlackJackLogic\BlackJackLogic.vcxproj", "{757490FA-184B-4AB0-97EB-DB70B9FF420A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DLLtest", "DLLtest\DLLtest.vcxproj", "{2113B3F5-AADF-4CE7-B46C-925E47BE9C64}"
+	ProjectSection(ProjectDependencies) = postProject
+		{757490FA-184B-4AB0-97EB-DB70B9FF420A} = {757490FA-184B-4AB0-97EB-DB70B9FF420A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameState", "..\TestCard2\GameState.csproj", "{4E7027B0-A1B4-400C-B5A0-E9E3CEAAD9C5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{757490FA-184B-4AB0-97EB-DB70B9FF420A} = {757490FA-184B-4AB0-97EB-DB70B9FF420A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardDisplay", "CardDisplay\CardDisplay.csproj", "{8150BA5E-863D-41DC-B786-91D0C60A12FC}"
 EndProject
