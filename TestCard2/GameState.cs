@@ -13,17 +13,15 @@ namespace GameState {
 
         //Game class constructor
         public Game(int NO_OF_PLAYERS, int NO_OF_COMPS, string[] players) {
-            //DeckOld myDeck = new Deck();
 
             //Deck Struct constructor
             IntPtr dPtr = BJinterface.DLLcreateDeck();
             DeckStruct = (deck)Marshal.PtrToStructure(dPtr, typeof(deck));
-            gameDeck = new Deck(dPtr);
+            gameDeck = new Deck(ref DeckStruct);
 
             //Table Struct constructor
             IntPtr tPtr = BJinterface.DLLSetTable(NO_OF_PLAYERS, NO_OF_COMPS, players);
             TableStruct = (table)Marshal.PtrToStructure(tPtr, typeof(table));
-            gameTable = new Table();
 
             BJinterface.DLLshuffle(ref DeckStruct);
         }
@@ -31,149 +29,103 @@ namespace GameState {
         //Game class members
         public static deck DeckStruct;
         public static table TableStruct;
+
         public Deck gameDeck;
         public Table gameTable { 
             get {
                 Table T = new Table();
 
-                player dlr = (player)Marshal.PtrToStructure(TableStruct.dealer, typeof(player));
-                T.dealer = new Game.Table.Player(ref dlr);
                 T.NO_OF_PLAYERS = TableStruct.NO_OF_PLAYERS;
                 T.NO_OF_COMPS = TableStruct.NO_OF_COMPS;
 
-
-                T.discardPile = new Deck(TableStruct.discardPile);
-                T.currPlayer = TableStruct.currPlayer;
-                T.handsAreDealt = TableStruct.handsAreDealt == 1;
-                T.hasSplits = TableStruct.hasSplits == 1;
-                //structPtr = TstructPtr;
-                T.players = new Game.Table.Player[T.NO_OF_COMPS + T.NO_OF_PLAYERS];
-
-                for (int i = 0; i < T.NO_OF_COMPS + T.NO_OF_PLAYERS; i++) {
-                    player newPlyr = (player)Marshal.PtrToStructure(TableStruct.players[i], typeof(player));
-                    T.players[i] = new Game.Table.Player(ref newPlyr);
-                }
                 return T;
-            }
-            set {
-                //TableStruct. = value;
             }
         }
 
         public class Deck {
 
-            public Card[] cards;
-            public Card.Suit[] suits;
-            public Card.Value[] values;
-
             //Deck Constructor
-            public Deck(IntPtr DstructPtr) {
+            public Deck(ref deck dStruct) {
 
-                Dstruct = (deck)Marshal.PtrToStructure(DstructPtr, typeof(deck));
-
-                cards = new Card[Constants.NO_OF_CARDS];
+                DStruct = dStruct;
                 suits = new Card.Suit[Constants.NO_OF_SUITS];
                 values = new Card.Value[Constants.NO_OF_CARD_VALUES];
 
-
-                for (int i = 0; i < Constants.NO_OF_CARDS; i++) {
-                    cards[i] = new Game.Deck.Card(Dstruct.cards[i]);
-                }
                 for (int i = 0; i < Constants.NO_OF_SUITS; i++) {
-                    suits[i] = new Game.Deck.Card.Suit(Dstruct.suits[i]);
+                    suits[i] = new Game.Deck.Card.Suit(DeckStruct.suits[i]);
                 }
                 for (int i = 0; i < Constants.NO_OF_CARD_VALUES; i++) {
-                    values[i] = new Game.Deck.Card.Value(Dstruct.values[i]);
+                    values[i] = new Game.Deck.Card.Value(DeckStruct.values[i]);
                 }
-                top = new Game.Deck.Card(Dstruct.top);
-                cards_left = Dstruct.cards_left;
-                structPtr = DstructPtr;
-            }
+            }//end default Deck constructor
 
+            public Card[] cards {
+                get {
+                    Card[] Cards = new Card[Constants.NO_OF_CARDS];
+                    for (int i = 0; i < Constants.NO_OF_CARDS; i++) {
+                        Cards[i] = new Game.Deck.Card(DeckStruct.cards[i]);
+                    }
+                    return Cards;
+                }
+            }
             public Card top {
                 get {
-                    return new Game.Deck.Card(Dstruct.top);
-                }
-                set { }//don't think i need this, the DLL will set the top card appropriately
-            }
-            public static int cards_left {
-                get {
-                    return Dstruct.cards_left;
-                }
-                set {
-                    Dstruct.cards_left = value;
+                    return new Game.Deck.Card(DeckStruct.top);
                 }
             }
-            public IntPtr structPtr;
-            public static deck Dstruct;
+            public int cards_left {
+                get { return DeckStruct.cards_left;}
+                set { DeckStruct.cards_left = value;}
+            }
+            public Card.Suit[] suits;
+            public Card.Value[] values;
+            deck DStruct;
 
             public class Card {
 
                 //Card constructor
                 public Card(IntPtr CstructPtr) {
+                    
+                    if (CstructPtr == IntPtr.Zero) {return;}
 
-                    if (CstructPtr == IntPtr.Zero) {
-                        suit = null;
-                        value = null;
-                        name = null;
-                        abbr = null;
-                        shown = false;
-                        wildcard = false;
-                        structPtr = CstructPtr;
-                        return;
-                    }
-
-                    card Cstruct = (card)Marshal.PtrToStructure(CstructPtr, typeof(card));
-                    suit = new Suit(Cstruct.suit);
-                    value = new Value(Cstruct.value);
+                    Cstruct = (card)Marshal.PtrToStructure(CstructPtr, typeof(card));
                     name = new string(Cstruct.name);
-                    abbr = new string(Cstruct.abbr);
-                    shown = (Cstruct.shown == 1);
-                    wildcard = (Cstruct.wildcard == 1);
-                    structPtr = CstructPtr;
-                }
 
-                //don't have any idea if this is work the way I intend, but what I'm hoping this does is... if I access the card as part of an array
-                //such as in the Deck, I can get the index and pass it into the get accessor which will allow me to get the appropriate struct from that array
-                public Card this[int index] {
-                    get {
-                        
-                        return new Card(DeckStruct.cards[index]);
+                    //modify the card abbreviation to match the GIF file
+                    char[] charArray = { Cstruct.abbr[0], Cstruct.abbr[1] };
+                    if (charArray[0] == 'T' || charArray[0] == 'J' || charArray[0] == 'Q' || charArray[0] == 'K' || charArray[0] == 'A') {
+                        charArray[0] = Char.ToLower(charArray[0]);
                     }
-                }
+                    Array.Reverse(charArray);
+                    abbr = new string(charArray);
+                }//end default Card constructor
 
-                public Suit suit;
-                public Value value;
+                public Suit suit { get { return new Suit(Cstruct.suit); } }
+                public Value value { get { return new Value(Cstruct.value); } }
+                public bool shown { get { return Cstruct.shown == 1; } }
+                public bool wildcard { get { return Cstruct.wildcard == 1; } }
+
                 public string name;
                 public string abbr;
-                public bool shown;
-                public bool wildcard;
-                public IntPtr structPtr;
+                public card Cstruct;
                 
                 public class Suit {
                    
                     //Suit constructor
                     public Suit(IntPtr SstructPtr) {
-                        cardSuit Sstruct = (cardSuit)Marshal.PtrToStructure(SstructPtr, typeof(cardSuit));
+
+                        Sstruct = (cardSuit)Marshal.PtrToStructure(SstructPtr, typeof(cardSuit));
                         name = new string(Sstruct.name);
                         abbr = (char)Sstruct.abbr;
-                        trump = (Sstruct.trump == 1);
-                        weight = Sstruct.weight;
-                        structPtr = SstructPtr;
+
                     }// end Suit constructor
 
                     //Suit class members with accessors
-                    public string name { get; }
-                    public char abbr { get; }
-                    public bool trump { get; set; }
-                    public int weight { get; set; }
-                    IntPtr structPtr;
-
-                    public void get() {
-                        cardSuit cs = (cardSuit)Marshal.PtrToStructure(this.structPtr, typeof(cardSuit));
-                        trump = cs.trump == 1;
-                        weight = cs.weight;
-                    }
+                    public string name;
+                    public char abbr;
+                    public bool trump { get { return Sstruct.trump == 1; } }
+                    public int weight { get { return Sstruct.weight; } }
+                    cardSuit Sstruct;
 
                 }//end Suit class def
 
@@ -182,83 +134,64 @@ namespace GameState {
                     //Value constructor
                     public Value(IntPtr VstructPtr) {
 
-                        cardValue Vstruct = (cardValue)Marshal.PtrToStructure(VstructPtr, typeof(cardValue));
+                        Vstruct = (cardValue)Marshal.PtrToStructure(VstructPtr, typeof(cardValue));
                         name = new string(Vstruct.name);
                         abbr = (char)Vstruct.abbr;
-                        weight = Vstruct.weight;
-                        structPtr = VstructPtr;
                     }
 
                     //Value class accessors
-                    public string name { get; }
-                    public char abbr { get; }
-                    public int weight { get; set; }
-                    IntPtr structPtr;
-
-                    public void get() {
-                        cardValue cv = (cardValue)Marshal.PtrToStructure(this.structPtr, typeof(cardValue));
-                        weight = cv.weight;
-                    }
+                    public string name;
+                    public char abbr;
+                    public int weight { get { return Vstruct.weight; } }
+                    cardValue Vstruct;
 
                 }//end Value class def
             }//end Card class def
         }//end Deck class def
 
-
-
         public class Table {
 
             public Table() { }
-            /*public Table(ref table TableStruct) {
-                //table Tstruct = (table)Marshal.PtrToStructure(TstructPtr, typeof(table));
-                Tstruct = TableStruct;
 
-                player dlr = (player)Marshal.PtrToStructure(Tstruct.dealer, typeof(player));
-                dealer = new Player(ref dlr);
-                NO_OF_PLAYERS = Tstruct.NO_OF_PLAYERS;
-                NO_OF_COMPS = Tstruct.NO_OF_COMPS;
-
-
-                discardPile = new Deck(Tstruct.discardPile);
-                currPlayer = Tstruct.currPlayer;
-                handsAreDealt = Tstruct.handsAreDealt == 1;
-                hasSplits = Tstruct.hasSplits == 1;
-                //structPtr = TstructPtr;
-                players = new Player[NO_OF_COMPS + NO_OF_PLAYERS];
-                
-                for (int i = 0; i < NO_OF_COMPS + NO_OF_PLAYERS; i++) {
-                    player newPlyr = (player)Marshal.PtrToStructure(Tstruct.players[i], typeof(player));
-                    players[i] = new Player(ref newPlyr);
+            public Player dealer {
+                get {
+                    player dlr = (player)Marshal.PtrToStructure(TableStruct.dealer, typeof(player));
+                    return new Game.Table.Player(ref dlr);
                 }
-            }*/
-
-            public Player dealer;
+            }
             public int NO_OF_PLAYERS;
             public int NO_OF_COMPS;
-            public Deck discardPile;
-            public int currPlayer;
-            public bool handsAreDealt;
-            public bool hasSplits;
-            public Player[] players;
-            //IntPtr structPtr;
-            public static table Tstruct;
+            public Deck discardPile {
+                get {
+                    deck dcPile = (deck)Marshal.PtrToStructure(TableStruct.discardPile, typeof(deck));
+                    return new Deck(ref dcPile);
+                }
+            }
+            public int currPlayer {get {return TableStruct.currPlayer;}}
+            public bool handsAreDealt { get { return TableStruct.handsAreDealt == 1; } }
+            public bool hasSplits { get { return TableStruct.hasSplits == 1; } }
+            public Player[] players {
+                get {
+                    Player[] Players = new Game.Table.Player[this.NO_OF_PLAYERS];
+
+                    for (int i = 0; i < this.NO_OF_PLAYERS; i++) {
+                        player newPlyr = (player)Marshal.PtrToStructure(TableStruct.players[i], typeof(player));
+                        Players[i] = new Game.Table.Player(ref newPlyr);
+                    }
+                    return Players;
+                }
+            }
 
             public class Player {
 
                 public Player(ref player PlayerStruct) {
-                    //Pstruct = (player)Marshal.PtrToStructure(PstructPtr, typeof(player));
+
                     Pstruct = PlayerStruct;
 
                     dealer = Pstruct.dealer == 1;
                     computer = Pstruct.computer == 1;
                     name = new string(Pstruct.name);
                     pos = Pstruct.pos;
-
-                    hand plyrHand = (hand)Marshal.PtrToStructure(Pstruct.playerHand, typeof(hand));
-                    playerHand = new Hand(ref plyrHand);
-
-                    //chips = Pstruct.chips;
-                    handCount = Pstruct.handCount;
                 }
 
                 private static player Pstruct;
@@ -266,81 +199,69 @@ namespace GameState {
                 public bool computer;
                 public string name;
                 public int pos;
-                public Hand playerHand;
-                public int chips {
+                public Hand playerHand {
                     get {
-                        return BJinterface.getChips(ref Game.TableStruct, pos);
-                        //return Pstruct.chips;
-                    }
-                    set {
-                        BJinterface.setChips(ref Game.TableStruct, pos, value);
+                        hand plyrHand = (hand)Marshal.PtrToStructure(Pstruct.playerHand, typeof(hand));
+                        return new Hand(ref plyrHand);
                     }
                 }
-                public int handCount;
+                public int chips {
+                    get {return BJinterface.getChips(ref Game.TableStruct, pos);}
+                    set {BJinterface.setChips(ref Game.TableStruct, pos, value);}
+                }
+                public int handCount {get {return Pstruct.handCount;}}
 
 
                 public class Hand {
 
                     //Hand class constructor
-                    public Hand(ref hand HandStruct) {
+                    public Hand(ref hand Handstruct) {
 
-                        Hstruct = HandStruct;
-                        //Hstruct = (hand)Marshal.PtrToStructure(HstructPtr, typeof(hand));
-                        starting = Hstruct.starting == 1;
-                        cardCount = Hstruct.cardCount;
-                        
-                        for (int i = 0; i < cardCount; i++) {
-                            cards[i] = new Deck.Card(Hstruct.cards[i]);
-                        }//end Hand class constructor
-
-                        score = Hstruct.score;
-                        bust = Hstruct.bust == 1;
-                        canSplit = Hstruct.canSplit == 1;
-                        hasSplit = Hstruct.hasSplit == 1;
-                        if (hasSplit) {
-                            hand split = (hand)Marshal.PtrToStructure(Hstruct.splitHand, typeof(hand));
-                            splitHand = new Hand(ref split);
-                        }
-                        hasBlackjack = Hstruct.hasBlackjack == 1;
-                        cardCount = Hstruct.cardCount;
-                        hiAces = Hstruct.hiAces;
-                        win = Hstruct.win == 1;
-                        lose = Hstruct.lose == 1;
-                        push = Hstruct.push == 1;
-                        hasInsurance = Hstruct.hasInsurance == 1;
-                        insuranceAmt = Hstruct.insuranceAmt;
-                        doubledDown = Hstruct.doubledDown == 1;
-                        hasEnded = Hstruct.hasEnded == 1;
-                        //bet = Hstruct.bet;
-                        handIndex = Hstruct.handIndex;
+                        Hstruct = Handstruct;
 
                     }// end Hand constructor
 
-                    private static hand Hstruct;
-                    public bool starting;
-                    public Deck.Card[] cards;
-                    public int score;
-                    public bool bust;
-                    public bool canSplit;
-                    public bool hasSplit;
-                    public Hand splitHand;
-                    public bool hasBlackjack;
-                    public int cardCount;
-                    public int hiAces;
-                    public bool win;
-                    public bool lose;
-                    public bool push;
-                    public bool hasInsurance;
-                    public int insuranceAmt;
-                    public bool doubledDown;
-                    public bool hasEnded;
+                    public bool starting { get { return Hstruct.starting == 1; } }
+                    public Deck.Card[] cards {
+                        get {
+                            Deck.Card[] Cards = new Deck.Card[cardCount];
+                            for (int i = 0; i < cardCount; i++) {
+                                Cards[i] = new Deck.Card(Hstruct.cards[i]);
+                            }
+                            return Cards;
+                        }
+                    }
+                    public int score { get { return Hstruct.score; } }
+                    public bool bust { get { return Hstruct.bust == 1; } }
+                    public bool canSplit { get { return Hstruct.canSplit == 1; } }
+                    public bool hasSplit { get { return Hstruct.hasSplit == 1; } }
+                    public Hand splitHand {
+                        get {
+                            if (hasSplit) {
+                                hand split = (hand)Marshal.PtrToStructure(Hstruct.splitHand, typeof(hand));
+                                return new Hand(ref split);
+                            }
+                            else return null;
+                        }
+                    }
+                    public bool hasBlackjack { get { return Hstruct.hasBlackjack == 1; } }
+                    public int cardCount { get { return Hstruct.cardCount; } }
+                    public int hiAces { get { return Hstruct.hiAces; } }
+                    public bool win { get { return Hstruct.win == 1; } }
+                    public bool lose { get { return Hstruct.lose == 1; } }
+                    public bool push { get { return Hstruct.push == 1; } }
+                    public bool hasInsurance { get { return Hstruct.hasInsurance == 1; } }
+                    public int insuranceAmt { get { return Hstruct.insuranceAmt; } }
+                    public bool doubledDown { get { return Hstruct.doubledDown == 1; } }
+                    public bool hasEnded { get { return Hstruct.hasEnded == 1; } }
                     public int bet {
-                        get { return bet; }
+                        get { return Hstruct.bet; }
                         set {
                             BJinterface.setBet(ref Game.TableStruct, value);
                         }
                     }
-                    public int handIndex;
+                    public int handIndex { get { return Hstruct.handIndex; } }
+                    private static hand Hstruct;
 
                 }//end Hand class def
             }//end Player class def

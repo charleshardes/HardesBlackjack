@@ -17,8 +17,8 @@ namespace HelloDLL {
 
     public static class Constants
     {
-        //public const string dllPath = @"C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\BlackJackLogic.dll";
-        public const string dllPath = @"C:\Users\Charles Hardes\Source\Repos\HardesBlackJack\Console_Cards_Windows\Debug\BlackJackLogic.dll";
+        public const string dllPath = @"C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\Debug\BlackJackLogic.dll";
+        //public const string dllPath = @"C:\Users\Charles Hardes\Source\Repos\HardesBlackJack\Console_Cards_Windows\Debug\BlackJackLogic.dll";
         public const string newInPath = @"C:\Users\Charles\Documents\GitHub\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\bin\Debug\newIn.txt";
         public const int NO_OF_CARDS = 52;
         public const int NO_OF_SUITS = 4;

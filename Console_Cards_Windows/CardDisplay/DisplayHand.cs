@@ -88,18 +88,6 @@ namespace CardDisplay {
         private void ShowCard(string Card, PictureBox myPictureBox)
         {
             //called everytime is card is displayed
-
-            if (Card.Length <= 2) {
-
-                //modify the string to match the GIF file
-                char[] charArray = Card.ToCharArray();
-                Array.Reverse(charArray);
-                if (charArray[0] == 't' || charArray[0] == 'j' || charArray[0] == 'q' || charArray[0] == 'k' || charArray[0] == 'a') {
-                    charArray[0] = Char.ToUpper(charArray[0]);
-                }
-                Card = new string(charArray);
-            }
-
             string FileName = System.Windows.Forms.Application.StartupPath + "\\cards_gif\\" + Card + ".gif";
             Image Card_image1 = Image.FromFile(FileName);
             myPictureBox.Image = Card_image1;
@@ -187,7 +175,7 @@ namespace CardDisplay {
 
             //Display dealer cards - first card is face down
             ShowCard("b2fv", pbDC1);
-            ShowCard(this.BJgame.gameTable.dealer.playerHand.cards[0].name, pbDC2);
+            ShowCard(this.BJgame.gameTable.dealer.playerHand.cards[0].abbr, pbDC2);
             lblDealerCount.Text = "";
             for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++)
             //Display the cards for all players 
@@ -195,9 +183,9 @@ namespace CardDisplay {
                 switch (i)
                 {
                     case 0:
-                        ShowCard(Players[i].Cards[0], pbPL1C1);
-                        ShowCard(Players[i].Cards[1], pbPL1C2);
-                        lblP1Count.Text = Players[0].Count.ToString();
+                        ShowCard(this.BJgame.gameTable.players[i].playerHand.cards[0].abbr, pbPL1C1);
+                        ShowCard(this.BJgame.gameTable.players[i].playerHand.cards[1].abbr, pbPL1C2);
+                        lblP1Count.Text = this.BJgame.gameTable.players[i].playerHand.score.ToString();
                         btnP1Hit.Enabled = true;
                         btnStay.Enabled = true;
                         btnBetP1Inc.Enabled = false;
@@ -205,9 +193,9 @@ namespace CardDisplay {
                         break;
                     case 1:
                         this.panelPlayer2.Visible = true;
-                        ShowCard(Players[i].Cards[0], pbPL2C1);
-                        ShowCard(Players[i].Cards[1], pbPL2C2);
-                        lblP2Count.Text = Players[i].Count.ToString();
+                        ShowCard(this.BJgame.gameTable.players[i].playerHand.cards[0].abbr, pbPL2C1);
+                        ShowCard(this.BJgame.gameTable.players[i].playerHand.cards[1].abbr, pbPL2C2);
+                        lblP2Count.Text = this.BJgame.gameTable.players[i].playerHand.score.ToString();
                         //btnP2Hit.Enabled = true;
                         //btnP2Stay.Enabled = true;
                         btnBetP2Inc.Enabled = false;
@@ -215,8 +203,9 @@ namespace CardDisplay {
                         break;                  
                 }
             }
+            
             btnDeal.Enabled = false;
-            lblCardCount.Text = Game.Deck.cards_left.ToString();
+            lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
         }//End btnDeal_Click
      
         private void label1_Click(object sender, EventArgs e)
@@ -319,7 +308,7 @@ namespace CardDisplay {
                     btnP2Stay.Enabled = true;
                 }
             }
-            lblCardCount.Text = Game.Deck.cards_left.ToString();
+            lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
         }
 
         private void Hit(DealCards2.player Player, Panel PlayerCards, Label lblCount, Button btnHit, Button btnStay)
@@ -356,7 +345,7 @@ namespace CardDisplay {
                     this.DealerHand();
                 }
             }
-            lblCardCount.Text = Game.Deck.cards_left.ToString();
+            lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
         }
         private void DealerHand()
         {
@@ -397,7 +386,7 @@ namespace CardDisplay {
                 }
             }
             
-            lblCardCount.Text = Game.Deck.cards_left.ToString();
+            lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
         }
 
         private void ShowCard(string v, Control control)
@@ -416,7 +405,7 @@ namespace CardDisplay {
                     this.DealerHand();
                 }
             }
-            lblCardCount.Text = Game.Deck.cards_left.ToString();
+            lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
         }
 
         private void btnP2Inc_Click(object sender, EventArgs e)

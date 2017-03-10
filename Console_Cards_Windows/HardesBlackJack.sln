@@ -15,6 +15,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CardsTest", "..\CardsTest\CardsTest.vcxproj", "{48042CD3-69DD-4FBA-BB23-7600BED0A368}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloDLL", "HelloDLL\HelloDLL\HelloDLL.csproj", "{97BE7E8C-AD4D-47A2-897B-76444C5B5A6B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{757490FA-184B-4AB0-97EB-DB70B9FF420A} = {757490FA-184B-4AB0-97EB-DB70B9FF420A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlackJackLogic", "BlackJackLogic\BlackJackLogic\BlackJackLogic.vcxproj", "{757490FA-184B-4AB0-97EB-DB70B9FF420A}"
 EndProject
