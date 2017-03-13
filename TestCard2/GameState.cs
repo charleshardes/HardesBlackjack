@@ -156,7 +156,7 @@ namespace GameState {
             public Player dealer {
                 get {
                     player dlr = (player)Marshal.PtrToStructure(TableStruct.dealer, typeof(player));
-                    return new Game.Table.Player(ref dlr);
+                    return new Game.Table.Player(-1);
                 }
             }
             public int NO_OF_PLAYERS;
@@ -176,7 +176,7 @@ namespace GameState {
 
                     for (int i = 0; i < this.NO_OF_PLAYERS; i++) {
                         player newPlyr = (player)Marshal.PtrToStructure(TableStruct.players[i], typeof(player));
-                        Players[i] = new Game.Table.Player(ref newPlyr);
+                        Players[i] = new Game.Table.Player(i);
                     }
                     return Players;
                 }
@@ -184,17 +184,23 @@ namespace GameState {
 
             public class Player {
 
-                public Player(ref player PlayerStruct) {
+                public Player(int index) {
 
-                    Pstruct = PlayerStruct;
-
+                    pos = index + 1;
                     dealer = Pstruct.dealer == 1;
                     computer = Pstruct.computer == 1;
                     name = new string(Pstruct.name);
-                    pos = Pstruct.pos;
+                    
                 }
 
-                private player Pstruct;
+                public player Pstruct {
+                    get {
+                        if (pos == 0) {
+                            return (player)Marshal.PtrToStructure(Game.TableStruct.dealer, typeof(player));
+                        }
+                        else return (player)Marshal.PtrToStructure(Game.TableStruct.players[pos - 1], typeof(player));
+                    }
+                }
                 private bool dealer;
                 public bool computer;
                 public string name;
@@ -260,7 +266,7 @@ namespace GameState {
                         }
                     }
                     public int handIndex { get { return Hstruct.handIndex; } }
-                    private hand Hstruct;
+                    public hand Hstruct;
 
                 }//end Hand class def
             }//end Player class def

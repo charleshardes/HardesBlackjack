@@ -55,7 +55,7 @@ namespace CardDisplay
                     //if (no_of_players == 4) { playerNames[1] = this.txtPlayer4Name.Text; }
 
                     DisplayHand frm = new DisplayHand(no_of_players, no_of_comps, playerNames);
-                    frm.NumPlayers = no_of_players + no_of_comps;
+                    //frm.NumPlayers = no_of_players + no_of_comps;
 
                     
                     for (i = 0; i < no_of_players + no_of_comps; i++) {
