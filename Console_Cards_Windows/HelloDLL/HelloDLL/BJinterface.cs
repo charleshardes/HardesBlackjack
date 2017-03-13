@@ -189,6 +189,9 @@ namespace HelloDLL {
         [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern void DLLtakeScores(ref table t);
 
+        [DllImport(Constants.dllPath, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void DLLclearTable(ref table t);
+
         public static IntPtr setTable(int NO_OF_PLAYERS, int NO_OF_COMPS, string[] stringArr) {
 
             table BJtable;

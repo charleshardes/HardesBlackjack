@@ -18,15 +18,8 @@ namespace CardDisplay {
         public DisplayHand(int NO_OF_PLAYERS, int NO_OF_COMPS, string[] players) {
 
             InitializeComponent();
-
             this.BJgame = new Game(NO_OF_PLAYERS, NO_OF_COMPS, players);
         }
-
-        /****************** REDUNDANT *************************************/
-        //public int NumPlayers {
-            //get { return iplayers; }
-            //set { iplayers = value; }
-        //}
 
         public Game BJgame;
 
@@ -40,23 +33,23 @@ namespace CardDisplay {
         PictureBox pbPL2C2 = new PictureBox();
         
 
-        private void DisplayHand_Paint(object sender, PaintEventArgs e)
-        {
+        private void DisplayHand_Paint(object sender, PaintEventArgs e) {
+
             // Declares the Graphics object and sets it to the Graphics object
             // Currently not used, this could be used instead of picture boxes
             Graphics g = e.Graphics;
         }
 
-        private void DrawCard(Graphics g, string Card,int x, int y)
-        {
+        private void DrawCard(Graphics g, string Card,int x, int y) {
+
             //not used
             string FileName = System.Windows.Forms.Application.StartupPath + "\\cards_gif\\" + Card + ".gif";
             Image Card_image1 = Image.FromFile(FileName);
             g.DrawImage(Card_image1, x, y, 46, 64);
         }
 
-        private void ShowCard(string Card, PictureBox myPictureBox)
-        {
+        private void ShowCard(string Card, PictureBox myPictureBox) {
+
             //called everytime is card is displayed
             string FileName = System.Windows.Forms.Application.StartupPath + "\\cards_gif\\" + Card + ".gif";
             Image Card_image1 = Image.FromFile(FileName);
@@ -66,8 +59,8 @@ namespace CardDisplay {
             myPictureBox.Invalidate();
         }
 
-        private void FormatCard(PictureBox PictureBox, int X, int Y)
-        {
+        private void FormatCard(PictureBox PictureBox, int X, int Y) 
+            {
             //Formats the picture box to the desired location on the form and the dimensions
             PictureBox.Location = new Point(X, Y);
             PictureBox.Width = 36;
@@ -75,8 +68,8 @@ namespace CardDisplay {
             PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
-        private void btnDeal_Click(object sender, EventArgs e)
-        {
+        private void btnDeal_Click(object sender, EventArgs e) 
+            {
             //This resets all player hands to their starting (not dealt a hand yet) state
             BJinterface.DLLsetAllHands(ref Game.TableStruct);
 
@@ -107,11 +100,10 @@ namespace CardDisplay {
             ShowCard("b2fv", pbDC1);
             ShowCard(this.BJgame.gameTable.dealer.playerHand.cards[1].abbr, pbDC2);
             lblDealerCount.Text = "";
-            for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++)
+            for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++) { 
+
             //Display the cards for all players 
-            {
-                switch (i)
-                {
+                switch (i) {
                     case 0:
                         ShowCard(this.BJgame.gameTable.players[i].playerHand.cards[0].abbr, pbPL1C1);
                         ShowCard(this.BJgame.gameTable.players[i].playerHand.cards[1].abbr, pbPL1C2);
@@ -138,10 +130,7 @@ namespace CardDisplay {
             lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
         }//End btnDeal_Click
      
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void label1_Click(object sender, EventArgs e) { }
         private void DisplayHand_Load(object sender, EventArgs e) {
             GetBetsALL(false);
         }
@@ -188,43 +177,29 @@ namespace CardDisplay {
             }
         }
 
-       
+        private void label2_Click(object sender, EventArgs e) {}
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-       
-
-        private void btnBetP1Inc_Click(object sender, EventArgs e)
-        {
+        private void btnBetP1Inc_Click(object sender, EventArgs e) {
             //increase the bet
             int ChipValue = int.Parse(txtP1Chips.Text);
             int Bet = int.Parse(txtP1Bet.Text);
-            if (ChipValue -5 > 0)
-            {
+            if (ChipValue -5 > 0) {
                 txtP1Bet.Text = (Bet + 5).ToString();
                 txtP1Chips.Text = (ChipValue - 5).ToString();
             }
         }
 
-        private void btnBetP1Dec_Click(object sender, EventArgs e)
-        {   
+        private void btnBetP1Dec_Click(object sender, EventArgs e) {   
             //decrease the bet
             int ChipValue = int.Parse(txtP1Chips.Text);
             int Bet = int.Parse(txtP1Bet.Text);
-            if (Bet - 5 > 0)
-            {
+            if (Bet - 5 > 0) {
                 txtP1Bet.Text = (Bet - 5).ToString();
                 txtP1Chips.Text = (ChipValue + 5).ToString();
             }
         }
 
-        private void grpPlayer2_Enter(object sender, EventArgs e)
-        {
-
-        }
+        private void grpPlayer2_Enter(object sender, EventArgs e){}
 
         private void btnP1Hit_Click(object sender, EventArgs e) {
             //Called from Hit button for the first player
@@ -244,7 +219,6 @@ namespace CardDisplay {
                     btnP2Stay.Enabled = true;
                 }
             }
-            //lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
         }
 
         private void btnP2Hit_Click(object sender, EventArgs e) {
@@ -257,13 +231,8 @@ namespace CardDisplay {
             if (Player.playerHand.hasEnded) {
                 if (Player.pos == (this.BJgame.gameTable.NO_OF_PLAYERS)) {
                     this.DealerHand();
-                }/*
-                else {
-                    btnP2Hit.Enabled = true;
-                    btnP2Stay.Enabled = true;
-                }*/
+                }
             }
-            //lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
         }
 
         private void Hit(Game.Table.Player Player, Panel PlayerCards, Label lblCount, Button btnHit, Button btnStay) {
@@ -348,30 +317,24 @@ namespace CardDisplay {
             lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
         }
 
-        private void ShowCard(string v, Control control)
-        {
-            
-        }
+        private void ShowCard(string v, Control control) { }
 
-        private void btnP2Inc_Click(object sender, EventArgs e)
-        {
+        private void btnP2Inc_Click(object sender, EventArgs e) {
             //Increases bet for the second player
             int ChipValue = int.Parse(txtP2Chips.Text);
             int Bet = int.Parse(txtP2Bet.Text);
-            if (ChipValue - 5 > 0)
-            {
+            if (ChipValue - 5 > 0) {
                 txtP2Bet.Text = (Bet + 5).ToString();
                 txtP2Chips.Text = (ChipValue - 5).ToString();
             }
         }
 
-        private void btnP2Dec_Click(object sender, EventArgs e)
-        {
+        private void btnP2Dec_Click(object sender, EventArgs e) {
+
             //Decreases bet for the second player
             int ChipValue = int.Parse(txtP2Chips.Text);
             int Bet = int.Parse(txtP2Bet.Text);
-            if (Bet - 5 > 0)
-            {
+            if (Bet - 5 > 0) {
                 txtP2Bet.Text = (Bet - 5).ToString();
                 txtP2Chips.Text = (ChipValue + 5).ToString();
             }
@@ -417,13 +380,9 @@ namespace CardDisplay {
             lblDealerCount.Text = "";
             lblP1Count.Text = "";
 
-            GetBetsALL(false);
-            //txtP1Chips.Text = this.BJgame.gameTable.players[0].chips.ToString();
+            BJinterface.DLLclearTable(ref Game.TableStruct);
 
-            if (this.BJgame.gameTable.NO_OF_PLAYERS > 1) {
-                txtP2Chips.Text = this.BJgame.gameTable.players[1].chips.ToString();
-                this.panelPlayer2.Visible = true;          
-            }
+            GetBetsALL(false);
 
             btnDeal.Enabled = true;
             btnBetP1Inc.Enabled = true;
@@ -434,18 +393,12 @@ namespace CardDisplay {
 
         private void panel1_Paint(object sender, PaintEventArgs e) { }
         
-
         private void lblP2Count_Click(object sender, EventArgs e) { }
 
-        private void txtPlayer1_TextChanged(object sender, EventArgs e)
-        {
+        private void txtPlayer1_TextChanged(object sender, EventArgs e) {}
 
-        }
+        private void DisplayHand_FormClosed(object sender, FormClosedEventArgs e) {
 
-        private void DisplayHand_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //CardGame frm = new CardGame();
-            //frm.Show();
             BJinterface.DLLcleanUp(ref Game.TableStruct, ref Game.DeckStruct);
             Application.Exit();
         }

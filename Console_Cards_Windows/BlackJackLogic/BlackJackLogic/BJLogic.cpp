@@ -342,7 +342,7 @@ extern "C" {
 
 				/*Condition for player Blackjack; pays 3/2*/
 				if (t->players[i]->playerHand->hasBlackjack) {
-					t->players[i]->chips += ((t->players[i]->playerHand->bet * 3) / 2);
+					t->players[i]->chips += ((t->players[i]->playerHand->bet * 3) / 2) + t->players[i]->playerHand->bet;
 				}
 				/*all other wins pay 2/1*/
 				else {
@@ -381,7 +381,7 @@ extern "C" {
 			h = h->splitHand;
 		}
 		h->bet = bet;
-		//t->players[t->currPlayer]->chips -= h->bet;
+		t->players[t->currPlayer]->chips -= h->bet;
 
 		//increment currPlayer, reset if last player
 		if (t->currPlayer == t->NO_OF_PLAYERS - 1) {
@@ -391,6 +391,19 @@ extern "C" {
 			t->currPlayer++;
 		}
 
+	}
+
+	__declspec(dllexport) void DLLclearTable(table *t) {
+
+		int i;
+		assert(t);
+
+		for (i = 0; i < t->NO_OF_PLAYERS; i++) {
+			discardHand(t, t->players[i]->playerHand);
+			t->players[i]->handCount = 0;
+		}
+		discardHand(t, t->dealer->playerHand);
+		t->hasSplits = 0;
 	}
 
 
