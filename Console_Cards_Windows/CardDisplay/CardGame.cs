@@ -39,8 +39,8 @@ namespace CardDisplay
                 no_of_players = int.Parse(txtNumPlayers.Text);
                 no_of_comps = 0; //default until we get this worked into the GUI
 
-                if (no_of_players > 2) {
-                    lblErrorMessage.Text = "Maximum of two players allowed.";
+                if (no_of_players > 4) {
+                    lblErrorMessage.Text = "Maximum of four players allowed.";
                 }
                 else {
 
@@ -51,8 +51,8 @@ namespace CardDisplay
                     if (no_of_players >= 2) { playerNames[1] = this.txtPlayer2Name.Text; }
 
                     // 2 or more players not possible yet...but this is for when it is.
-                    //if (no_of_players >= 3) { playerNames[1] = this.txtPlayer3Name.Text; }
-                    //if (no_of_players == 4) { playerNames[1] = this.txtPlayer4Name.Text; }
+                    if (no_of_players >= 3) { playerNames[2] = this.txtPlayer3Name.Text; }
+                    if (no_of_players == 4) { playerNames[3] = this.txtPlayer4Name.Text; }
 
                     DisplayHand frm = new DisplayHand(no_of_players, no_of_comps, playerNames);
                     //frm.NumPlayers = no_of_players + no_of_comps;
@@ -62,21 +62,19 @@ namespace CardDisplay
                         switch (i) {
                             case 0:
 
-                                frm.txtPlayer1Name.Text = frm.BJgame.gameTable.players[0].name;
+                                frm.lblPlayer1.Text = frm.BJgame.gameTable.players[0].name;
                                 continue;
                             case 1:
-                                frm.txtPlayer2Name.Text = frm.BJgame.gameTable.players[1].name;
+                                frm.lblPlayer1.Text = frm.BJgame.gameTable.players[1].name;
                                 continue;
-                            /************************ FOR WHEN UP TO 4 PLAYERS IMPLEMENTED*******
+                            
                             case 2:
-                                Playa = (player)Marshal.PtrToStructure(frm.Game.Table.players[2], typeof(player));
-                                frm.txtPlayer3Name.Text = Playa.name.ToString();
-                                break;
+                                //frm.txtPlayer3Name.Text = frm.BJgame.gameTable.players[2].name;
+                                continue;
                             case 3:
-                                Playa = (player)Marshal.PtrToStructure(frm.Game.Table.players[3], typeof(player));
-                                frm.txtPlayer4Name.Text = Playa.name.ToString();
-                                break;
-                            */
+                                //frm.txtPlayer4Name.Text = frm.BJgame.gameTable.players[3].name;
+                                continue;
+
                         }//END SWITCH
                     }//END FOR
                     frm.Show();
@@ -88,25 +86,43 @@ namespace CardDisplay
             }
         }
 
-        private void txtNumPlayers_TextChanged(object sender, EventArgs e)
-        {
+        private void txtNumPlayers_TextChanged(object sender, EventArgs e) {
             int i = 0;
             bool r = int.TryParse(txtNumPlayers.Text, out i);
-            if (r)
-            {
-                if (int.Parse(txtNumPlayers.Text) > 1)
-                {
+            if (r) {
+                if (int.Parse(txtNumPlayers.Text) > 1) {
                     panelPlayer2.Visible = true;
-                }else
-                {
-                    panelPlayer2.Visible = false;
                 }
+                else { panelPlayer2.Visible = false;}
+
+                if (int.Parse(txtNumPlayers.Text) > 2) {
+                    panelPlayer3.Visible = true;
+                }
+                else { panelPlayer3.Visible = false; }
+
+                if (int.Parse(txtNumPlayers.Text) > 3) {
+                    panelPlayer4.Visible = true;
+                }
+                else { panelPlayer4.Visible = false; }
+
             }          
         }
 
         private void CardGame_FormClosed(object sender, FormClosedEventArgs e)
         {
            
+        }
+
+        private void panelPlayer1_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e) {
+     
+        }
+
+        private void label5_Click(object sender, EventArgs e) {
+
         }
     }
 }

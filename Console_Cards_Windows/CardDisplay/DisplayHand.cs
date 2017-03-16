@@ -63,8 +63,8 @@ namespace CardDisplay {
             {
             //Formats the picture box to the desired location on the form and the dimensions
             PictureBox.Location = new Point(X, Y);
-            PictureBox.Width = 36;
-            PictureBox.Height = 47;
+            PictureBox.Width = 72;
+            PictureBox.Height = 94;
             PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
@@ -109,7 +109,7 @@ namespace CardDisplay {
                         ShowCard(this.BJgame.gameTable.players[i].playerHand.cards[1].abbr, pbPL1C2);
                         lblP1Count.Text = this.BJgame.gameTable.players[i].playerHand.score.ToString();
                         btnP1Hit.Enabled = true;
-                        btnStay.Enabled = true;
+                        btnP1Stay.Enabled = true;
                         btnBetP1Inc.Enabled = false;
                         btnBetP1Dec.Enabled = false;
                         break;
@@ -164,7 +164,7 @@ namespace CardDisplay {
             }//end for loop
         }
 
-        private void GetBet(TextBox txtChips, TextBox txtBet, GameState.Game.Table.Player Player, bool dealing) {
+        private void GetBet(Label txtChips, TextBox txtBet, GameState.Game.Table.Player Player, bool dealing) {
 
             int bet = int.Parse(txtBet.Text);
             int chips = Player.chips;
@@ -206,7 +206,7 @@ namespace CardDisplay {
 
             Game.Table.Player Player = this.BJgame.gameTable.players[0];
 
-            Hit(Player, panelP1Cards, lblP1Count, btnP1Hit, btnStay);
+            Hit(Player, panelP1Cards, lblP1Count, btnP1Hit, btnP1Stay);
 
             if (Player.playerHand.hasEnded) {
 
@@ -226,7 +226,7 @@ namespace CardDisplay {
 
             Game.Table.Player Player = this.BJgame.gameTable.players[1];
 
-            Hit(Player, panelP2Cards, lblP2Count, btnP2Hit, btnStay);
+            Hit(Player, panelP2Cards, lblP2Count, btnP2Hit, btnP1Stay);
 
             if (Player.playerHand.hasEnded) {
                 if (Player.pos == (this.BJgame.gameTable.NO_OF_PLAYERS)) {
@@ -249,8 +249,8 @@ namespace CardDisplay {
             PictureBox CardBox = new PictureBox();
 
             //format picture box for the new card
-            CardBox.Width = 36;
-            CardBox.Height = 47;
+            CardBox.Width = 72;
+            CardBox.Height = 94;
             CardBox.SizeMode = PictureBoxSizeMode.StretchImage;
             CardBox.Location = new Point(X + ((h.cardCount - 2) * 15), 3);
             PlayerCards.Controls.Add(CardBox);
@@ -283,8 +283,8 @@ namespace CardDisplay {
             for  (int i = 2; i < Dealer.playerHand.cardCount; i++) {
 
                 PictureBox DealerBox = new PictureBox();
-                DealerBox.Width = 36;
-                DealerBox.Height = 47;
+                DealerBox.Width = 72;
+                DealerBox.Height = 94;
                 DealerBox.SizeMode = PictureBoxSizeMode.StretchImage;
                 DealerBox.Location = new Point(X + ((i - 1) * 15), 3);
                 panelDlrCards.Controls.Add(DealerBox);
@@ -346,7 +346,7 @@ namespace CardDisplay {
 
             //Called from Stay button for first player
             btnP1Hit.Enabled = false;
-            btnStay.Enabled = false;
+            btnP1Stay.Enabled = false;
 
             if (this.BJgame.gameTable.NO_OF_PLAYERS > 1) {
                 btnP2Hit.Enabled = true;
@@ -370,8 +370,8 @@ namespace CardDisplay {
 
         private void pbDC3_Click(object sender, EventArgs e) { }
         
-        private void btnClear_Click(object sender, EventArgs e)
-        {
+        private void btnClear_Click(object sender, EventArgs e) {
+
             //Clears the table and allows players to set bets for next hand
 
             panelDlrCards.Controls.Clear();
@@ -401,6 +401,58 @@ namespace CardDisplay {
 
             BJinterface.DLLcleanUp(ref Game.TableStruct, ref Game.DeckStruct);
             Application.Exit();
+        }
+
+        private void lblPlayer_Click(object sender, EventArgs e) {
+
+        }
+
+        private void panelP1Cards_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e) {
+
+        }
+
+        private void lblPlayer1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void panelPlayer2_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void lblDealerCount_Click(object sender, EventArgs e) {
+
+        }
+
+        private void lblCardCount_Click(object sender, EventArgs e) {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void panel6_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void txtP1Chips_Click(object sender, EventArgs e) {
+
+        }
+
+        private void panel11_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void label3_Click_1(object sender, EventArgs e) {
+
         }
     }
 }
