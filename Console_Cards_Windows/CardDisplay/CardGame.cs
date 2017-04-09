@@ -28,7 +28,19 @@ namespace CardDisplay
         {
 
         }
+        private void DrawCard(Graphics g, string Card, int x, int y)
+        {
 
+            //not used
+
+            string FileName = System.Windows.Forms.Application.StartupPath + "\\cards_gif\\" + Card + ".gif";
+            Image Card_image1 = Image.FromFile(FileName);
+
+            //g.TranslateTransform(100.0F, 0.0F);
+            //g.RotateTransform(-30.0F);
+            g.DrawImage(Card_image1, x, y, 46, 64);
+
+        }    
         private void button1_Click(object sender, EventArgs e) {
             int i;
             int no_of_players, no_of_comps;
@@ -123,6 +135,11 @@ namespace CardDisplay
 
         private void label5_Click(object sender, EventArgs e) {
 
+        }
+
+        private void CardGame_Paint(object sender, PaintEventArgs e)
+        {
+            
         }
     }
 }

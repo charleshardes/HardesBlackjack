@@ -5,3 +5,10 @@ C:\Users\Charles\Documents\GitHub\HardesBlackJack\TestCard2\bin\Debug\HelloDLL.e
 C:\Users\Charles\Documents\GitHub\HardesBlackJack\TestCard2\bin\Debug\HelloDLL.pdb
 C:\Users\Charles\Documents\GitHub\HardesBlackJack\TestCard2\obj\Debug\GameState.dll
 C:\Users\Charles\Documents\GitHub\HardesBlackJack\TestCard2\obj\Debug\GameState.pdb
+C:\cygwin64\home\Gerald\HardesBlackJack\TestCard2\bin\Debug\GameState.dll
+C:\cygwin64\home\Gerald\HardesBlackJack\TestCard2\bin\Debug\GameState.pdb
+C:\cygwin64\home\Gerald\HardesBlackJack\TestCard2\bin\Debug\HelloDLL.exe
+C:\cygwin64\home\Gerald\HardesBlackJack\TestCard2\bin\Debug\HelloDLL.pdb
+C:\cygwin64\home\Gerald\HardesBlackJack\TestCard2\obj\Debug\GameState.csprojResolveAssemblyReference.cache
+C:\cygwin64\home\Gerald\HardesBlackJack\TestCard2\obj\Debug\GameState.dll
+C:\cygwin64\home\Gerald\HardesBlackJack\TestCard2\obj\Debug\GameState.pdb
