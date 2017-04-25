@@ -576,7 +576,7 @@ namespace GameState {
             private int ipostion;
             private string sName;
             //private string[] sCards = new string[7];
-            IList<string> sCards = new List<string>();
+            private IList<string> sCards = new List<string>();
             private int iBet;
             private int iCount;
             private int iChipBalance;

@@ -15,7 +15,6 @@ C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\
 C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\bin\Debug\HelloDLL.application
 C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\bin\Debug\HelloDLL.exe
 C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\bin\Debug\HelloDLL.pdb
-C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\obj\Debug\HelloDLL.csprojResolveAssemblyReference.cache
 C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\obj\Debug\HelloDLL.Properties.Resources.resources
 C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\obj\Debug\HelloDLL.csproj.GenerateResource.Cache
 C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\obj\Debug\HelloDLL.TrustInfo.xml
@@ -23,3 +22,4 @@ C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\
 C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\obj\Debug\HelloDLL.application
 C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\obj\Debug\HelloDLL.exe
 C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\obj\Debug\HelloDLL.pdb
+C:\cygwin64\home\Gerald\HardesBlackJack\Console_Cards_Windows\HelloDLL\HelloDLL\obj\Debug\HelloDLL.csprojResolveAssemblyReference.cache

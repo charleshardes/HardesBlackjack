@@ -404,6 +404,7 @@ extern "C" {
 		}
 		discardHand(t, t->dealer->playerHand);
 		t->hasSplits = 0;
+		t->handsAreDealt = false;
 	}
 
 

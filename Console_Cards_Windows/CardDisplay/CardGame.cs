@@ -70,25 +70,25 @@ namespace CardDisplay
                     //frm.NumPlayers = no_of_players + no_of_comps;
 
                     
-                    for (i = 0; i < no_of_players + no_of_comps; i++) {
-                        switch (i) {
-                            case 0:
+                    //for (i = 0; i < no_of_players + no_of_comps; i++) {
+                    //    switch (i) {
+                    //        case 0:
 
-                                frm.lblPlayer1.Text = frm.BJgame.gameTable.players[0].name;
-                                continue;
-                            case 1:
-                                frm.lblPlayer1.Text = frm.BJgame.gameTable.players[1].name;
-                                continue;
+                    //            frm.lblPlayer3.Text = frm.BJgame.gameTable.players[0].name;
+                    //            continue;
+                    //        case 1:
+                    //            frm.lblPlayer4.Text = frm.BJgame.gameTable.players[1].name;
+                    //            continue;
                             
-                            case 2:
-                                //frm.txtPlayer3Name.Text = frm.BJgame.gameTable.players[2].name;
-                                continue;
-                            case 3:
-                                //frm.txtPlayer4Name.Text = frm.BJgame.gameTable.players[3].name;
-                                continue;
+                    //        case 2:
+                    //            //frm.txtPlayer3Name.Text = frm.BJgame.gameTable.players[2].name;
+                    //            continue;
+                    //        case 3:
+                    //            //frm.txtPlayer4Name.Text = frm.BJgame.gameTable.players[3].name;
+                    //            continue;
 
-                        }//END SWITCH
-                    }//END FOR
+                    //    }//END SWITCH
+                    //}//END FOR
                     frm.Show();
                     this.Hide();
                 }

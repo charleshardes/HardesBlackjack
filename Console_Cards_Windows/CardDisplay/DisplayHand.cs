@@ -8,197 +8,151 @@ using System.Text;
 using System.Threading.Tasks;
 using GameState;
 using System.Windows.Forms;
+using System.Globalization;
 using HelloDLL;
 
 
-namespace CardDisplay {
-    
-    public partial class DisplayHand : Form {
+namespace CardDisplay
+{
 
-        public DisplayHand(int NO_OF_PLAYERS, int NO_OF_COMPS, string[] players) {
+    public partial class DisplayHand : Form
+    {
+
+        public DisplayHand(int NO_OF_PLAYERS, int NO_OF_COMPS, string[] players)
+        {
 
             InitializeComponent();
             this.BJgame = new Game(NO_OF_PLAYERS, NO_OF_COMPS, players);
+            
+            CardPositions.Add(new CardPosition() { Location = new Point { X = 200, Y = 235 }, Rotation = 0, Translation = 0 });
+            CardPositions.Add(new CardPosition() { Location = new Point { X = 620, Y = 310 }, Rotation = 0, Translation = 0 });
+            CardPositions.Add(new CardPosition() { Location = new Point { X = 450, Y = 345 }, Rotation = 0, Translation = 0 });
+            CardPositions.Add(new CardPosition() { Location = new Point { X = 260, Y = 310 }, Rotation = 0, Translation = 0 });
+            CardPositions.Add(new CardPosition() { Location = new Point { X = 600, Y = 235 }, Rotation = 0, Translation = 0 });
+            
+            switch (NO_OF_PLAYERS)
+            {
+                case 1:
+                    this.panelChair3.Visible = true;
+                    //PlayerChairs.Add(new Chair() { Hit = this.btnHit3, Stay = this.btnStay3, Bet = this.txtBet3, Chips = this.lblChips3, Count = this.lblCount3, BetInc = this.btnBetInc3, BetDec = this.btnBetDec3, Player = this.BJgame.gameTable.players[0], CardPosition = CardPositions[2]});
+                    lblPlayer3.Text = BJgame.gameTable.players[0].name;
+                    Chair3 = new Chair() { Hit= this.btnHit3, Stay = this.btnStay3, Bet = this.txtBet3, Chips = this.lblChips3, Count = this.lblCount3, BetInc = this.btnBetInc3, BetDec = this.btnBetDec3, Player = this.BJgame.gameTable.players[0], CardPosition = CardPositions[2] };
+                    PlayerChairs.Add(Chair3);
+                    break;  
+                case 2:
+                    this.panelChair3.Visible = true;
+                    this.panelChair4.Visible = true;
+                    Chair3 = new Chair() { Hit = this.btnHit3, Stay = this.btnStay3, Bet = this.txtBet3, Chips = this.lblChips3, Count = this.lblCount3, BetInc = this.btnBetInc3, BetDec = this.btnBetDec3, Player = this.BJgame.gameTable.players[0], CardPosition = CardPositions[2] };
+                    lblPlayer3.Text = BJgame.gameTable.players[0].name;
+                    PlayerChairs.Add(Chair3);
+                    Chair4 = new Chair() { Hit = this.btnHit4, Stay = this.btnStay4, Bet = this.txtBet4, Chips = this.lblChips4, Count = this.lblCount4, BetInc = this.btnBetInc4, BetDec = this.btnBetDec4, Player = this.BJgame.gameTable.players[1], CardPosition = CardPositions[3] };
+                    lblPlayer4.Text = BJgame.gameTable.players[1].name;
+                    PlayerChairs.Add(Chair4);
+                    break;
+                case 3:
+                    this.panelChair2.Visible = true;
+                    this.panelChair3.Visible = true;
+                    this.panelChair4.Visible = true;
+                    Chair2 = new Chair() { Hit = this.btnHit2, Stay = this.btnStay2, Bet = this.txtBet2, Chips = this.lblChips2, Count = this.lblCount2, BetInc = this.btnBetInc2, BetDec = this.btnBetDec2, Player = this.BJgame.gameTable.players[0], CardPosition = CardPositions[1] };
+                    lblPlayer2.Text = BJgame.gameTable.players[0].name;
+                    PlayerChairs.Add(Chair2);
+                    Chair3 = new Chair() { Hit = this.btnHit3, Stay = this.btnStay3, Bet = this.txtBet3, Chips = this.lblChips3, Count = this.lblCount3, BetInc = this.btnBetInc3, BetDec = this.btnBetDec3, Player = this.BJgame.gameTable.players[0], CardPosition = CardPositions[2] };
+                    lblPlayer3.Text = BJgame.gameTable.players[1].name;
+                    PlayerChairs.Add(Chair3);
+                    Chair4 = new Chair() { Hit = this.btnHit4, Stay = this.btnStay4, Bet = this.txtBet4, Chips = this.lblChips4, Count = this.lblCount4, BetInc = this.btnBetInc4, BetDec = this.btnBetDec4, Player = this.BJgame.gameTable.players[1], CardPosition = CardPositions[3] };
+                    lblPlayer4.Text = BJgame.gameTable.players[2].name;
+                    PlayerChairs.Add(Chair4);
+                    break;
+            }
         }
 
         public Game BJgame;
-        //private int DealCards = 0;
-        //private IList<PictureBox> DealerBoxes = new List<PictureBox>();
-        //The following picture box objects are used to display the first two cards of a new game
-        //PictureBox pbDC1 = new PictureBox();
-        //PictureBox pbDC2 = new PictureBox();
-        //PictureBox pbPL1C1 = new PictureBox();
-        //PictureBox pbPL1C2 = new PictureBox();
-        //PictureBox pbPL2C1 = new PictureBox();
-        //PictureBox pbPL2C2 = new PictureBox();
-        
+        //public PlayerTablePosition PlrTablePos;
+        public List<Chair> PlayerChairs = new List<Chair>();
+        public Chair Chair1 = new Chair();
+        public Chair Chair2 = new Chair();
+        public Chair Chair3 = new Chair();
+        public Chair Chair4 = new Chair();
+        public Chair Chair5 = new Chair();
 
-        private void DisplayHand_Paint(object sender, PaintEventArgs e) {
+        public const int MAX_NUM_PLAYERS = 5;
+        public List<CardPosition> CardPositions = new List<CardPosition>();
+
+        public class Chair
+        {
+            public Button Hit { get; set; }
+            public Button Stay { get; set; }
+            public TextBox Bet { get; set; }
+            public Label Chips { get; set; }
+            public Label Count { get; set; }
+            public Button BetInc { get; set; }
+            public Button BetDec { get; set; }
+            public Game.Table.Player Player { get; set; }
+            public CardPosition CardPosition { get; set; }
+        }
+        public class CardPosition
+        {
+            public Point Location { get; set; }
+            public float Rotation { get; set; }
+            public float Translation { get; set; }
+        }
+        private void DisplayHand_Paint(object sender, PaintEventArgs e)
+        {
 
             // Declares the Graphics object and sets it to the Graphics object
-            // Currently not used, this could be used instead of picture boxes
+            
             Graphics g = e.Graphics;
-            //Graphics g = e.Graphics;
-            //DrawCard(e.Graphics, "s9", 20, 20); testing
-            //CardGraphic(e);
-            //DrawCard(e.Graphics, "s9", 20, 20);
             if (BJgame.gameTable.handsAreDealt)
             {
                 Deal_Hand(g);
             }
             g.Dispose();
-
-            //string sCard = "";
-            //if (BJgame.gameTable.dealer.playerHand.cardCount > 0)
-            //{
-                //DrawCard(e.Graphics, "s9", 20, 20);
-           //     sCard = this.BJgame.gameTable.dealer.playerHand.cards[0].abbr;
-                //DrawCard(g, this.BJgame.gameTable.dealer.playerHand.cards[1].abbr, panelDlrCards.Location.X + 15, panelDlrCards.Location.Y);
-                
-           // };
-            //DrawCard(e.Graphics, sCard, 20, 20);
         }
 
-        private void DrawCard(Graphics g, string Card,int x, int y, float Rotate, float Translate) {
-            
+        private void DrawCard(Graphics g, string Card, int x, int y, float Rotate, float Translate)
+        {
             string FileName = System.Windows.Forms.Application.StartupPath + "\\cards_gif\\" + Card + ".gif";
             Image Card_image1 = Image.FromFile(FileName);
             g.TranslateTransform(Translate, 0.0F);
             g.RotateTransform(Rotate);
-            g.DrawImage(Card_image1, x, y, 71, 96);  
+            g.DrawImage(Card_image1, x, y, 59, 80);  //71,96
         }
-
-        private void DrawPictureBox(string Card, int x, int y, float Rotate, float Translate)
-
-        {
-            //not used
-            string FileName = System.Windows.Forms.Application.StartupPath + "\\cards_gif\\" + Card + ".gif";
-            Image Card_image1 = Image.FromFile(FileName);
-            //PictureBox p = new PictureBox();
-            Graphics Gerry = pictureBox1.CreateGraphics();
-            
-            Gerry.TranslateTransform(0.0F, 0.0F);
-            Gerry.RotateTransform(30F);
-            Gerry.DrawImage(Card_image1, 122, 46, 72, 94);
-            pictureBox1.Width = 72;
-            pictureBox1.Height = 94;
-            Point myPoint = new Point(122, 46);
-            pictureBox1.Location = myPoint;
-            pictureBox1.Image = Card_image1;
-
-        }
-
-        private void ClearCard(Graphics g, string Card, int x, int y, float Rotate, float Translate)
-        {
-            //not used
-            string FileName = System.Windows.Forms.Application.StartupPath + "\\cards_gif\\" + Card + ".bmp";
-            Bitmap myBitmap = new Bitmap(FileName);
-            Color backColor = myBitmap.GetPixel(1, 1);
-            myBitmap.MakeTransparent(backColor);
-            g.TranslateTransform(Translate, 0.0F);
-            g.RotateTransform(Rotate);
-            g.DrawImage(myBitmap, x, y, 71, 96);
-        }
-
-        private void ShowCard(string Card, PictureBox myPictureBox) {
-
-            //not used
-            //called everytime is card is displayed
-            string FileName = System.Windows.Forms.Application.StartupPath + "\\cards_gif\\" + Card + ".gif";
-            Image Card_image1 = Image.FromFile(FileName);
-            
-            myPictureBox.Image = Card_image1;
-            myPictureBox.Visible = true;
-            myPictureBox.BringToFront();
-            myPictureBox.Invalidate();
-        }
-
-        private void FormatCard(PictureBox PictureBox, int X, int Y) 
-            {
-            //not used
-            //Formats the picture box to the desired location on the form and the dimensions
-            PictureBox.Location = new Point(X, Y);
-            PictureBox.Width = 72;
-            PictureBox.Height = 94;
-            PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-        }
+        
         private void Deal_Hand(Graphics g)
         {
             if (this.BJgame.gameTable.dealer.playerHand.cards[0].shown)
             {
-                DrawCard(g, this.BJgame.gameTable.dealer.playerHand.cards[0].abbr, 400, 0, 0, 0);
-            }else
-            {
-                DrawCard(g, "b2fv", 400, 0, 0, 0); //First card face down
+                DrawCard(g, this.BJgame.gameTable.dealer.playerHand.cards[0].abbr, 460, 30, 0, 0);
             }
-            DrawCard(g, this.BJgame.gameTable.dealer.playerHand.cards[1].abbr, 415, 0, 0, 0);
+            else
+            {
+                DrawCard(g, "b2fv", 460, 30, 0, 0); //First card face down
+            }
+                DrawCard(g, this.BJgame.gameTable.dealer.playerHand.cards[1].abbr, 473, 30, 0, 0);
             for (int r = 2; r < this.BJgame.gameTable.dealer.playerHand.cardCount; r++)
             {
-                DrawCard(g, this.BJgame.gameTable.dealer.playerHand.cards[r].abbr, 415 + (((r + 1) - 2) * 15), 0, 0, 0);
+                DrawCard(g, this.BJgame.gameTable.dealer.playerHand.cards[r].abbr, 473 + (((r + 1) - 2) * 13), 30, 0, 0);
             }
 
             for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++)
             {
                 //Display the cards for all players 
-                switch (i)
+                
+                int X_Spaces = 13;
+                DrawCard(g, this.BJgame.gameTable.players[i].playerHand.cards[0].abbr, this.PlayerChairs[i].CardPosition.Location.X, this.PlayerChairs[i].CardPosition.Location.Y, this.PlayerChairs[i].CardPosition.Rotation, this.PlayerChairs[i].CardPosition.Translation); //100,230,25,100                                                                                                                                                                                                                                                                        //DrawCard(g, this.BJgame.gameTable.players[i].playerHand.cards[1].abbr, this.PlrTablePos.Locations[i].CardLocation.X, this.PlrTablePos.Locations[i].CardLocation.Y, 0, 0); //100,230,25,100
+                for (int r = 1; r < this.BJgame.gameTable.players[i].playerHand.cardCount; r++)
                 {
-                    case 0:
-                        DrawCard(g, this.BJgame.gameTable.players[i].playerHand.cards[0].abbr, 100, 230, 25, 100);//25,100
-                        DrawCard(g, this.BJgame.gameTable.players[i].playerHand.cards[1].abbr, 115, 230, 0, 0);
-                        for (int r = 2; r < this.BJgame.gameTable.players[i].playerHand.cardCount; r++)
-                        {
-                            DrawCard(g, this.BJgame.gameTable.players[i].playerHand.cards[r].abbr, 115 + (((r + 1) - 2) * 15), 230, 0, 0);
-                        }
-                        break;
-                    case 1:
-                        DrawCard(g, this.BJgame.gameTable.players[i].playerHand.cards[0].abbr, 250, 255, -5, 0); //05,0
-                        DrawCard(g, this.BJgame.gameTable.players[i].playerHand.cards[1].abbr, 265, 255, 0, 0);
-                        for (int r = 2; r < this.BJgame.gameTable.players[i].playerHand.cardCount; r++)
-                        {
-                            DrawCard(g, this.BJgame.gameTable.players[i].playerHand.cards[r].abbr, 265 + (((r + 1) - 2) * 15), 255, 0, 0);
-                        }
-                        break;
-                    case 2:     
-                        DrawCard(g, this.BJgame.gameTable.players[i].playerHand.cards[0].abbr, 320, 360, -20, 0);
-                        DrawCard(g, this.BJgame.gameTable.players[i].playerHand.cards[1].abbr, 335, 360, 0, 0);
-                        for (int r = 2; r < this.BJgame.gameTable.players[i].playerHand.cardCount; r++)
-                        {
-                            DrawCard(g, this.BJgame.gameTable.players[i].playerHand.cards[r].abbr, 335 + (((r + 1) - 2) * 15), 360, 0, 0);
-                        }
-                        break;
+                    DrawCard(g, this.BJgame.gameTable.players[i].playerHand.cards[r].abbr, this.PlayerChairs[i].CardPosition.Location.X + (r * X_Spaces), this.PlayerChairs[i].CardPosition.Location.Y, 0, 0); //100,230,25,100
                 }
             }
         }
-        private void Clear_Table(Graphics g)
+
+        private void btnDeal_Click(object sender, EventArgs e)
         {
-            //not used
-            ClearCard(g,"BlankCard", 400, 0, 0, 0);
-            ClearCard(g,"BlankCard", 415, 0, 0, 0);
-            for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++)
-            {
-
-                //Display the cards for all players 
-                switch (i)
-                {
-                    case 0:
-                        ClearCard(g,"BlankCard", 100, 230, 25, 100);
-                        ClearCard(g,"BlankCard", 115, 230, 0, 0);
-
-                        break;
-                    case 1:
-                        this.panelPlayer2.Visible = true;
-                        //ShowCard(this.BJgame.gameTable.players[i].playerHand.cards[0].abbr, pbPL2C1);
-                        //ShowCard(this.BJgame.gameTable.players[i].playerHand.cards[1].abbr, pbPL2C2);
-                        break;
-                }
-            }
-        }
-        private void btnDeal_Click(object sender, EventArgs e) 
-            {
             //This resets all player hands to their starting (not dealt a hand yet) state
             BJinterface.DLLsetAllHands(ref Game.TableStruct);
 
-            
+
             //this gets the bet amount from the GUI, makes the applicable update to the player's hand class
             //moved this here from DisplayHand_Load(), it's more appropriate here.
             GetBetsALL(true);
@@ -206,54 +160,34 @@ namespace CardDisplay {
             //This deals out the starting hands to all players and dealer
             BJinterface.DLLdealStartingHands(ref Game.TableStruct, ref Game.DeckStruct);
 
-            //Format the pictureboxes to diplay the cards
-            //FormatCard(pbDC1, 5, 3);
-            //FormatCard(pbDC2, 20, 3);
-            //FormatCard(pbPL1C1, 5, 3);
-            //FormatCard(pbPL1C2, 20, 3);
-            //FormatCard(pbPL2C1, 5, 3);
-            //FormatCard(pbPL2C2, 20, 3);
 
-            //Adds the picturebox controls tot he panel 
-            //DrawCard(this.BJgame.gameTable.dealer.playerHand.cards[0].abbr, 400, 0, 0, 0);
-            //DrawCard(this.BJgame.gameTable.dealer.playerHand.cards[1].abbr, 415, 0, 0, 0);
-            //DrawPictureBox(this.BJgame.gameTable.dealer.playerHand.cards[1].abbr, 415, 0, 0, 0);
-
-            //panelDlrCards.SendToBack();
-            //panelDlrCards.Controls.Add(pbDC1);
-            //panelDlrCards.Controls.Add(pbDC2);
-            //panelP1Cards.Controls.Add(pbPL1C1);
-            //panelP1Cards.Controls.Add(pbPL1C2);
-            //panelP2Cards.Controls.Add(pbPL2C1);
-            //panelP2Cards.Controls.Add(pbPL2C2);
-
-            //Display dealer cards - first card is face down
-            //ShowCard("b2fv", pbDC1);
-            //ShowCard(this.BJgame.gameTable.dealer.playerHand.cards[1].abbr, pbDC2);
-            //DrawCard()
             lblDealerCount.Text = "";
-            for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++) { 
+            for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++)
+            {
 
-            //Display the cards for all players 
-                switch (i) {
+                //Display the cards for all players 
+                switch (i)
+                {
                     case 0:
-                        lblP1Count.Text = this.BJgame.gameTable.players[i].playerHand.score.ToString();
-                        btnP1Hit.Enabled = true;
-                        btnP1Stay.Enabled = true;
-                        btnBetP1Inc.Enabled = false;
-                        btnBetP1Dec.Enabled = false;
+                        PlayerChairs[i].Count.Text = this.BJgame.gameTable.players[i].playerHand.score.ToString();
+                        PlayerChairs[i].Hit.Enabled = true;
+                        PlayerChairs[i].Stay.Enabled = true;
+                        PlayerChairs[i].BetInc.Enabled = false;
+                        PlayerChairs[i].BetDec.Enabled = false;
                         break;
                     case 1:
-                        this.panelPlayer2.Visible = true;
-                        lblP2Count.Text = this.BJgame.gameTable.players[i].playerHand.score.ToString();
-                        btnBetP2Inc.Enabled = false;
-                        btnBetP2Dec.Enabled = false;
+                        PlayerChairs[i].Count.Text = this.BJgame.gameTable.players[i].playerHand.score.ToString();
+                        //PlayerChairs[i].Hit.Enabled = true;
+                        //PlayerChairs[i].Stay.Enabled = true;
+                        PlayerChairs[i].BetInc.Enabled = false;
+                        PlayerChairs[i].BetDec.Enabled = false;
                         break;
                     case 2:
-                        this.panelPlayer3.Visible = true;
-                        lblP3Count.Text = this.BJgame.gameTable.players[i].playerHand.score.ToString();
-                        btnBetP3Inc.Enabled = false;
-                        btnBetP3Dec.Enabled = false;
+                        PlayerChairs[i].Count.Text = this.BJgame.gameTable.players[i].playerHand.score.ToString();
+                        //PlayerChairs[i].Hit.Enabled = true;
+                        //PlayerChairs[i].Stay.Enabled = true;
+                        PlayerChairs[i].BetInc.Enabled = false;
+                        PlayerChairs[i].BetDec.Enabled = false;
                         break;
                 }
             }
@@ -261,470 +195,398 @@ namespace CardDisplay {
             lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
             this.Invalidate();
         }//End btnDeal_Click
-     
-        private void label1_Click(object sender, EventArgs e) { }
-        private void DisplayHand_Load(object sender, EventArgs e) {
-            GetBetsALL(false);
-        }
 
+            private void label1_Click(object sender, EventArgs e) { }
 
-        private void CardGraphic(PaintEventArgs e)
-        {
-            //not used
-            // Then to rotate, prepending rotation matrix.
-            e.Graphics.RotateTransform(15.0F);
-            e.Graphics.TranslateTransform(100.0F, 0.0F);
-            // Draw rotated, translated ellipse to screen.
-            //e.Graphics.DrawEllipse(new Pen(Color.Blue, 3), 0, 0, 200, 80);
-            //e.Graphics.DrawImage()
-            string FileName = System.Windows.Forms.Application.StartupPath + "\\cards_gif\\" + "s6" + ".gif";
-            Image Card_image1 = Image.FromFile(FileName);
-            e.Graphics.DrawImage(Card_image1, 0, 49, 46, 64);
-            FileName = System.Windows.Forms.Application.StartupPath + "\\cards_gif\\" + "sk" + ".gif";
-            Card_image1 = Image.FromFile(FileName);
-            e.Graphics.DrawImage(Card_image1, 20, 49, 46, 64);
-
-        }
-       
-        private void GetBetsALL(bool dealing) {
-
-            for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++) { 
-            //Initialize the total chip count and the default bet for each player
-
-                //Players.Add(new DealCards2.player());
-                //Players[i].Position = i;
-                switch (i) {
-                    case 0:
-                        GetBet(txtP1Chips, txtP1Bet, this.BJgame.gameTable.players[i], dealing);
-                        continue;
-                    case 1:
-                        panelPlayer2.Visible = true;
-                        GetBet(txtP2Chips, txtP2Bet, this.BJgame.gameTable.players[i], dealing);
-                        continue;
-                        /***************for when 4 players implemented***************
-                        case 2:
-                            panelPlayer3.Visible = true;
-                            GetBet(txtP3Chips, txtP3Bet, this.BJgame.gameTable.players[i]);
-                            continue;
-                        case 3:
-                            panelPlayer4.Visible = true;
-                            GetBet(txtP4Chips, txtP4Bet, this.BJgame.gameTable.players[i]);
-                            continue;
-                        */
-                }//end switch
-            }//end for loop
-        }
-
-        private void GetBet(Label txtChips, TextBox txtBet, GameState.Game.Table.Player Player, bool dealing) {
-
-            int bet = int.Parse(txtBet.Text);
-            int chips = Player.chips;
-            chips -= bet;
-            txtChips.Text = chips.ToString();
-
-            if (dealing) {
-                Player.playerHand.bet = bet;
-                Player.chips = chips;
-            }
-        }
-
-        private void label2_Click(object sender, EventArgs e) {}
-
-        private void btnBetP1Inc_Click(object sender, EventArgs e) {
-            //increase the bet
-            int ChipValue = int.Parse(txtP1Chips.Text);
-            int Bet = int.Parse(txtP1Bet.Text);
-            if (ChipValue -5 > 0) {
-                txtP1Bet.Text = (Bet + 5).ToString();
-                txtP1Chips.Text = (ChipValue - 5).ToString();
-            }
-        }
-
-        private void btnBetP1Dec_Click(object sender, EventArgs e) {   
-            //decrease the bet
-            int ChipValue = int.Parse(txtP1Chips.Text);
-            int Bet = int.Parse(txtP1Bet.Text);
-            if (Bet - 5 > 0) {
-                txtP1Bet.Text = (Bet - 5).ToString();
-                txtP1Chips.Text = (ChipValue + 5).ToString();
-            }
-        }
-
-        private void grpPlayer2_Enter(object sender, EventArgs e){}
-
-        private void btnP1Hit_Click(object sender, EventArgs e) {
-            //Called from Hit button for the first player
-
-            Game.Table.Player Player = this.BJgame.gameTable.players[0];
-
-            Hit(Player, lblP1Count, btnP1Hit, btnP1Stay);
-
-            if (Player.playerHand.hasEnded) {
-
-                //if there's a player 2 left to play
-                if (Player.pos == (this.BJgame.gameTable.NO_OF_PLAYERS)) {
-                    this.DealerHand();
-                }
-                else {
-                    btnP2Hit.Enabled = true;
-                    btnP2Stay.Enabled = true;
-                }
-            }
-            this.Invalidate();
-        }
-
-        private void btnP2Hit_Click(object sender, EventArgs e) {
-            //Called from Hit button for the first player
-
-            Game.Table.Player Player = this.BJgame.gameTable.players[1];
-
-            Hit(Player, lblP2Count, btnP2Hit, btnP2Stay);
-
-            if (Player.playerHand.hasEnded) {
-                if (Player.pos == (this.BJgame.gameTable.NO_OF_PLAYERS)) {
-                    this.DealerHand();
-                }else
-                {
-                    btnP3Hit.Enabled = true;
-                    btnP3Stay.Enabled = true;
-                }
-            }
-            this.Invalidate();
-        }
-
-        private void Hit(Game.Table.Player Player, Label lblCount, Button btnHit, Button btnStay)
-        {
-
-            //Called for the player hit buttons to draw a card
-            //int X = 20;
-            Game.Table.Player.Hand h;
-            byte hit = (byte)'h';
-
-            BJinterface.DLLplayerTurn(ref Game.TableStruct, ref Game.DeckStruct, hit);
-
-            h = this.BJgame.gameTable.players[Player.pos - 1].playerHand;
-
-            //PictureBox CardBox = new PictureBox();
-
-            //format picture box for the new card
-            //CardBox.Width = 72;
-            //CardBox.Height = 94;
-            //CardBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            //CardBox.Location = new Point(X + ((h.cardCount - 2) * 15), 3);
-            //PlayerCards.Controls.Add(CardBox);
-            //ShowCard(h.cards[h.cardCount - 1].abbr, CardBox);
-           
-            lblCount.Text = h.score.ToString();
-            if (h.bust) {
-                lblCount.Text += " Busted";
-            }
-            if (h.hasEnded) {
-                btnHit.Enabled = false;
-                btnStay.Enabled = false;
-            }
-            lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
-            //this.Invalidate();
-        }
-        private Point GetLocation(int PlayerPosition, int CardPosition)
-        {
-            //not used
-            Point myPoint = new Point();
-            switch (PlayerPosition)
+            private void DisplayHand_Load(object sender, EventArgs e)
             {
-                case 0: //dealer
-                    myPoint.X = 200 + CardPosition + 15;
-                    break;
-
-                case 1:
-                    break;
-
-                case 2:
-                    break;
-
+               // GetBetsALL(false);
             }
-            return myPoint;
-        }
+            private void GetBetsALL(bool dealing)
+            {
 
+                for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++)
+                {
+                    //Initialize the total chip count and the default bet for each player
 
-        private void DealerHand() {
+                    //Players.Add(new DealCards2.player());
+                    //Players[i].Position = i;
+                    switch (i)
+                    {
+                        case 0:
+                            GetBet(PlayerChairs[0].Chips,PlayerChairs[0].Bet, this.BJgame.gameTable.players[i], dealing);
+                            continue;
+                        case 1:
+                            //panelChair4.Visible = true;
+                            GetBet(PlayerChairs[1].Chips, PlayerChairs[1].Bet, this.BJgame.gameTable.players[i], dealing);
+                            continue;
+                            /***************for when 4 players implemented***************
+                            case 2:
+                                panelPlayer3.Visible = true;
+                                GetBet(txtP3Chips, txtP3Bet, this.BJgame.gameTable.players[i]);
+                                continue;
+                            case 3:
+                                panelPlayer4.Visible = true;
+                                GetBet(txtP4Chips, txtP4Bet, this.BJgame.gameTable.players[i]);
+                                continue;
+                            */
+                    }//end switch
+                }//end for loop
+            }
 
-            //After the last player's hand is done, DealerHand is called to show and complete the dealers hand
-            //int X = 20;
-            Game.Table.Player Dealer = this.BJgame.gameTable.dealer;
+            private void GetBet(Label txtChips, TextBox txtBet, GameState.Game.Table.Player Player, bool dealing)
+            {
 
-            BJinterface.DLLdealerTurn(ref Game.TableStruct, ref Game.DeckStruct);
-            Dealer = this.BJgame.gameTable.dealer;
+                int bet = int.Parse(txtBet.Text);
+                int chips = Player.chips;
+                chips -= bet;
+                txtChips.Text = chips.ToString();
 
-            //show the dealer's starting cards
-            //ShowCard(Dealer.playerHand.cards[0].abbr, pbDC1);
-            //ShowCard(Dealer.playerHand.cards[1].abbr, pbDC2);
-            //
-            //for  (int i = 2; i < Dealer.playerHand.cardCount; i++) {
-
-            //    PictureBox DealerBox = new PictureBox();
-            //    DealerBox.Width = 72;
-            //    DealerBox.Height = 94;
-            //    DealerBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            //    DealerBox.Location = new Point(X + ((i - 1) * 15), 3);
-            //    //panelDlrCards.Controls.Add(DealerBox);
-
-            //    ShowCard(Dealer.playerHand.cards[i].abbr, DealerBox);
-
-            //}
-            lblDealerCount.Text = Dealer.playerHand.score.ToString();
-            btnClear.Enabled = true;
-
-            BJinterface.DLLtakeScores(ref Game.TableStruct);
-
-            for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++) {
-
-                //reset buttons and text
-                switch (i) {
-                    case 0:
-                        txtP1Chips.Text = this.BJgame.gameTable.players[i].chips.ToString();
-                        btnBetP1Inc.Enabled = false;
-                        btnBetP1Dec.Enabled = false;
-                        break;
-                    case 1:     
-                        txtP2Chips.Text = this.BJgame.gameTable.players[i].chips.ToString();
-                        btnBetP2Inc.Enabled = false;
-                        btnBetP2Dec.Enabled = false;
-                        break;
+                if (dealing)
+                {
+                    Player.playerHand.bet = bet;
+                    Player.chips = chips;
                 }
+            }
+
+            private void label2_Click(object sender, EventArgs e) { }
+
+            private void btnBetInc3_Click(object sender, EventArgs e)
+            {
+            //increase the bet
+            
+                
+                int ChipValue = int.Parse(lblChips3.Text, NumberStyles.Currency);
+                int Bet = int.Parse(txtBet3.Text);
+                if (ChipValue - 5 > 0)
+                {
+                    txtBet3.Text = (Bet + 5).ToString();
+                    lblChips3.Text = (ChipValue - 5).ToString("C0");
+                }
+            }
+
+            private void btnBetDec3_Click(object sender, EventArgs e)
+            {
+                //decrease the bet
+                int ChipValue = int.Parse(lblChips3.Text, NumberStyles.Currency);
+                int Bet = int.Parse(txtBet3.Text);
+                if (Bet - 5 > 0)
+                {
+                    txtBet3.Text = (Bet - 5).ToString();
+                    lblChips3.Text = (ChipValue + 5).ToString("C0");
+                    
+                }
+            }
+
+            private void grpPlayer2_Enter(object sender, EventArgs e) { }
+
+            private void btnHit1_Click(object sender, EventArgs e)
+            {
+                //Called from Hit button for the first player
+
+                Hit(Chair1.Player, Chair1.Count, Chair1.Hit, Chair1.Stay);
+
+                if (Chair1.Player.playerHand.hasEnded)
+                {
+                    if (Chair1.Player.pos == (this.BJgame.gameTable.NO_OF_PLAYERS))
+                    {
+                        this.DealerHand();
+                    }
+                    else
+                    {
+                        Chair2.Hit.Enabled = true;
+                        Chair2.Stay.Enabled = true;
+                    }
+                }
+                this.Invalidate();
+            }
+
+            private void btnHit2_Click(object sender, EventArgs e)
+            {
+                //Called from Hit button for the first player
+
+                //Game.Table.Player Player = this.BJgame.gameTable.players[0];
+
+                //Hit(Player, lblCount2, btnHit2, btnStay2);
+                Hit(Chair2.Player, Chair2.Count, Chair2.Hit, Chair2.Stay);
+
+                if (Chair2.Player.playerHand.hasEnded)
+                {
+                    if (Chair2.Player.pos == (this.BJgame.gameTable.NO_OF_PLAYERS))
+                    {   
+                        this.DealerHand();
+                    }
+                    else
+                    {
+                        Chair3.Hit.Enabled = true;
+                        Chair3.Stay.Enabled = true;
+                    }
+                }
+                this.Invalidate();
+            }
+
+            private void Hit(Game.Table.Player Player, Label lblCount, Button btnHit, Button btnStay)
+            {
+
+                //Called for the player hit buttons to draw a card
+                //int X = 20;
+                Game.Table.Player.Hand h;
+                byte hit = (byte)'h';
+
+                BJinterface.DLLplayerTurn(ref Game.TableStruct, ref Game.DeckStruct, hit);
+
+                h = this.BJgame.gameTable.players[Player.pos - 1].playerHand;
+
+
+                lblCount.Text = h.score.ToString();
+                if (h.bust)
+                {
+                    lblCount.Text += " Busted";
+                }
+                if (h.hasEnded)
+                {
+                    btnHit.Enabled = false;
+                    btnStay.Enabled = false;
+                }
+                lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
+                this.Invalidate();
             }
             
-            lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
-        }
 
-        private void ShowCard(string v, Control control) { }
 
-        private void btnP2Inc_Click(object sender, EventArgs e) {
-            //Increases bet for the second player
-            int ChipValue = int.Parse(txtP2Chips.Text);
-            int Bet = int.Parse(txtP2Bet.Text);
-            if (ChipValue - 5 > 0) {
-                txtP2Bet.Text = (Bet + 5).ToString();
-                txtP2Chips.Text = (ChipValue - 5).ToString();
-            }
-        }
-
-        private void btnP2Dec_Click(object sender, EventArgs e) {
-
-            //Decreases bet for the second player
-            int ChipValue = int.Parse(txtP2Chips.Text);
-            int Bet = int.Parse(txtP2Bet.Text);
-            if (Bet - 5 > 0) {
-                txtP2Bet.Text = (Bet - 5).ToString();
-                txtP2Chips.Text = (ChipValue + 5).ToString();
-            }
-        }
-
-        private void btnP1Stay_Click(object sender, EventArgs e) {
-
-            BJinterface.DLLplayerTurn(ref Game.TableStruct, ref Game.DeckStruct, (byte)'s');
-
-            //Called from Stay button for first player
-            btnP1Hit.Enabled = false;
-            btnP1Stay.Enabled = false;
-
-            if (this.BJgame.gameTable.NO_OF_PLAYERS > 1) {
-                btnP2Hit.Enabled = true;
-                btnP2Stay.Enabled = true;
-            }
-            else {
-                //If there is not second player go to DealerHand
-                DealerHand();
-            }
-            this.Invalidate();
-        }
-
-        private void btnP2Stay_Click(object sender, EventArgs e) {
-
-            BJinterface.DLLplayerTurn(ref Game.TableStruct, ref Game.DeckStruct, (byte)'s');
-
-            //Called from Stay button for second player
-            btnP2Hit.Enabled = false;
-            btnP2Stay.Enabled = false;
-            if (this.BJgame.gameTable.NO_OF_PLAYERS > 2)
+            private void DealerHand()
             {
-                btnP3Hit.Enabled = true;
-                btnP3Stay.Enabled = true;
+
+                //After the last player's hand is done, DealerHand is called to show and complete the dealers hand
+                //int X = 20;
+                Game.Table.Player Dealer = this.BJgame.gameTable.dealer;
+
+                BJinterface.DLLdealerTurn(ref Game.TableStruct, ref Game.DeckStruct);
+                Dealer = this.BJgame.gameTable.dealer;
+
+
+                lblDealerCount.Text = Dealer.playerHand.score.ToString();
+                btnClear.Enabled = true;
+
+                BJinterface.DLLtakeScores(ref Game.TableStruct);
+
+                for (int i = 0; i < this.BJgame.gameTable.NO_OF_PLAYERS; i++)
+                {
+
+                    //reset buttons and text
+                    switch (i)
+                    {
+                        case 0:
+                            lblChips3.Text = this.BJgame.gameTable.players[i].chips.ToString();
+                            btnBetInc3.Enabled = false;
+                            btnBetDec3.Enabled = false;
+                            break;
+                        case 1:
+                            lblChips4.Text = this.BJgame.gameTable.players[i].chips.ToString();
+                            btnBetInc4.Enabled = false;
+                            btnBetDec4.Enabled = false;
+                            break;
+                    }
+                }
+
+                lblCardCount.Text = this.BJgame.gameDeck.cards_left.ToString();
+            }
+            private void btnBetInc2_Click(object sender, EventArgs e)
+            {
+                //Increases bet for the second player
+                int ChipValue = int.Parse(lblChips2.Text);
+                int Bet = int.Parse(txtBet2.Text);
+                if (ChipValue - 5 > 0)
+                {
+                    txtBet2.Text = (Bet + 5).ToString();
+                    lblChips2.Text = (ChipValue - 5).ToString();
+                }
+            }
+            private void btnBetDec2_Click(object sender, EventArgs e)
+            {
+
+                //Decreases bet for the second player
+                int ChipValue = int.Parse(lblChips2.Text);
+                int Bet = int.Parse(txtBet2.Text);
+                if (Bet - 5 > 0)
+                {
+                    txtBet2.Text = (Bet - 5).ToString();
+                    lblChips2.Text = (ChipValue + 5).ToString();
+                }
+            }
+        private void btnStay1_Click(object sender, EventArgs e)
+        {
+
+            BJinterface.DLLplayerTurn(ref Game.TableStruct, ref Game.DeckStruct, (byte)'s');
+
+            Chair1.Hit.Enabled = false;
+            Chair1.Stay.Enabled = false;
+
+            if (Chair1.Player.pos < (this.BJgame.gameTable.NO_OF_PLAYERS))
+            {
+                btnHit2.Enabled = true;
+                btnStay2.Enabled = true;
             }
             else
             {
-                //If there is not third player go to DealerHand
+                //If there is not another player go to DealerHand
                 DealerHand();
             }
             this.Invalidate();
-        } 
+        }
 
-        private void pbDC3_Click(object sender, EventArgs e) { }
-        
-        private void btnClear_Click(object sender, EventArgs e) {
+        private void btnStay2_Click(object sender, EventArgs e)
+        {
 
-            //Clears the table and allows players to set bets for next hand
+            BJinterface.DLLplayerTurn(ref Game.TableStruct, ref Game.DeckStruct, (byte)'s');
 
-            //panelDlrCards.Controls.Clear();
-            //panelP1Cards.Controls.Clear();
-            //panelP2Cards.Controls.Clear();
+            Chair2.Hit.Enabled = false;
+            Chair2.Stay.Enabled = false;
 
-            //ClearCard(400, 0);
-            lblDealerCount.Text = "";
-            lblP1Count.Text = "";
-
-            BJinterface.DLLclearTable(ref Game.TableStruct);
-
-            GetBetsALL(false);
-
-            btnDeal.Enabled = true;
-            btnBetP1Inc.Enabled = true;
-            btnBetP1Dec.Enabled = true;
-            btnBetP2Inc.Enabled = true;
-            btnBetP2Dec.Enabled = true;
-            btnClear.Enabled = false;
+            if (Chair2.Player.pos < (this.BJgame.gameTable.NO_OF_PLAYERS)) 
+            {
+                btnHit3.Enabled = true;
+                btnStay3.Enabled = true;
+            }
+            else
+            {
+                //If there is not another player go to DealerHand
+                DealerHand();
+            }
             this.Invalidate();
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e) { }
-        
-        private void lblP2Count_Click(object sender, EventArgs e) { }
-
-        private void txtPlayer1_TextChanged(object sender, EventArgs e) {}
-
-        private void DisplayHand_FormClosed(object sender, FormClosedEventArgs e) {
-
-            BJinterface.DLLcleanUp(ref Game.TableStruct, ref Game.DeckStruct);
-            Application.Exit();
-        }
-
-        private void lblPlayer_Click(object sender, EventArgs e) {
-
-        }
-
-        private void panelP1Cards_Paint(object sender, PaintEventArgs e)
+        private void btnStay4_Click(object sender, EventArgs e)
         {
-            Graphics g = e.Graphics;
-            if (BJgame.gameTable.handsAreDealt)
+
+            BJinterface.DLLplayerTurn(ref Game.TableStruct, ref Game.DeckStruct, (byte)'s');
+
+            Chair4.Hit.Enabled = false;
+            Chair4.Stay.Enabled = false;    
+             
+            if (Chair4.Player.pos < (this.BJgame.gameTable.NO_OF_PLAYERS)) 
             {
-                //DrawCard(g, this.BJgame.gameTable.players[0].playerHand.cards[0].abbr, panelP1Cards.Location.X, panelP1Cards.Location.X);
-            };
+                btnHit5.Enabled = true;
+                btnStay5.Enabled = true;
+            }
+            else
+            {
+                //If there is not another player go to DealerHand
+                DealerHand();
+            }
+            this.Invalidate();
+        }
+        private void btnClear_Click(object sender, EventArgs e)
+            {
+
+                //Clears the table and allows players to set bets for next hand
+
+                lblDealerCount.Text = "";
+                //lblCount3.Text = "";
+
+                BJinterface.DLLclearTable(ref Game.TableStruct);
+
+                GetBetsALL(false);
+
+                btnDeal.Enabled = true;
+                btnClear.Enabled = false;
+                for (int i =0; i< PlayerChairs.Count; i++)
+                {
+                    PlayerChairs[i].BetInc.Enabled = true;
+                    PlayerChairs[i].BetDec.Enabled = true;
+                    PlayerChairs[i].Count.Text = "";
+                }
                 
-        }
-        
+                this.Invalidate();
+            }
 
-        private void label3_Click(object sender, EventArgs e) {
-
-        }
-
-        private void lblPlayer1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void panelPlayer2_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void lblDealerCount_Click(object sender, EventArgs e) {
-
-        }
-
-        private void lblCardCount_Click(object sender, EventArgs e) {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void panel4_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void panel6_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void txtP1Chips_Click(object sender, EventArgs e) {
-
-        }
-
-        private void panel11_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void label3_Click_1(object sender, EventArgs e) {
-
-        }
-
-        private void panelP1Cards2_Paint(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            if (BJgame.gameTable.handsAreDealt)
+            private void DisplayHand_FormClosed(object sender, FormClosedEventArgs e)
             {
-                //DrawCard(this.BJgame.gameTable.players[0].playerHand.cards[0].abbr, panelP1Cards2.Location.X, panelP1Cards.Location.X,0);
-            };
-        }
 
-        private void panelDlrCards_Paint(object sender, PaintEventArgs e)
-        {
-            
-        }
+                BJinterface.DLLcleanUp(ref Game.TableStruct, ref Game.DeckStruct);
+                Application.Exit();
+            }
 
-        private void btnBetP3Inc_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnBetP2Inc_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnP3Hit_Click(object sender, EventArgs e)
-        {
-            Game.Table.Player Player = this.BJgame.gameTable.players[1];
-
-            Hit(Player, lblP3Count, btnP3Hit, btnP3Stay);
-
-            if (Player.playerHand.hasEnded)
+            private void panelP1Cards_Paint(object sender, PaintEventArgs e)
             {
-                if (Player.pos == (this.BJgame.gameTable.NO_OF_PLAYERS))
+                Graphics g = e.Graphics;
+                if (BJgame.gameTable.handsAreDealt)
+                {
+                    //DrawCard(g, this.BJgame.gameTable.players[0].playerHand.cards[0].abbr, panelP1Cards.Location.X, panelP1Cards.Location.X);
+                };
+
+            }
+             private void panelP1Cards2_Paint(object sender, PaintEventArgs e)
+            {
+                Graphics g = e.Graphics;
+                if (BJgame.gameTable.handsAreDealt)
+                {
+                    //DrawCard(this.BJgame.gameTable.players[0].playerHand.cards[0].abbr, panelP1Cards2.Location.X, panelP1Cards.Location.X,0);
+                };
+            }
+
+            private void btnHit3_Click(object sender, EventArgs e)
+            {
+                //Called from Hit button for the first player
+
+                Hit(Chair3.Player, Chair3.Count, Chair3.Hit, Chair3.Stay);
+
+                if (Chair3.Player.playerHand.hasEnded)
+                {
+                    if (Chair3.Player.pos == (this.BJgame.gameTable.NO_OF_PLAYERS))
+                    {
+                        this.DealerHand();
+                    }
+                    else
+                    {
+                        Chair4.Hit.Enabled = true;
+                        Chair4.Stay.Enabled = true;
+                    }
+                }
+                this.Invalidate();
+            }
+
+        private void btnStay3_Click(object sender, EventArgs e)
+        {
+            BJinterface.DLLplayerTurn(ref Game.TableStruct, ref Game.DeckStruct, (byte)'s');
+
+            Chair3.Hit.Enabled = false;
+            Chair3.Stay.Enabled = false;
+
+            if (Chair3.Player.pos < (this.BJgame.gameTable.NO_OF_PLAYERS))
+            {
+                btnHit4.Enabled = true;
+                btnStay4.Enabled = true;
+            }
+            else
+            {
+                //If there is not another player go to DealerHand
+                DealerHand();
+            }
+            this.Invalidate();
+        }
+
+        private void btnHit4_Click(object sender, EventArgs e)
+        {
+            //Called from Hit button for the first player
+
+            Hit(Chair4.Player, Chair4.Count, Chair4.Hit, Chair4.Stay);
+
+            if (Chair4.Player.playerHand.hasEnded)
+            {
+                if (Chair4.Player.pos == (this.BJgame.gameTable.NO_OF_PLAYERS))
                 {
                     this.DealerHand();
                 }
                 else
                 {
-                    btnP4Hit.Enabled = true;
-                    btnP4Stay.Enabled = true;
+                    Chair5.Hit.Enabled = true;
+                    Chair5.Stay.Enabled = true;
                 }
             }
             this.Invalidate();
         }
 
-        private void btnP4Stay_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnP3Stay_Click(object sender, EventArgs e)
-        {
-            BJinterface.DLLplayerTurn(ref Game.TableStruct, ref Game.DeckStruct, (byte)'s');
-
-            //Called from Stay button for second player
-            btnP3Hit.Enabled = false;
-            btnP3Stay.Enabled = false;
-            if (this.BJgame.gameTable.NO_OF_PLAYERS > 2)
-            {
-                btnP4Hit.Enabled = true;
-                btnP4Stay.Enabled = true;
-            }
-            else
-            {
-                //If there is not third player go to DealerHand
-                DealerHand();
-            }
-            this.Invalidate();
-        }
     }
 }
     
